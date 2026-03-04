@@ -26,10 +26,10 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 <img src="images/1rubzz.png" width="200px">
 
 [[github](http://github.com/1rubzz)]
-[[portfolio](team/johndoe.md)]
+[[portfolio]()]
 
 * Role: Team Lead
-* Responsibilities: UI
+* Responsibilities: -
 
 ### Johnny Doe
 
