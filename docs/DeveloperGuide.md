@@ -316,133 +316,46 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**UC1 Use case: Add employee**
+**Use case 1 (UC1): Add employee**
 
 **MSS**
 
 1.  User requests to add a person by adding employee details
-2.  AddressBook adds the person to the records.
-3.  AddressBook displays confirmation message.
+2.  System adds the person to the records.
+3.  System displays confirmation message.
     Use case ends.
 
-**Extensions** // TO REVIEW --------------------------
+**Extensions**
 
-* 1a. AddressBook detects an error (e.g. format/syntax error) in the entered data.
-      1a1. AddressBook displays an error message with the correct format.
-      1a2. User enters new data.
+* 1a. System detects an error (e.g. format/syntax error) in the entered data.
+    * 1a1. System displays an error message with the correct format.
+    * 1a2. User enters new data.
       Steps 1a1-1a2 are repeated until the data entered are correct.
       Use case resumes from step 2.
 
-
-
-**Use case: Quick-add and subsequent update**
+**Use case 4 (UC4): Search for an employee**
 
 **MSS**
 
-1.  User requests to add a new employee with only a name and phone number.
-2.  AddressBook adds the employee and shows a confirmation message with the added details.
-3.  Some time later, User requests to edit the same employee to add their email and address.
-// how to reference the same employee? employee id? what if there are conflicts/duplicates e.g. names?
-4.  AddressBook shows the updated details of the employee.
+1.  User requests a search for employee(s).
+2.  System processes the search query against the existing employee records.
+3.  System displays a list of all employees that match the search.
 
     Use case ends.
 
-**Extensions** // TO REVIEW --------------------------
+**Extensions**
 
-* 1b. // one or more of the arguments face a duplicate
+* 1a. The user executes the search with invalid command
+    * 1a1. System displays an error message indicating that search command is invalid, with guide on how to properly form it.
+    
+      Use case resumes at step 1.
 
-  Use case ends.
+* 2a. No employees match the provided search query.
+    * 2a1. System displays a message indicating that the search yielded no results (e.g., "0 employees listed!").
+    
+      Use case ends.
 
 *{More to be added}*
-
-// --------------------------
-
-**Use case: Modify a specific employee's details, found by some detail**
-
-**MSS**
-
-1.  User searches for a specific employee by one of the likely-distinct parameters. (name, email, phone number)
-2.  AddressBook shows the employee ID of the target employee with details to be modified.
-3.  User requests to edit the employee's details.
-4.  AddressBook modifies the relevant details to be modified for that specific employee.
-5.  AddressBook shows the new details of the employee.
-
-    Use case ends.
-
-**Extensions** // TO REVIEW --------------------------
-
-* 1a. // there are multiple matching results
-
-      // then how
-
-      Use case restarts at step 1.
-
-* 1b. // one or more of the arguments face a duplicate
-
-  Use case ends.
-
-// --------------------------
-
-**Use case: Undo a mistaken deletion**
-
-**MSS**
-
-1.  User requests to list employees.
-2.  AddressBook shows the list.
-3.  User requests to delete an employee based on an index.
-4.  AddressBook requests to delete the employee.
-5.  AddressBook prompts the User to confirm their action.
-6.  User confirms delete action.
-7.  AddressBook deletes the employee record.
-8.  User realizes they deleted the wrong person and requests to undo the action.
-9.  AddressBook restores the deleted employee to the list and prints a action success message.
-
-Use case ends.
-
-    Use case ends.
-
-**Extensions** // TO REVIEW --------------------------
-
-* 1a. // there are multiple matching results
-
-      // then how
-
-      Use case restarts at step 1.
-
-* 1b. // one or more of the arguments face a duplicate
-
-  Use case ends.
-
-// --------------------------
-
-
-
-// --------------------------
-
-**Use case: Onboarding via Guided Tutorial**
-
-**MSS**
-
-1.  User launches the application for the first time.
-2.  AddressBook detects a new user and prompts to start a guided tutorial.
-3.  User accepts the prompt.
-4.  AddressBook prints the list of commands.
-
-    Use case ends.
-
-**Extensions** // TO REVIEW --------------------------
-
-* 1a. // there are multiple matching results
-
-      // then how
-
-      Use case restarts at step 1.
-
-* 1b. // one or more of the arguments face a duplicate
-
-  Use case ends.
-
-// --------------------------
 
 ### Non-Functional Requirements
 
@@ -452,19 +365,16 @@ Use case ends.
     times within **1 second**.
 4. The system should be usable entirely through a **Command Line Interface (CLI)** without requiring graphical 
     interaction such as mouse input.
-5. The system should store employee data **locally and persistently**, such that data remains available after the 
-    application is closed and reopened.
-6. The system should be usable by **HR managers who are not highly technical**, meaning commands should be simple and 
+5. The system should be usable by **HR managers who are not highly technical**, meaning commands should be simple and 
     documentation should clearly explain how to use them.
-7. The system should follow **standard Java coding conventions and modular design principles** to ensure 
+6. The system should follow **standard Java coding conventions and modular design principles** to ensure 
    maintainability.
-8. The system should ensure that employee data stored in the system remains consistent and is not corrupted during 
+7. The system should ensure that employee data stored in the system remains consistent and is not corrupted during 
    normal usage.
-9. The system should ensure that employee information stored locally is not transmitted over the network without 
+8. The system should ensure that employee information stored locally is not transmitted over the network without 
    user intent.
-10. The system should handle invalid commands or inputs gracefully by displaying appropriate error messages without 
-    crashing.
-11. The system should be packaged as a single executable JAR file so that users can run the application without 
+9. The system should remain stable when invalid commands or inputs are entered and should not crash during normal usage.
+10. The system should be packaged as a single executable JAR file so that users can run the application without 
     additional installation steps beyond having Java installed.
 
 ### Glossary
