@@ -316,29 +316,22 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case 1 (UC1): Add employee**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
-
+1.  User requests to add a person by adding employee details
+2.  System adds the person to the records.
+3.  System displays confirmation message.
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
-
-  Use case ends.
-
-* 3a. The given index is invalid.
-
-    * 3a1. AddressBook shows an error message.
-
-      Use case resumes at step 2.
-
+* 1a. System detects an error (e.g. format/syntax error) in the entered data.
+    * 1a1. System displays an error message with the correct format.
+    * 1a2. User enters new data.
+      Steps 1a1-1a2 are repeated until the data entered are correct.
+      Use case resumes from step 2.
 
 **Use case 4 (UC4): Search for an employee**
 
