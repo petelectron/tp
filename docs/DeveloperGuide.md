@@ -333,6 +333,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Steps 3a1-3a2 are repeated until the data entered are correct.
       Use case resumes from step 2.
 
+**UC2 Use case: Delete employee**
+
+**MSS**
+
+1.  User requests to remove a person by passing the target employee's details
+2.  AddressBook removes the person from the records.
+3.  AddressBook displays confirmation message.
+    Use case ends.
+
+**Extensions** // TO REVIEW --------------------------
+
+* 1a. AddressBook detects an error (e.g. format/syntax error) in the entered data.
+      1a1. AddressBook displays an error message with the correct format.
+      1a2. User enters new data in the correct format.
+      Steps 1a1-1a2 are repeated until the data entered are correct.
+      Use case resumes from step 2.
+* 1b. AddressBook detects that there is no such matching employee in the list.
+      1b1. AddressBook displays an error message "Error: Employee {data} not found."
+      Use case ends.
 
 
 **Use case: Quick-add and subsequent update**
