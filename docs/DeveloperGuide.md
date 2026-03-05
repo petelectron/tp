@@ -328,9 +328,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions** // TO REVIEW --------------------------
 
 * 1a. AddressBook detects an error (e.g. format/syntax error) in the entered data.
-      3a1. AddressBook displays an error message with the correct format.
-      3a2. User enters new data.
-      Steps 3a1-3a2 are repeated until the data entered are correct.
+      1a1. AddressBook displays an error message with the correct format.
+      1a2. User enters new data.
+      Steps 1a1-1a2 are repeated until the data entered are correct.
       Use case resumes from step 2.
 
 
