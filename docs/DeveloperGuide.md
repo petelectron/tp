@@ -349,19 +349,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     times within **1 second**.
 4. The system should be usable entirely through a **Command Line Interface (CLI)** without requiring graphical 
     interaction such as mouse input.
-5. The system should store employee data **locally and persistently**, such that data remains available after the 
-    application is closed and reopened.
-6. The system should be usable by **HR managers who are not highly technical**, meaning commands should be simple and 
+5. The system should be usable by **HR managers who are not highly technical**, meaning commands should be simple and 
     documentation should clearly explain how to use them.
-7. The system should follow **standard Java coding conventions and modular design principles** to ensure 
+6. The system should follow **standard Java coding conventions and modular design principles** to ensure 
    maintainability.
-8. The system should ensure that employee data stored in the system remains consistent and is not corrupted during 
+7. The system should ensure that employee data stored in the system remains consistent and is not corrupted during 
    normal usage.
-9. The system should ensure that employee information stored locally is not transmitted over the network without 
+8. The system should ensure that employee information stored locally is not transmitted over the network without 
    user intent.
-10. The system should handle invalid commands or inputs gracefully by displaying appropriate error messages without 
-    crashing.
-11. The system should be packaged as a single executable JAR file so that users can run the application without 
+9. The system should remain stable when invalid commands or inputs are entered and should not crash during normal usage.
+10. The system should be packaged as a single executable JAR file so that users can run the application without 
     additional installation steps beyond having Java installed.
 
 ### Glossary
