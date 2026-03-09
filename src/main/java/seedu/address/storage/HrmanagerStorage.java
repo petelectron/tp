@@ -24,12 +24,12 @@ public interface HrmanagerStorage {
      *
      * @throws DataLoadingException if loading the data from storage failed.
      */
-    Optional<ReadOnlyHrmanager> readAddressBook() throws DataLoadingException;
+    Optional<ReadOnlyHrmanager> readHrmanager() throws DataLoadingException;
 
     /**
      * @see #getHrmanagerFilePath()
      */
-    Optional<ReadOnlyHrmanager> readAddressBook(Path filePath) throws DataLoadingException;
+    Optional<ReadOnlyHrmanager> readHrmanager(Path filePath) throws DataLoadingException;
 
     /**
      * Saves the given {@link ReadOnlyHrmanager} to the storage.

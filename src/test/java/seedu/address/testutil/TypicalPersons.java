@@ -62,7 +62,7 @@ public class TypicalPersons {
     /**
      * Returns an {@code Hrmanager} with all the typical persons.
      */
-    public static Hrmanager getTypicalAddressBook() {
+    public static Hrmanager getTypicalHrmanager() {
         Hrmanager ab = new Hrmanager();
         for (Person person : getTypicalPersons()) {
             ab.addPerson(person);

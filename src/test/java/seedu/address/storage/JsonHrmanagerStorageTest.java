@@ -6,7 +6,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalHrmanager;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -26,12 +26,12 @@ public class JsonHrmanagerStorageTest {
     public Path testFolder;
 
     @Test
-    public void readAddressBook_nullFilePath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> readAddressBook(null));
+    public void readHrmanager_nullFilePath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> readHrmanager(null));
     }
 
-    private java.util.Optional<ReadOnlyHrmanager> readAddressBook(String filePath) throws Exception {
-        return new JsonHrmanagerStorage(Paths.get(filePath)).readAddressBook(addToTestDataPathIfNotNull(filePath));
+    private java.util.Optional<ReadOnlyHrmanager> readHrmanager(String filePath) throws Exception {
+        return new JsonHrmanagerStorage(Paths.get(filePath)).readHrmanager(addToTestDataPathIfNotNull(filePath));
     }
 
     private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -42,62 +42,62 @@ public class JsonHrmanagerStorageTest {
 
     @Test
     public void read_missingFile_emptyResult() throws Exception {
-        assertFalse(readAddressBook("NonExistentFile.json").isPresent());
+        assertFalse(readHrmanager("NonExistentFile.json").isPresent());
     }
 
     @Test
     public void read_notJsonFormat_exceptionThrown() {
-        assertThrows(DataLoadingException.class, () -> readAddressBook("notJsonFormatAddressBook.json"));
+        assertThrows(DataLoadingException.class, () -> readHrmanager("notJsonFormatHrmanager.json"));
     }
 
     @Test
-    public void readAddressBook_invalidPersonAddressBook_throwDataLoadingException() {
-        assertThrows(DataLoadingException.class, () -> readAddressBook("invalidPersonAddressBook.json"));
+    public void readHrmanager_invalidPersonHrmanager_throwDataLoadingException() {
+        assertThrows(DataLoadingException.class, () -> readHrmanager("invalidPersonHrmanager.json"));
     }
 
     @Test
-    public void readAddressBook_invalidAndValidPersonAddressBook_throwDataLoadingException() {
-        assertThrows(DataLoadingException.class, () -> readAddressBook("invalidAndValidPersonAddressBook.json"));
+    public void readHrmanager_invalidAndValidPersonHrmanager_throwDataLoadingException() {
+        assertThrows(DataLoadingException.class, () -> readHrmanager("invalidAndValidPersonHrmanager.json"));
     }
 
     @Test
     public void readAndSaveHrmanager_allInOrder_success() throws Exception {
-        Path filePath = testFolder.resolve("TempAddressBook.json");
-        Hrmanager original = getTypicalAddressBook();
+        Path filePath = testFolder.resolve("TempHrmanager.json");
+        Hrmanager original = getTypicalHrmanager();
         JsonHrmanagerStorage jsonHRmanagerStorage = new JsonHrmanagerStorage(filePath);
 
         // Save in new file and read back
         jsonHRmanagerStorage.saveHrmanager(original, filePath);
-        ReadOnlyHrmanager readBack = jsonHRmanagerStorage.readAddressBook(filePath).get();
+        ReadOnlyHrmanager readBack = jsonHRmanagerStorage.readHrmanager(filePath).get();
         assertEquals(original, new Hrmanager(readBack));
 
         // Modify data, overwrite exiting file, and read back
         original.addPerson(HOON);
         original.removePerson(ALICE);
         jsonHRmanagerStorage.saveHrmanager(original, filePath);
-        readBack = jsonHRmanagerStorage.readAddressBook(filePath).get();
+        readBack = jsonHRmanagerStorage.readHrmanager(filePath).get();
         assertEquals(original, new Hrmanager(readBack));
 
         // Save and read without specifying file path
         original.addPerson(IDA);
         jsonHRmanagerStorage.saveHrmanager(original); // file path not specified
-        readBack = jsonHRmanagerStorage.readAddressBook().get(); // file path not specified
+        readBack = jsonHRmanagerStorage.readHrmanager().get(); // file path not specified
         assertEquals(original, new Hrmanager(readBack));
 
     }
 
     @Test
-    public void saveAddressBook_nullHrmanager_throwsNullPointerException() {
+    public void saveHrmanager_nullHrmanager_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> saveHrmanager(null, "SomeFile.json"));
     }
 
     /**
-     * Saves {@code addressBook} at the specified {@code filePath}.
+     * Saves {@code hrmanager} at the specified {@code filePath}.
      */
-    private void saveHrmanager(ReadOnlyHrmanager addressBook, String filePath) {
+    private void saveHrmanager(ReadOnlyHrmanager hrmanager, String filePath) {
         try {
             new JsonHrmanagerStorage(Paths.get(filePath))
-                    .saveHrmanager(addressBook, addToTestDataPathIfNotNull(filePath));
+                    .saveHrmanager(hrmanager, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

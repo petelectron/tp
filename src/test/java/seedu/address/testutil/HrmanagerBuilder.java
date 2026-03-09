@@ -4,9 +4,9 @@ import seedu.address.model.Hrmanager;
 import seedu.address.model.person.Person;
 
 /**
- * A utility class to help with building Addressbook objects.
+ * A utility class to help with building Hrmanager objects.
  * Example usage: <br>
- *     {@code Hrmanager ab = new AddressBookBuilder().withPerson("John", "Doe").build();}
+ *     {@code Hrmanager ab = new HrmanagerBuilder().withPerson("John", "Doe").build();}
  */
 public class HrmanagerBuilder {
 

@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.HrmanagerBuilder;
 
 public class ModelManagerTest {
 
@@ -66,7 +66,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void setAddressBookFilePath_validPath_setsHrmanagerFilePath() {
+    public void setHrmanagerFilePath_validPath_setsHrmanagerFilePath() {
         Path path = Paths.get("address/book/file/path");
         modelManager.setHrmanagerFilePath(path);
         assertEquals(path, modelManager.getHrmanagerFilePath());
@@ -78,12 +78,12 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasPerson_personNotInAddressBook_returnsFalse() {
+    public void hasPerson_personNotInHrmanager_returnsFalse() {
         assertFalse(modelManager.hasPerson(ALICE));
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
+    public void hasPerson_personInHrmanager_returnsTrue() {
         modelManager.addPerson(ALICE);
         assertTrue(modelManager.hasPerson(ALICE));
     }
@@ -95,7 +95,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        Hrmanager HRmanager = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        Hrmanager HRmanager = new HrmanagerBuilder().withPerson(ALICE).withPerson(BENSON).build();
         Hrmanager differentHrmanager = new Hrmanager();
         UserPrefs userPrefs = new UserPrefs();
 

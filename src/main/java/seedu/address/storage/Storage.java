@@ -24,7 +24,7 @@ public interface Storage extends HrmanagerStorage, UserPrefsStorage {
     Path getHrmanagerFilePath();
 
     @Override
-    Optional<ReadOnlyHrmanager> readAddressBook() throws DataLoadingException;
+    Optional<ReadOnlyHrmanager> readHrmanager() throws DataLoadingException;
 
     @Override
     void saveHrmanager(ReadOnlyHrmanager addressBook) throws IOException;

@@ -7,7 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalHrmanager;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,8 +37,8 @@ public class HrmanagerTest {
     }
 
     @Test
-    public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        Hrmanager newData = getTypicalAddressBook();
+    public void resetData_withValidReadOnlyHrmanager_replacesData() {
+        Hrmanager newData = getTypicalHrmanager();
         HRmanager.resetData(newData);
         assertEquals(newData, HRmanager);
     }
@@ -60,18 +60,18 @@ public class HrmanagerTest {
     }
 
     @Test
-    public void hasPerson_personNotInAddressBook_returnsFalse() {
+    public void hasPerson_personNotInHrmanager_returnsFalse() {
         assertFalse(HRmanager.hasPerson(ALICE));
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
+    public void hasPerson_personInHrmanager_returnsTrue() {
         HRmanager.addPerson(ALICE);
         assertTrue(HRmanager.hasPerson(ALICE));
     }
 
     @Test
-    public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
+    public void hasPerson_personWithSameIdentityFieldsInHrmanager_returnsTrue() {
         HRmanager.addPerson(ALICE);
         Person editedAlice = new PersonBuilder(ALICE).withRole(VALID_ROLE_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();

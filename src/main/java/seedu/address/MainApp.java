@@ -60,22 +60,22 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * Returns a {@code ModelManager} with the data from {@code storage}'s hrmanager and {@code userPrefs}. <br>
+     * The data from the sample hrmanager will be used instead if {@code storage}'s address book is not found,
+     * or an empty hrmanager will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
         logger.info("Using data file : " + storage.getHrmanagerFilePath());
 
-        Optional<ReadOnlyHrmanager> addressBookOptional;
+        Optional<ReadOnlyHrmanager> hrmanagerOptional;
         ReadOnlyHrmanager initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
+            hrmanagerOptional = storage.readHrmanager();
+            if (!hrmanagerOptional.isPresent()) {
                 logger.info("Creating a new data file " + storage.getHrmanagerFilePath()
                         + " populated with a sample Hrmanager.");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleHrmanager);
+            initialData = hrmanagerOptional.orElseGet(SampleDataUtil::getSampleHrmanager);
         } catch (DataLoadingException e) {
             logger.warning("Data file at " + storage.getHrmanagerFilePath() + " could not be loaded."
                     + " Will be starting with an empty Hrmanager.");

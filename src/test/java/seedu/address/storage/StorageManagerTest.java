@@ -2,7 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalHrmanager;
 
 import java.nio.file.Path;
 
@@ -24,9 +24,9 @@ public class StorageManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonHrmanagerStorage addressBookStorage = new JsonHrmanagerStorage(getTempFilePath("ab"));
+        JsonHrmanagerStorage hrmanagerStorage = new JsonHrmanagerStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        storageManager = new StorageManager(hrmanagerStorage, userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {
@@ -54,9 +54,9 @@ public class StorageManagerTest {
          * {@link JsonHrmanagerStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link JsonHrmanagerStorageTest} class.
          */
-        Hrmanager original = getTypicalAddressBook();
+        Hrmanager original = getTypicalHrmanager();
         storageManager.saveHrmanager(original);
-        ReadOnlyHrmanager retrieved = storageManager.readAddressBook().get();
+        ReadOnlyHrmanager retrieved = storageManager.readHrmanager().get();
         assertEquals(original, new Hrmanager(retrieved));
     }
 

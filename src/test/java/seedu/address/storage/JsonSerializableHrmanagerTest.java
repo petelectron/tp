@@ -16,8 +16,8 @@ import seedu.address.testutil.TypicalPersons;
 public class JsonSerializableHrmanagerTest {
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonSerializableHrmanagerTest");
-    private static final Path TYPICAL_PERSONS_FILE = TEST_DATA_FOLDER.resolve("typicalPersonsAddressBook.json");
-    private static final Path INVALID_PERSON_FILE = TEST_DATA_FOLDER.resolve("invalidPersonAddressBook.json");
+    private static final Path TYPICAL_PERSONS_FILE = TEST_DATA_FOLDER.resolve("typicalPersonsHrmanager.json");
+    private static final Path INVALID_PERSON_FILE = TEST_DATA_FOLDER.resolve("invalidPersonHrmanager.json");
     private static final Path DUPLICATE_PERSON_FILE = TEST_DATA_FOLDER.resolve("duplicatePersonHrmanager.json");
 
     @Test
@@ -25,7 +25,7 @@ public class JsonSerializableHrmanagerTest {
         JsonSerializableHRmanager dataFromFile = JsonUtil.readJsonFile(TYPICAL_PERSONS_FILE,
                 JsonSerializableHRmanager.class).get();
         Hrmanager HrmanagerFromFile = dataFromFile.toModelType();
-        Hrmanager typicalPersonsHrmanager = TypicalPersons.getTypicalAddressBook();
+        Hrmanager typicalPersonsHrmanager = TypicalPersons.getTypicalHrmanager();
         assertEquals(HrmanagerFromFile, typicalPersonsHrmanager);
     }
 

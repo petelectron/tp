@@ -42,10 +42,10 @@ public interface Model {
     /**
      * Sets the user prefs' address book file path.
      */
-    void setHrmanagerFilePath(Path addressBookFilePath);
+    void setHrmanagerFilePath(Path hrmanagerFilePath);
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
+     * Replaces hrmanager data with the data in {@code hrmanager}.
      */
     void setHrmanager(ReadOnlyHrmanager hrmanager);
 

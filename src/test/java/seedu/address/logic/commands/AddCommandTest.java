@@ -114,7 +114,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void setHrmanagerFilePath(Path addressBookFilePath) {
+        public void setHrmanagerFilePath(Path hrmanagerFilePath) {
             throw new AssertionError("This method should not be called.");
         }
 

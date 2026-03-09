@@ -31,7 +31,7 @@ import seedu.address.testutil.PersonUtil;
 
 public class HrmanagerParserTest {
 
-    private final HRmanagerParser parser = new HRmanagerParser();
+    private final HrmanagerParser parser = new HrmanagerParser();
 
     @Test
     public void parseCommand_add() throws Exception {

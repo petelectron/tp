@@ -32,27 +32,27 @@ public class JsonHrmanagerStorage implements HrmanagerStorage {
     }
 
     @Override
-    public Optional<ReadOnlyHrmanager> readAddressBook() throws DataLoadingException {
-        return readAddressBook(filePath);
+    public Optional<ReadOnlyHrmanager> readHrmanager() throws DataLoadingException {
+        return readHrmanager(filePath);
     }
 
     /**
-     * Similar to {@link #readAddressBook()}.
+     * Similar to {@link #readHrmanager()}.
      *
      * @param filePath location of the data. Cannot be null.
      * @throws DataLoadingException if loading the data from storage failed.
      */
-    public Optional<ReadOnlyHrmanager> readAddressBook(Path filePath) throws DataLoadingException {
+    public Optional<ReadOnlyHrmanager> readHrmanager(Path filePath) throws DataLoadingException {
         requireNonNull(filePath);
 
-        Optional<JsonSerializableHRmanager> jsonAddressBook = JsonUtil.readJsonFile(
+        Optional<JsonSerializableHRmanager> jsonHrmanager = JsonUtil.readJsonFile(
                 filePath, JsonSerializableHRmanager.class);
-        if (!jsonAddressBook.isPresent()) {
+        if (!jsonHrmanager.isPresent()) {
             return Optional.empty();
         }
 
         try {
-            return Optional.of(jsonAddressBook.get().toModelType());
+            return Optional.of(jsonHrmanager.get().toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataLoadingException(ive);

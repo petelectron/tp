@@ -54,14 +54,14 @@ public class StorageManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyHrmanager> readAddressBook() throws DataLoadingException {
-        return readAddressBook(HRmanagerStorage.getHrmanagerFilePath());
+    public Optional<ReadOnlyHrmanager> readHrmanager() throws DataLoadingException {
+        return readHrmanager(HRmanagerStorage.getHrmanagerFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyHrmanager> readAddressBook(Path filePath) throws DataLoadingException {
+    public Optional<ReadOnlyHrmanager> readHrmanager(Path filePath) throws DataLoadingException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return HRmanagerStorage.readAddressBook(filePath);
+        return HRmanagerStorage.readHrmanager(filePath);
     }
 
     @Override
