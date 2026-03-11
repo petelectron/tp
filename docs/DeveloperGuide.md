@@ -35,7 +35,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S2-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S2-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -67,13 +67,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S2-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103T-T13-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -84,7 +84,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S2-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -116,15 +116,15 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S2-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores HRmanager's employee records, i.e. all `Person` objects (which are contained in a `UniquePersonList` object).
+* stores the currently selected `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be observed. The UI can be bound to this list so that it updates automatically when the data changes.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
@@ -139,12 +139,12 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S2-CS2103T-T13-1/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
+* can save both HRmanager data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
@@ -255,6 +255,27 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
+### Search feature
+
+The `search` command is implemented by `SearchCommand`, `SearchCommandParser`, and `NameContainsKeywordsPredicate`.
+
+The flow is as follows:
+
+1. The user enters `search KEYWORD [MORE_KEYWORDS]...`.
+2. `AddressBookParser` routes the input to `SearchCommandParser`.
+3. `SearchCommandParser` trims the arguments, rejects blank input, rejects searches with more than 100 keywords, and rejects any keyword longer than 100 characters.
+4. If parsing succeeds, `SearchCommand` is created with a `NameContainsKeywordsPredicate`.
+5. `SearchCommand#execute` updates the model's filtered employee list and returns feedback in the form `X employees listed!`.
+
+Matching behavior:
+
+* search is case-insensitive
+* only employee names are searched
+* each keyword is treated as a partial substring match rather than a full-word match
+* multiple keywords are combined using `OR` semantics
+
+This means a command such as `search ali tan` returns employees whose names contain either `ali` or `tan`, regardless of case.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -274,14 +295,14 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**: Human Resource Manager
 
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of employee and applicant records
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
 **Value proposition**:
-- manage contacts faster than a typical mouse/GUI driven app
+- manage employee records faster than a typical mouse/GUI driven app
 - provides fast access to employee details, with sorting options for further clarity
 - view job applicants details at a glance and decide whether to proceed with interviews and hiring
 
@@ -296,7 +317,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *` | user                               | delete an employee                     | clear up data when it is no longer needed                  |
 | `* * *` | user                               | view all employees                     | gain a brief overview of everyone in the company           |
 | `* * *` | user                               | store phone numbers and email addresses | contact employees easily                                   |
-| `* * *` | busy user                          | search for employees                   | quickly find a specific staff member                       |
+| `* * *` | busy user                          | search for employees by name           | quickly find a specific staff member                       |
 | `* * *` | busy user                          | add contacts with only name and phone  | track someone now and update details later                 |
 | `* * `  | organised user                     | modify employee details                | keep info up to date                                       |
 | `* * `  | organised user                     | sort employees by variables            | find the most relevant employees for my needs              |
@@ -383,21 +404,28 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests a search for employee(s).
-2.  System processes the search query against the existing employee records.
-3.  System displays a list of all employees that match the search.
+1.  User enters the `search` command with one or more name keywords.
+2.  System validates the search input.
+3.  System processes the search query against the existing employee records.
+4.  System displays a list of all employees that match the search.
+    Matching is case-insensitive, supports partial-name matching, and returns employees that match any one of the supplied keywords.
     
     Use case ends.
 
 **Extensions**
 
-* 1a. The user executes the search with invalid command
-    * 1a1. System displays an error message indicating that search command is invalid, with guide on how to properly form it.
+* 1a. The user executes `search` with blank input.
+    * 1a1. System displays an invalid command format message together with the proper `search` usage.
       
     Use case resumes at step 1.
 
-* 2a. No employees match the provided search query.
-    * 2a1. System displays a message indicating that the search yielded no results (e.g., "0 employees listed!"). 
+* 1b. The user provides more than 100 keywords, or at least one keyword longer than 100 characters.
+    * 1b1. System displays an invalid command format message together with the proper `search` usage.
+      
+    Use case resumes at step 1.
+
+* 3a. No employees match the provided search query.
+    * 3a1. System displays `0 employees listed!`.
       
     Use case ends.
 
