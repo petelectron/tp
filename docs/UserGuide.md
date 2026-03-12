@@ -65,8 +65,7 @@ HRManager is a **desktop app for managing contacts, optimized for use via a  Lin
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * Tag constraints: Tags must be **alphanumeric** (only letters and numbers) and **between 1 to 50 characters long**. Tags are **case-sensitive**.<br>
-  e.g. `t/HR`, `t/Department123` are valid; `t/HR Department` (contains space), `t/HR!` (contains special character),
-  and tags longer than 50 characters are invalid. 
+  e.g. `t/HR`, `t/Department123` are valid; `t/HR Department` (contains space), `t/HR!`(contains special character), and tags longer than 50 characters are invalid.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>

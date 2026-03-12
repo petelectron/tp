@@ -333,9 +333,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. System displays an error message with the correct format.
     * 1a2. User enters new data.
     Steps 1a1-1a2 are repeated until the data entered are correct.
-      
+
     Use case resumes from step 2.
-      
+
 
 ### Use case 2 (UC2): Delete employee
 
@@ -353,12 +353,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. System displays an error message with the correct format.
     * 1a2. User enters new data in the correct format.
       Steps 1a1-1a2 are repeated until the data entered are correct.
-  
+
     Use case resumes from step 2.
-      
+
 * 1b. System detects that there is no such matching employee in the list.
     * 1b1. System displays an error message "Error: Employee (data) not found.
-      
+    
     Use case ends.
 
 
@@ -368,14 +368,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User requests to view the list of employees.
 2. System retrieves the employee records and displays employee list.
-   
+
    Use case ends.
 
 **Extensions**
 
 * 2a. There are no employees stored in the system.
     * 2a1. System displays an empty employee list.
-  
+
     Use case ends
 
 
@@ -386,14 +386,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests a search for employee(s).
 2.  System processes the search query against the existing employee records.
 3.  System displays a list of all employees that match the search.
-    
+
     Use case ends.
 
 **Extensions**
 
 * 1a. The user executes the search with invalid command
     * 1a1. System displays an error message indicating that search command is invalid, with guide on how to properly form it.
-      
+
     Use case resumes at step 1.
 
 * 2a. No employees match the provided search query.
@@ -488,8 +488,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **HR Manager**: The primary user of the system who manages employee records using the application.
-* **Employee Record**: A collection of information stored in the system about an employee, such as name, 
-                       email, phone number, and role.
+* **Employee Record**: A collection of information stored in the system about an employee, such as name, email, phone number, and role.
 * **Command Line Interface (CLI)**: A text-based interface where users interact with the application by typing commands.
 * **Tag**: A label that can be attached to an employee record for categorization purposes. Tags must be alphanumeric
   and 1-50 characters in length. Examples include "HR", "Manager", "FullTime", "Intern".
@@ -517,7 +516,7 @@ testers are expected to do more *exploratory* testing.
 
 2. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window. 
+   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
    2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
@@ -534,7 +533,7 @@ testers are expected to do more *exploratory* testing.
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
    3. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same. 
+      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
    4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
