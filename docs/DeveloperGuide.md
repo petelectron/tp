@@ -476,9 +476,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to edit employee details.
-2. System searches for the employee (UC4).
+2. System retrieves the employee based on user's provided index.
 3. User enters the details to be updated.
-4. System edits the employee's details, and displays the updated employee information.
+4. System updates the employee's details accordingly, and displays the updated employee information.
 
 **Extensions**
 
@@ -487,9 +487,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       
     Use case resumes at step 1.
 
+* 2a. The user entered an invalid index.
+  * 2a1. System shows an error message.
+  
+    Use case resumes at step 1.
+
 * 3a. User's given details are invalid.
     * 3a1. System shows an error message.
       
+    Use case resumes at step 3.
+
+* 3b. User enters empty details.
+  * 3b1. System shows an error message.
+  
     Use case resumes at step 3.
 
 
