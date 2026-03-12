@@ -143,9 +143,9 @@ Examples:
 
 Deletes one or more employees from the list using their displayed index numbers.
 
-Format: `delete  [MORE_INDEXES]`
+Format: `delete INDEX [MORE_INDEXES]`
 
-* Deletes the employee at the specified `INDEX`.
+* Deletes the employee(s) at the specified `INDEX`.
 * The index refers to the index number shown in the displayed employee list.
 * The index **must be a positive integer** 1, 2, 3, …​
 * Multiple indexes can be provided to delete multiple employees in one command.
