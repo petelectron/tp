@@ -53,6 +53,11 @@ public class AddressBookParserTest {
         List<Index> expectedIndexes = List.of(INDEX_FIRST_PERSON);
 
         assertEquals(new DeleteCommand(expectedIndexes), command);
+
+        // alias
+        DeleteCommand aliasCommand = (DeleteCommand) parser.parseCommand(
+                DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeleteCommand(expectedIndexes), aliasCommand);
     }
 
     @Test
