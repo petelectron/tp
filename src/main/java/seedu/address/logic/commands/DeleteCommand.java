@@ -18,14 +18,19 @@ import seedu.address.model.person.Person;
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
+    public static final String COMMAND_ALIAS = "del";
     public static final int MAX_INDEX_COUNT = 100;
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1 3 5";
-
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted employee(s): %1$s";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + " (Alias:" + COMMAND_ALIAS + "): Deletes the person identified "
+            + "by the index number used in the displayed person list.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1 3 5 (deletes the 1st,"
+            + "3rd and 5th person in the displayed list)\n"
+            + "Shortcut: " + COMMAND_ALIAS + " 2 (deletes the "
+            + "2nd person in the displayed list)\n"
+            + "Note: Maximum of " + MAX_INDEX_COUNT + " indexes can be provided.";
+
     private final List<Index> targetIndexes;
 
     public DeleteCommand(List<Index> targetIndexes) {
