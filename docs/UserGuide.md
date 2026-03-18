@@ -64,6 +64,10 @@ HRmanager is a **desktop app for managing employee and applicant records, optimi
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
+* Name constraints: Names should only consist of letters from the alphabet, hyphens ("-") or spaces, and should be between 2 and 50 characters long. The name should not start or end with a space or hyphen, and it should not contain consecutive spaces or hyphens. Upper or lowercase letters does not matter.
+
+* Phone Number constraints: The phone number must contain only numbers, and be between 3 and 16 digits inclusive. Do not include spaces, extensions or country codes.
+
 * Tag constraints: Tags must be **alphanumeric** (only letters and numbers) and **between 1 to 50 characters long**. Tags are **case-sensitive**.<br>
   e.g. `t/HR`, `t/Department123` are valid; `t/HR Department` (contains space), `t/HR!`(contains special character), and tags longer than 50 characters are invalid.
 
@@ -91,8 +95,9 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com r/Receptionist`
+
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com r/Associate Director p/1234567 t/criminal`
 
 ### Listing all employees : `list`
 
@@ -179,7 +184,7 @@ HRmanager data are saved automatically as a JSON file `[JAR file location]/data/
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, HRmanager will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+If your changes to the data file make its format invalid, HRmanager will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause HRmanager to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
