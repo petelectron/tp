@@ -25,17 +25,48 @@ public class PhoneTest {
         assertThrows(NullPointerException.class, () -> Phone.isValidPhone(null));
 
         // invalid phone numbers
-        assertFalse(Phone.isValidPhone("")); // empty string
-        assertFalse(Phone.isValidPhone(" ")); // spaces only
-        assertFalse(Phone.isValidPhone("91")); // less than 3 numbers
-        assertFalse(Phone.isValidPhone("phone")); // non-numeric
-        assertFalse(Phone.isValidPhone("9011p041")); // alphabets within digits
-        assertFalse(Phone.isValidPhone("9312 1534")); // spaces within digits
+
+        // empty string
+        assertFalse(Phone.isValidPhone(""));
+        // spaces only
+        assertFalse(Phone.isValidPhone(" "));
+        // less than 3 numbers
+        assertFalse(Phone.isValidPhone("91"));
+        // non-numeric
+        assertFalse(Phone.isValidPhone("phone"));
+        // alphabets within digits
+        assertFalse(Phone.isValidPhone("9011p041"));
+        // spaces within digits
+        assertFalse(Phone.isValidPhone("9312 1534"));
+        // start with special char (simulate extension)
+        assertFalse(Phone.isValidPhone("+621859312"));
+        // special char within digits
+        assertFalse(Phone.isValidPhone("62/1859312"));
+        // spaces within digits (simulate country code)
+        assertFalse(Phone.isValidPhone("62 185 9312"));
+        // special char within digits (simulate extension)
+        assertFalse(Phone.isValidPhone("+621859312"));
+        // spaces within digits (simulate country code)
+        assertFalse(Phone.isValidPhone("62 1249312"));
+        // special character '!'
+        assertFalse(Phone.isValidPhone("931!1534"));
+        // special character '#'
+        assertFalse(Phone.isValidPhone("93#141534")); 
+        // len 17 phone number (>16)
+        assertFalse(Phone.isValidPhone("93122315678111534"));
+        // ridiculous length phone number
+        assertFalse(Phone.isValidPhone("356762194720127421646129468281"));
 
         // valid phone numbers
-        assertTrue(Phone.isValidPhone("911")); // exactly 3 numbers
+
+        // exactly 3 numbers
+        assertTrue(Phone.isValidPhone("911"));
+        // reasonable normal phone number
         assertTrue(Phone.isValidPhone("93121534"));
-        assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
+        // len 15 long phone number
+        assertTrue(Phone.isValidPhone("124293842033123"));
+        // len 16 phone number; possible edge case failure at limit
+        assertTrue(Phone.isValidPhone("9312231567811153")); 
     }
 
     @Test

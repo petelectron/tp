@@ -29,8 +29,29 @@ public class NameTest {
         assertFalse(Name.isValidName(" ")); // spaces only
         assertFalse(Name.isValidName("^")); // only non-alphanumeric characters
         assertFalse(Name.isValidName("peter*")); // contains non-alphanumeric characters
+        assertFalse(Name.isValidName("peter  jack")); // contains consecutive spaces
+        assertFalse(Name.isValidName("peter--jack")); // contains consecutive hyphens
+        assertFalse(Name.isValidName(" peter jack")); // starts with a space
+        assertFalse(Name.isValidName("peter jack ")); // ends with a space
+        assertFalse(Name.isValidName("-peter jack")); // starts with a hyphen
+        assertFalse(Name.isValidName("peter jack-")); // ends with a hyphen
+        assertFalse(Name.isValidName("peter- jack")); // consecutive hyphen and space
+        assertFalse(Name.isValidName("peter -jack")); // consecutive space and hyphen
+        assertFalse(Name.isValidName("12345")); // numbers only
+        assertFalse(Name.isValidName("peter the 2nd")); // alphanumeric characters
+        assertFalse(Name.isValidName("Alexander-Jonathan-Montgomery-"
+            + "Wellington-Smith-Anderson")); // unacceptably long String (prevents attacks)
+        assertFalse(Name.isValidName("Alexander Jonathan Montgomery Wellington Smith Anderson"
+            + "David Roger Jackson Ray Jr 2nd")); // long names and includes numbers
+        assertFalse(Name.isValidName("peter the %nd")); // special characters
+        assertFalse(Name.isValidName("peter_pan")); // special characters
+        assertFalse(Name.isValidName("peterpan]")); // special characters
+        assertFalse(Name.isValidName("a")); // only one character
+
 
         // valid name
+        assertTrue(Name.isValidName("ct")); // 2 characters only
+        assertTrue(Name.isValidName("TAN XIAO MING")); // UPPERCASE characters only
         assertTrue(Name.isValidName("peter jack")); // alphabets only
         assertTrue(Name.isValidName("12345")); // numbers only
         assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters

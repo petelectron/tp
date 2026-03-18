@@ -350,7 +350,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. System detects an error (e.g. format/syntax error) in the entered data.
+* 1a. System detects an error (e.g. format/syntax/duplicates error) in the entered data.
     * 1a1. System displays an error message with the correct format.
     * 1a2. User enters new data.
     Steps 1a1-1a2 are repeated until the data entered are correct.
