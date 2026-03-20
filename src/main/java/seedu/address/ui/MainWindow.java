@@ -48,6 +48,9 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane resultDisplayPlaceholder;
 
     @FXML
+    private StackPane statsPanelPlaceholder;
+
+    @FXML
     private StackPane statusbarPlaceholder;
 
     /**
@@ -121,6 +124,9 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        StatsPanel statsPanel = new StatsPanel(logic);
+        statsPanelPlaceholder.getChildren().add(statsPanel.getRoot());
     }
 
     /**

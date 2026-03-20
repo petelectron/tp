@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      styleClass="stats-panel" spacing="10" prefWidth="280">
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <!-- Header -->
+    <Label text="📊 HR Statistics" styleClass="stats-header">
+        <style>
+            -fx-font-weight: bold;
+            -fx-font-size: 14px;
+        </style>
+    </Label>
+
+    <!-- Separator line -->
+    <Region styleClass="separator-line" prefHeight="1"/>
+
+    <!-- Statistics -->
+    <VBox spacing="8">
+        <HBox spacing="10">
+            <Label text="👥 Total employees:" styleClass="stats-label" prefWidth="140"/>
+            <Label fx:id="totalEmployeesLabel" styleClass="stats-value"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Label text="🏷️ Unique tags:" styleClass="stats-label" prefWidth="140"/>
+            <Label fx:id="uniqueTagsLabel" styleClass="stats-value"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Label text="📈 Most common tag:" styleClass="stats-label" prefWidth="140"/>
+            <Label fx:id="mostCommonTagLabel" styleClass="stats-value"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Label text="✅ Employees with tags:" styleClass="stats-label" prefWidth="140"/>
+            <Label fx:id="employeesWithTagsLabel" styleClass="stats-value"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Label text="❌ Without tags:" styleClass="stats-label" prefWidth="140"/>
+            <Label fx:id="employeesWithoutTagsLabel" styleClass="stats-value"/>
+        </HBox>
+    </VBox>
+
+    <!-- Separator line -->
+    <Region styleClass="separator-line" prefHeight="1"/>
+
+    <!-- Tag Distribution -->
+    <Label text="📋 Tag Distribution (Top 5)" styleClass="stats-label"/>
+
+    <Label fx:id="tagDistributionLabel" styleClass="tag-distribution" wrapText="true"/>
+
+</VBox>
