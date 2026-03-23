@@ -40,6 +40,9 @@ public class SearchCommandParserTest {
 
         assertParseFailure(parser, "ab-",
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, "ab_cd",
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
     }
 
     @Test
