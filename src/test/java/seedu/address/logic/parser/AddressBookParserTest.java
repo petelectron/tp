@@ -77,9 +77,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_search() throws Exception {
-        List<String> keywords = List.of("foo");
+        List<String> keywords = List.of("foo", "bar");
         SearchCommand command = (SearchCommand) parser.parseCommand(
-            SearchCommand.COMMAND_WORD + " " + keywords.get(0));
+            SearchCommand.COMMAND_WORD + " " + String.join(" ", keywords));
         assertEquals(new SearchCommand(new PersonMatchesKeywordPredicate(keywords)), command);
     }
 

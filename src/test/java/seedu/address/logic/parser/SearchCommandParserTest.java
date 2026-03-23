@@ -28,8 +28,8 @@ public class SearchCommandParserTest {
     }
 
     @Test
-    public void parse_multipleKeywords_throwsParseException() {
-        assertParseFailure(parser, "Alice Bob",
+    public void parse_tooManyKeywords_throwsParseException() {
+        assertParseFailure(parser, "a b c d e f",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
     }
 
@@ -37,6 +37,12 @@ public class SearchCommandParserTest {
     public void parse_nonAlphanumericKeyword_throwsParseException() {
         assertParseFailure(parser, "Alice-123",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, "ab-",
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, "ab_cd",
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
     }
 
     @Test
@@ -49,10 +55,17 @@ public class SearchCommandParserTest {
 
     @Test
     public void parse_alphanumericKeyword_returnsSearchCommand() {
-        String validInput = "Alice123";
+        String validInput = "a1B2c";
         SearchCommand expectedSearchCommand =
                 new SearchCommand(new PersonMatchesKeywordPredicate(Collections.singletonList(validInput)));
         assertParseSuccess(parser, validInput, expectedSearchCommand);
+    }
+
+    @Test
+    public void parse_multipleValidKeywords_returnsSearchCommand() {
+        SearchCommand expectedSearchCommand =
+            new SearchCommand(new PersonMatchesKeywordPredicate(java.util.List.of("Alice", "Bob", "12c")));
+        assertParseSuccess(parser, "Alice Bob 12c", expectedSearchCommand);
     }
 
     @Test

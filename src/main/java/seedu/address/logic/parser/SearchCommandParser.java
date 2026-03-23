@@ -2,7 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -25,20 +25,22 @@ public class SearchCommandParser implements Parser<SearchCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
-        if (nameKeywords.length != 1) {
+        String[] keywords = trimmedArgs.split("\\s+");
+        if (keywords.length > SearchCommand.MAX_KEYWORDS) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }
 
-        String keyword = nameKeywords[0];
-        if (keyword.length() > SearchCommand.MAX_KEYWORD_LENGTH
-                || !keyword.matches(SearchCommand.KEYWORD_ALPHANUMERIC_REGEX)) {
+        boolean hasInvalidKeyword = Arrays.stream(keywords)
+                .anyMatch(keyword -> keyword.length() > SearchCommand.MAX_KEYWORD_LENGTH
+                        || !keyword.matches(SearchCommand.KEYWORD_ALPHANUMERIC_REGEX));
+
+        if (hasInvalidKeyword) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }
 
-        return new SearchCommand(new PersonMatchesKeywordPredicate(Collections.singletonList(keyword)));
+        return new SearchCommand(new PersonMatchesKeywordPredicate(Arrays.asList(keywords)));
     }
 
 }

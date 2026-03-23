@@ -35,16 +35,13 @@ public class PersonMatchesKeywordPredicateTest {
     }
 
     @Test
-    public void test_nameContainsKeywords_returnsTrue() {
+    public void test_nameContainsAllKeywords_returnsTrue() {
         PersonMatchesKeywordPredicate predicate =
                 new PersonMatchesKeywordPredicate(Collections.singletonList("Alice"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
         predicate = new PersonMatchesKeywordPredicate(Arrays.asList("Alice", "Bob"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
-
-        predicate = new PersonMatchesKeywordPredicate(Arrays.asList("Bob", "Carol"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Carol").build()));
 
         predicate = new PersonMatchesKeywordPredicate(Arrays.asList("aLIce", "bOB"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
@@ -54,10 +51,17 @@ public class PersonMatchesKeywordPredicateTest {
 
         predicate = new PersonMatchesKeywordPredicate(Arrays.asList("aLI", "bO"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        predicate = new PersonMatchesKeywordPredicate(Arrays.asList("Alice", "   "));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        predicate = new PersonMatchesKeywordPredicate(Arrays.asList("Alice", "12345", "friend"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+                .withEmail("alice@email.com").withRole("UI Designer").withTags("friend").build()));
     }
 
     @Test
-    public void test_nameDoesNotContainKeywords_returnsFalse() {
+    public void test_nameDoesNotContainAllKeywords_returnsFalse() {
         PersonMatchesKeywordPredicate predicate = new PersonMatchesKeywordPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
 
@@ -67,7 +71,10 @@ public class PersonMatchesKeywordPredicateTest {
         predicate = new PersonMatchesKeywordPredicate(Arrays.asList("Carol"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
-        predicate = new PersonMatchesKeywordPredicate(Arrays.asList("xyz", "zzz"));
+        predicate = new PersonMatchesKeywordPredicate(Arrays.asList("Alice", "Carol"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        predicate = new PersonMatchesKeywordPredicate(Arrays.asList("xyz", "Alice"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
         predicate = new PersonMatchesKeywordPredicate(Arrays.asList("notpresent"));

@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Person}'s fields contain any of the keywords given.
+ * Tests that a {@code Person}'s fields contain all of the keywords given.
  */
 public class PersonMatchesKeywordPredicate implements Predicate<Person> {
     private final List<String> keywords;
@@ -18,9 +18,14 @@ public class PersonMatchesKeywordPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
+        boolean allKeywordsBlank = keywords.stream().allMatch(String::isBlank);
+        if (allKeywordsBlank) {
+            return false;
+        }
+
         return keywords.stream()
                 .filter(keyword -> !keyword.isBlank())
-                .anyMatch(keyword -> matchesAnyPersonField(person, keyword));
+                .allMatch(keyword -> matchesAnyPersonField(person, keyword));
     }
 
     private boolean matchesAnyPersonField(Person person, String keyword) {

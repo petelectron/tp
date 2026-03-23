@@ -96,11 +96,21 @@ public class SearchCommandTest {
     @Test
     public void execute_singleKeyword_matchesEmailField() {
         String expectedMessage = String.format(SearchCommand.MESSAGE_EMPLOYEES_LISTED_OVERVIEW, 7);
-        PersonMatchesKeywordPredicate predicate = preparePredicate("example");
+        PersonMatchesKeywordPredicate predicate = preparePredicate("examp");
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(getTypicalPersons(), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_multipleKeywords_andSearchAcrossFields() {
+        String expectedMessage = String.format(SearchCommand.MESSAGE_EMPLOYEES_LISTED_OVERVIEW, 2);
+        PersonMatchesKeywordPredicate predicate = preparePredicate("Ku examp");
+        SearchCommand command = new SearchCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(CARL, FIONA), model.getFilteredPersonList());
     }
 
     @Test
