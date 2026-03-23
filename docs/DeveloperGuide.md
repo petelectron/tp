@@ -380,7 +380,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. One or more indexes are invalid (e.g., index exceeds list size).
     * 2a1. System displays an error message indicating the invalid index.
-    
+
     Use case ends.
 
 
@@ -410,24 +410,24 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3.  System processes the search query against the existing employee records.
 4.  System displays a list of all employees that match the search.
     Matching is case-insensitive, supports partial-name matching, and returns employees that match any one of the supplied keywords.
-    
+
     Use case ends.
 
 **Extensions**
 
 * 1a. The user executes `search` with blank input.
     * 1a1. System displays an invalid command format message together with the proper `search` usage.
-      
+
     Use case resumes at step 1.
 
 * 1b. The user provides more than 100 keywords, or at least one keyword longer than 100 characters.
     * 1b1. System displays an invalid command format message together with the proper `search` usage.
-      
+
     Use case resumes at step 1.
 
 * 3a. No employees match the provided search query.
     * 3a1. System displays `0 employees listed!`.
-      
+
     Use case ends.
 
 ### Use case 5 (UC5): Tag an employee
@@ -440,34 +440,34 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4. System requests for the tag name.
 5. User provides tag name.
 6. System adds the tag to an employee and updates the list
-   
+
    Use case ends.
 
 **Extensions**
 
 * 2a. The list is empty.
     * 2a1. System informs user that there are no employees to tag.
-      
+
     Use case ends.
 
 * 3a. The given index is invalid.
     * 3a1. System shows an error message.
-      
+
     Use case resumes at step 1.
 
 * 5a. The tag name provided is already associated with this employee.
     * 5a1. System shows an error message indicating the tag is a duplicate.
-      
+
     Use case resumes at step 2.
 
 * 5b. The tag name provided is invalid (e.g., blank, exceeds 50 characters, or contains non-alphanumeric characters).
     * 5b1. System shows an error message: "Tags names should be alphanumeric and between 1 to 50 characters long".
-      
+
     Use case resumes at step 4.
 
 * a. At any time, the User chooses to cancel the tagging operation.
     * a1. System cancels the tagging.
-    
+
     Use case ends.
 
 
@@ -484,22 +484,22 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The user enters the command in the incorrect format.
     * 1a1. System shows an error message.
-      
+
     Use case resumes at step 1.
 
 * 2a. The user entered an invalid index.
   * 2a1. System shows an error message.
-  
+
     Use case resumes at step 1.
 
 * 3a. User's given details are invalid.
     * 3a1. System shows an error message.
-      
+
     Use case resumes at step 3.
 
 * 3b. User enters empty details.
   * 3b1. System shows an error message.
-  
+
     Use case resumes at step 3.
 
 
@@ -507,20 +507,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2. The system should respond to user commands within **1 second** under normal usage conditions.
-3. The system should be able to store and manage at least **100 employee records** while maintaining command response 
+3. The system should be able to store and manage at least **100 employee records** while maintaining command response
     times within **1 second**.
-4. The system should be usable entirely through a **Command Line Interface (CLI)** without requiring graphical 
+4. The system should be usable entirely through a **Command Line Interface (CLI)** without requiring graphical
     interaction such as mouse input.
-5. The system should be usable by **HR managers who are not highly technical**, meaning commands should be simple and 
+5. The system should be usable by **HR managers who are not highly technical**, meaning commands should be simple and
     documentation should clearly explain how to use them.
-6. The system should follow **standard Java coding conventions and modular design principles** to ensure 
+6. The system should follow **standard Java coding conventions and modular design principles** to ensure
    maintainability.
-7. The system should ensure that employee data stored in the system remains consistent and is not corrupted during 
+7. The system should ensure that employee data stored in the system remains consistent and is not corrupted during
    normal usage.
-8. The system should ensure that employee information stored locally is not transmitted over the network without 
+8. The system should ensure that employee information stored locally is not transmitted over the network without
    user intent.
 9. The system should remain stable when invalid commands or inputs are entered and should not crash during normal usage.
-10. The system should be packaged as a single executable JAR file so that users can run the application without 
+10. The system should be packaged as a single executable JAR file so that users can run the application without
     additional installation steps beyond having Java installed.
 
 ### Glossary
