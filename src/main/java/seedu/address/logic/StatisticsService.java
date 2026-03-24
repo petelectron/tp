@@ -1,5 +1,7 @@
 package seedu.address.logic;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -7,8 +9,6 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.Statistics;
 import seedu.address.model.person.Person;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Service class that provides statistics about employees.
@@ -19,6 +19,12 @@ public class StatisticsService {
     private static final Logger logger = LogsCenter.getLogger(StatisticsService.class);
     private final Logic logic;
 
+    /**
+     * Creates a StatisticsService with the given Logic component.
+     *
+     * @param logic The Logic component used to access employee data
+     * @throws NullPointerException if logic is null
+     */
     public StatisticsService(Logic logic) {
         requireNonNull(logic);
         this.logic = logic;

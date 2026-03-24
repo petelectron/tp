@@ -1,5 +1,7 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,8 +10,6 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Represents statistics calculated from employee records.

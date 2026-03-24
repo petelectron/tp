@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.logging.Logger;
 
 import javafx.collections.ListChangeListener;
@@ -11,8 +13,6 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.StatisticsService;
 import seedu.address.model.Statistics;
 import seedu.address.model.person.Person;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Panel that displays statistics about employee records.
