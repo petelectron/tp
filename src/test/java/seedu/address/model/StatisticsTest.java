@@ -1,7 +1,6 @@
 package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,7 +40,9 @@ public class StatisticsTest {
 
     @Test
     public void constructor_singlePersonWithoutTags_returnsCorrectStats() {
-        List<Person> persons = Collections.singletonList(ALICE);
+        // Create a person without tags explicitly instead of using ALICE
+        Person personWithoutTags = createPersonWithTags("Alice"); // No tags
+        List<Person> persons = Collections.singletonList(personWithoutTags);
 
         Statistics stats = new Statistics(persons);
 
@@ -125,10 +126,12 @@ public class StatisticsTest {
             tags.add(new Tag(tagName));
         }
 
+        String emailName = name.toLowerCase().replaceAll("[^a-z0-9]", "");
+
         return new Person(
                 new Name(name),
                 new Phone("12345678"),
-                new Email(name.toLowerCase() + "@example.com"),
+                new Email(emailName + "@example.com"),
                 new Role("Employee"),
                 tags
         );

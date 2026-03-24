@@ -12,6 +12,8 @@ import seedu.address.logic.StatisticsService;
 import seedu.address.model.Statistics;
 import seedu.address.model.person.Person;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Panel that displays statistics about employee records.
  * Only responsible for UI display - statistics calculation is delegated.
@@ -49,10 +51,11 @@ public class StatsPanel extends UiPart<Region> {
      */
     public StatsPanel(Logic logic) {
         super(FXML);
+        requireNonNull(logic, "Logic must not be null"); // ADD THIS LINE
         this.logic = logic;
         this.statisticsService = new StatisticsService(logic);
 
-        // Listen for changes to the person list - using anonymous class
+        // Listen for changes to the person list
         logic.getFilteredPersonList().addListener(new ListChangeListener<Person>() {
             @Override
             public void onChanged(Change<? extends Person> change) {

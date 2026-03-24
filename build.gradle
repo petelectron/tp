@@ -23,17 +23,6 @@ checkstyle {
 test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
-
-    enableAssertions = true
-
-    systemProperty 'java.util.logging.config.file', 'src/test/resources/logging.properties'
-    systemProperty 'java.util.logging.level', 'FINE'
-
-    // Show test output in console
-    testLogging {
-        events "passed", "skipped", "failed"
-        showStandardStreams = true
-    }
 }
 
 run {

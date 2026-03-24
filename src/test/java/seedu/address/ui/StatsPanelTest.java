@@ -1,13 +1,16 @@
 package seedu.address.ui;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.file.Path;
 
+import org.junit.jupiter.api.BeforeAll; // ADD THIS IMPORT
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import javafx.application.Platform; // ADD THIS IMPORT
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.Model;
@@ -25,6 +28,15 @@ public class StatsPanelTest {
 
     private StatsPanel statsPanel;
 
+    @BeforeAll
+    public static void initJavaFx() {
+        try {
+            Platform.startup(() -> {});
+        } catch (IllegalStateException e) {
+            // JavaFX is already initialized
+        }
+    }
+
     @BeforeEach
     public void setUp() {
         Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), new UserPrefs());
@@ -40,7 +52,7 @@ public class StatsPanelTest {
 
     @Test
     public void constructor_nullLogic_throwsNullPointerException() {
-        org.junit.jupiter.api.Assertions.assertThrows(NullPointerException.class, () -> new StatsPanel(null));
+        assertThrows(NullPointerException.class, () -> new StatsPanel(null));
     }
 
     @Test
