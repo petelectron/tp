@@ -1,13 +1,13 @@
 package seedu.address.model;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -16,22 +16,25 @@ import seedu.address.model.tag.Tag;
  * This is a data container with no UI logic.
  */
 public class Statistics {
+
+    private static final Logger logger = LogsCenter.getLogger(Statistics.class);
+
     private final int totalEmployees;
     private final int uniqueTagCount;
     private final String mostCommonTag;
     private final int employeesWithTags;
     private final int employeesWithoutTags;
     private final String tagDistribution;
-    private final Map<String, Integer> tagFrequency; // ADD THIS LINE
 
     /**
      * Creates a Statistics object by calculating from a list of persons.
      * @param persons The list of persons to calculate statistics from
      */
     public Statistics(List<Person> persons) {
-        requireNonNull(persons);
+        assert persons != null : "Person list cannot be null";
 
         this.totalEmployees = persons.size();
+        logger.fine("Calculating statistics for " + totalEmployees + " employees");
 
         // Calculate tag statistics
         Set<String> uniqueTags = new java.util.HashSet<>();
@@ -39,10 +42,17 @@ public class Statistics {
         int employeesWithTagsCount = 0;
 
         for (Person person : persons) {
+            assert person != null : "Person in list cannot be null";
+
             Set<Tag> personTags = person.getTags();
+            assert personTags != null : "Person tags cannot be null";
+
             if (!personTags.isEmpty()) {
                 employeesWithTagsCount++;
                 for (Tag tag : personTags) {
+                    assert tag != null : "Tag cannot be null";
+                    assert tag.tagName != null : "Tag name cannot be null";
+
                     String tagName = tag.tagName;
                     uniqueTags.add(tagName);
                     tagFrequency.put(tagName, tagFrequency.getOrDefault(tagName, 0) + 1);
@@ -50,12 +60,18 @@ public class Statistics {
             }
         }
 
-        this.tagFrequency = tagFrequency; // ADD THIS LINE - Store it as instance variable
         this.employeesWithTags = employeesWithTagsCount;
         this.employeesWithoutTags = totalEmployees - employeesWithTagsCount;
+        assert employeesWithTags + employeesWithoutTags == totalEmployees : "Employee counts inconsistent";
+
         this.uniqueTagCount = uniqueTags.size();
+        assert uniqueTagCount >= 0 : "Unique tag count cannot be negative";
+
         this.mostCommonTag = findMostCommonTag(tagFrequency);
         this.tagDistribution = createTagDistribution(tagFrequency);
+
+        logger.fine("Statistics calculated: " + uniqueTagCount + " unique tags, "
+                + employeesWithTags + " employees with tags");
     }
 
     /**
@@ -64,7 +80,10 @@ public class Statistics {
      * @return String representation of the most common tag with count, or "None" if no tags exist
      */
     private String findMostCommonTag(Map<String, Integer> tagFrequency) {
+        assert tagFrequency != null : "Tag frequency map cannot be null";
+
         if (tagFrequency.isEmpty()) {
+            logger.fine("No tags found in data");
             return "None";
         }
 
@@ -72,13 +91,21 @@ public class Statistics {
         int maxFrequency = 0;
 
         for (Map.Entry<String, Integer> entry : tagFrequency.entrySet()) {
+            assert entry.getKey() != null : "Tag name in entry is null";
+            assert entry.getValue() != null && entry.getValue() > 0 : "Tag frequency should be positive";
+
             if (entry.getValue() > maxFrequency) {
                 maxFrequency = entry.getValue();
                 mostCommon = entry.getKey();
             }
         }
 
-        return mostCommon + " (" + maxFrequency + ")";
+        assert maxFrequency > 0 : "Max frequency should be positive";
+        assert !mostCommon.isEmpty() : "Most common tag should not be empty when tags exist";
+
+        String result = mostCommon + " (" + maxFrequency + ")";
+        logger.fine("Most common tag: " + result);
+        return result;
     }
 
     /**
@@ -87,16 +114,25 @@ public class Statistics {
      * @return Formatted string of tag distribution, or "No tags yet" if no tags exist
      */
     private String createTagDistribution(Map<String, Integer> tagFrequency) {
+        assert tagFrequency != null : "Tag frequency map cannot be null";
+
         if (tagFrequency.isEmpty()) {
+            logger.fine("No tags to display in distribution");
             return "No tags yet";
         }
 
-        return tagFrequency.entrySet()
+        String distribution = tagFrequency.entrySet()
                 .stream()
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .limit(5)
                 .map(entry -> "• " + entry.getKey() + ": " + entry.getValue())
                 .collect(Collectors.joining("\n"));
+
+        assert distribution != null : "Tag distribution should not be null";
+        assert !distribution.isEmpty() : "Tag distribution should not be empty when tags exist";
+
+        logger.fine("Tag distribution created with " + distribution.split("\n").length + " entries");
+        return distribution;
     }
 
     // Getters
@@ -109,10 +145,6 @@ public class Statistics {
     }
 
     public String getMostCommonTag() {
-        if (tagFrequency.isEmpty()) {
-            return "None"; // Ensure this returns "None" for empty case
-        }
-
         return mostCommonTag;
     }
 

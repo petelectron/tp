@@ -20,9 +20,10 @@ import seedu.address.model.tag.Tag;
 public class StatisticsTest {
 
     @Test
-    public void constructor_nullPersonList_throwsNullPointerException() {
-        org.junit.jupiter.api.Assertions.assertThrows(NullPointerException.class, () ->
-                new Statistics(null));
+    public void constructor_nullPersonList_throwsAssertionError() {
+        org.junit.jupiter.api.Assertions.assertThrows(AssertionError.class, () -> {
+            new Statistics(null);
+        });
     }
 
     @Test

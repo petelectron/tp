@@ -31,7 +31,7 @@ HRmanager is a **desktop app for managing employee and applicant records, optimi
 
   * `list` : Lists all employees currently shown in HRmanager.
 
-  * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds an employee named `John Doe` to HRmanager.
+  * `add n/John Doe p/98765432 e/johnd@example.com r/Software Engineer` : Adds an employee named `John Doe` to HRmanager.
 
   * `delete 3` : Deletes the 3rd employee shown in the current list.
 

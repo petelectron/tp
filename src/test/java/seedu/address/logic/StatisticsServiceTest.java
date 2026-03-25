@@ -83,7 +83,6 @@ public class StatisticsServiceTest {
 
     /**
      * Test implementation of Logic interface for testing StatisticsService.
-     * This avoids dependency on real LogicManager and delete command issues.
      */
     private static class TestLogic implements Logic {
 
@@ -100,7 +99,6 @@ public class StatisticsServiceTest {
 
         @Override
         public CommandResult execute(String commandText) throws CommandException, ParseException {
-            // Not used in tests - return null or throw UnsupportedOperationException
             throw new UnsupportedOperationException("execute not supported in TestLogic");
         }
 
@@ -121,7 +119,7 @@ public class StatisticsServiceTest {
 
         @Override
         public void setGuiSettings(GuiSettings guiSettings) {
-            // Not used in tests
+            // Not used
         }
     }
 }
