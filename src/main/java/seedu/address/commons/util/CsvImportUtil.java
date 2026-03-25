@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import seedu.address.commons.exceptions.CsvParseException;
+import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -27,6 +28,7 @@ public class CsvImportUtil {
     private static final String HEADER_PHONE = "phone";
     private static final String HEADER_EMAIL = "email";
     private static final String HEADER_ROLE = "role";
+    private static final String HEADER_DEPARTMENT = "department";
     private static final String HEADER_TAGS = "tags";
 
     /** Column indices. -1 means absent. */
@@ -34,6 +36,7 @@ public class CsvImportUtil {
     private int idxPhone = -1;
     private int idxEmail = -1;
     private int idxRole = -1;
+    private int idxDepartment = -1;
     private int idxTags = -1;
 
     /**
@@ -97,6 +100,8 @@ public class CsvImportUtil {
                 idxRole = i;
             } else if (headers.get(i).equals(HEADER_TAGS)) {
                 idxTags = i;
+            } else if (headers.get(i).equals(HEADER_DEPARTMENT)) {
+                idxDepartment = i;
             }
         }
 
@@ -114,6 +119,9 @@ public class CsvImportUtil {
         if (idxRole == -1) {
             missing.add(HEADER_ROLE);
         }
+        if (idxDepartment == -1) {
+            missing.add(HEADER_DEPARTMENT);
+        }
 
         if (!missing.isEmpty()) {
             throw new CsvParseException(String.format(
@@ -130,17 +138,19 @@ public class CsvImportUtil {
             String phoneStr = getField(fields, idxPhone, "phone", lineNumber);
             String emailStr = getField(fields, idxEmail, "email", lineNumber);
             String roleStr = getField(fields, idxRole, "role", lineNumber);
+            String departmentStr = getField(fields, idxDepartment, "department", lineNumber);
 
             Name name = new Name(nameStr);
             Phone phone = new Phone(phoneStr);
             Email email = new Email(emailStr);
             Role role = new Role(roleStr);
+            Department department = new Department(departmentStr);
             Set<Tag> tags = parseTags(fields, lineNumber);
 
-            return new Person(name, phone, email, role, tags);
+            return new Person(name, phone, email, role, department, tags);
 
         } catch (IllegalArgumentException e) {
-            // Thrown by Name/Phone/Email/Address/Tag constructors on invalid input
+            // Thrown by Name/Phone/Email/Role/Department/Tag constructors on invalid input
             throw new CsvParseException(
                 String.format("Line %d: invalid field value — %s", lineNumber, e.getMessage()), e);
         }

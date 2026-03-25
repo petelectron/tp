@@ -276,6 +276,79 @@ Matching behavior:
 
 This means a command such as `search ali tan` returns employees whose names contain either `ali` or `tan`, regardless of case.
 
+### Statistics Panel
+
+The statistics panel provides real-time workforce metrics displayed permanently on the right side of the application. This feature follows the **Separation of Concerns (SoC)** principle by separating data calculation from UI display.
+
+#### Design Overview
+
+The statistics feature consists of three main components:
+
+1. **`Statistics`** (Model layer): A pure data container that calculates statistics from a list of employees. It has no UI dependencies and is easily testable.
+2. **`StatisticsService`** (Service layer): Orchestrates the retrieval of statistics by accessing the filtered employee list from `Logic` and creating a `Statistics` object.
+3. **`StatsPanel`** (UI layer): A JavaFX component that displays statistics and listens for changes to the employee list to auto-refresh.
+
+<puml src="diagrams/StatsPanelClassDiagram.puml" width="500" />
+
+#### Implementation Details
+
+**Statistics Class:**
+- Takes a `List<Person>` as input
+- Calculates total employees, unique tags, most common tag, and tag distribution
+- Uses helper methods `findMostCommonTag()` and `createTagDistribution()` for clean separation
+- All fields are final and assigned in the constructor
+
+**StatisticsService Class:**
+- Acts as a bridge between `Logic` and `Statistics`
+- Provides `getCurrentStatistics()` which converts `ObservableList<Person>` to `List<Person>`
+- Uses logging to track statistics calculation events
+
+**StatsPanel Class:**
+- Extends `UiPart<Region>` with FXML layout
+- Listens to `logic.getFilteredPersonList()` for changes
+- Updates UI labels when the employee list changes
+- Only handles UI updates - no calculation logic
+
+#### Sequence Diagram
+
+The sequence diagram below shows how the statistics panel updates when an employee is added:
+
+<puml src="diagrams/StatsUpdateSequenceDiagram.puml" width="600" />
+
+1. User executes `add` command
+2. `LogicManager` executes the command and updates the model
+3. `ObservableList` change triggers the listener in `StatsPanel`
+4. `StatsPanel` calls `refresh()` → `statisticsService.getCurrentStatistics()`
+5. `StatisticsService` creates a new `Statistics` object from the employee list
+6. `StatsPanel` updates its labels with the new statistics
+
+#### Design Considerations
+
+**Aspect: Where to place statistics calculation logic**
+
+- **Alternative 1 (current):** Separate `Statistics` class for calculation
+    - Pros: Easy to test, follows SRP, reusable
+    - Cons: Additional class to maintain
+
+- **Alternative 2:** Calculate statistics directly in `StatsPanel`
+    - Pros: Fewer classes
+    - Cons: UI layer contains business logic, harder to test
+
+**Aspect: Auto-refresh mechanism**
+
+- **Current choice:** Listener on `ObservableList<Person>`
+    - Pros: Updates automatically on any change, no command needed
+    - Cons: More complex setup
+
+- **Alternative:** User must type `stats` command
+    - Pros: Simpler to implement
+    - Cons: Requires manual refresh, less convenient
+
+#### Testing Strategy
+
+- `StatisticsTest`: Unit tests for calculation logic with various employee lists
+- `StatisticsServiceTest`: Tests service layer with temporary storage
+- `StatisticsServiceIntegrationTest`: Integration tests with actual commands
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -310,13 +383,13 @@ This means a command such as `search ali tan` returns employees whose names cont
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                            | I want to …​                           | So that I can…​                                            |
+| Priority | As a …​                            | I want to …​                            | So that I can…​                                             |
 |---------|------------------------------------|----------------------------------------|------------------------------------------------------------|
 | `* * *` | new user                           | have a guided tutorial                 | understand the layout and get started quickly              |
 | `* * *` | user                               | add an employee                        | keep track of new employees                                |
 | `* * *` | user                               | delete an employee                     | clear up data when it is no longer needed                  |
 | `* * *` | user                               | view all employees                     | gain a brief overview of everyone in the company           |
-| `* * *` | user                               | store phone numbers and email addresses | contact employees easily                                   |
+| `* * *` | user                               | store phone numbers and email addresses| contact employees easily                                   |
 | `* * *` | busy user                          | search for employees by name           | quickly find a specific staff member                       |
 | `* * *` | busy user                          | add contacts with only name and phone  | track someone now and update details later                 |
 | `* * `  | organised user                     | modify employee details                | keep info up to date                                       |
@@ -327,9 +400,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * `  | clueless user                      | see error messages                     | correct my mistakes                                        |
 | `* `    | expert user                        | import employee data                   | manage pre-existing details without hand-typing everything |
 | `* `    | expert user                        | export employee data                   | back up data, support audits and planning                  |
-| `* `    | expert user                        | bulk archive or tag multiple applicants | clean up after a role is filled more efficiently           |
-| `* `    | user responsible for reporting	    | use a centralized dashboard            | maintain visibility over workforce and talent pipeline     |
-| `* `    | safe user                          | access the app via login authentication | ensure employee data is secure                             |
+| `* `    | expert user                        | repeat previous command or similar     | enter commands quickly                                     |
+| `* `    | expert user                        | bulk archive or tag multiple applicants| clean up after a role is filled more efficiently           |
+| `* `    | user responsible for reporting	  | use a centralized dashboard            | maintain visibility over workforce and talent pipeline     |
+| `* `    | safe user                          | access the app via login authentication| ensure employee data is secure                             |
 
 *{More to be added}*
 
@@ -422,13 +496,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1b. The user provides more than 100 keywords, or at least one keyword longer than 100 characters.
     * 1b1. System displays an invalid command format message together with the proper `search` usage.
- 
+
     Use case resumes at step 1.
 
 * 3a. No employees match the provided search query.
     * 3a1. System displays `0 employees listed!`.
-     
+
     Use case ends.
+
 
 ### Use case 5 (UC5): Tag an employee
 
@@ -503,6 +578,40 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Use case resumes at step 3.
 
 
+### Use case 7 (UC7): Cycle through previous executed commands
+
+**MSS**
+
+1.  User requests to edit an employee's phone number.
+2.  System edits the employee's phone number in the records.
+3.  System displays confirmation message.
+4.  User suddenly recalls that they have forgotten to also edit the employee's email address.
+5.  User presses the up arrow (PgUp) key in the CLI.
+6.  System prefills the CLI with the command used in step 1.
+7.  User deletes the phone field and types the email details, then enters the command. (The command "edit" and the relevant employee index is already prepared)
+6.  System edits the employee's email address in the records.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. There are no previous successfully executed commands.
+    * 1a1. System does not do anything in response to up arrow (PgUp) key.
+
+    Use case ends.
+
+* 2a. There are up to 5 previous successfully executed commands.
+    * 2a1. User presses up arrow (PgUp) key until their desired previous executed command appears. If there is already an input in the CLI, it is saved.
+    * 2a2. User either modifies or does not modify their desired previous command, and enters it, or, user presses down arrow (PgDn) key to get back to the more recent/original command.
+
+    Use case ends.
+
+* 2a1. User enters more than 5 commands.
+    * 2a1. The oldest command is discarded and can no longer be cycled through.
+
+    Use case ends.
+
+
 ### Non-Functional Requirements
 
 1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
@@ -574,7 +683,7 @@ testers are expected to do more *exploratory* testing.
 
     6. Test case: `add  n/Lance Choo p/33333333 e/lance@example.com r/Head of HR t/friend t/husband` (Multiple tags)<br>
        Expected: The employee is added. The success message is shown, along with the added details.
-   
+
     7. Test case: `add n/Amy Cho n/Bob Choo p/11111111 e/bob@meme.com r/Head of Operations t/friend` (Two names))<br>
        Expected: The employee is not added. Error messages for duplicated prefix shown.
 
@@ -589,7 +698,7 @@ testers are expected to do more *exploratory* testing.
 
     11. Test case: `add n/Pikachu p/11111111 e/bob@meme.com r/Head of Operations` (No optional Tag)<br>
         Expected: The employee is added. The success message is shown, along with the added details.
-   
+
     12. Test case: `add n/Peppa Pig e/peppa@example.com r/Head of Media` (No phone number) or similar absence of necessary attributes <br>
         Expected: The employee is not added. Error message is shown, along with the correct format and required parameters.
 

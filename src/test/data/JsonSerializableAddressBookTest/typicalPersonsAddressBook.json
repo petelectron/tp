@@ -5,42 +5,49 @@
     "phone" : "94351253",
     "email" : "alice@example.com",
     "role" : "Software Engineer",
+    "department" : "Human Resources",
     "tags" : [ "friends" ]
   }, {
     "name" : "Benson Meier",
     "phone" : "98765432",
     "email" : "johnd@example.com",
     "role" : "Security Officer",
+    "department" : "Security",
     "tags" : [ "owesMoney", "friends" ]
   }, {
     "name" : "Carl Kurz",
     "phone" : "95352563",
     "email" : "heinz@example.com",
     "role" : "Cleaner",
+    "department" : "Operations",
     "tags" : [ ]
   }, {
     "name" : "Daniel Meier",
     "phone" : "87652533",
     "email" : "cornelia@example.com",
     "role" : "CEO",
+    "department" : "Leadership",
     "tags" : [ "friends" ]
   }, {
     "name" : "Elle Meyer",
     "phone" : "9482224",
     "email" : "werner@example.com",
     "role" : "Head of Marketing",
+    "department" : "Marketing",
     "tags" : [ ]
   }, {
     "name" : "Fiona Kunz",
     "phone" : "9482427",
     "email" : "lydia@example.com",
     "role" : "Receptionist",
+    "department" : "Support",
     "tags" : [ ]
   }, {
     "name" : "George Best",
     "phone" : "9482442",
     "email" : "anna@example.com",
     "role" : "Web UI Designer",
+    "department" : "Design",
     "tags" : [ ]
   } ]
 }

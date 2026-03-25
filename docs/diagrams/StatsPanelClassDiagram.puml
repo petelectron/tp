@@ -1,0 +1,58 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor UI_COLOR_T4
+skinparam classBackgroundColor UI_COLOR
+
+class StatsPanel {
+    - totalEmployeesLabel: Label
+    - uniqueTagsLabel: Label
+    - mostCommonTagLabel: Label
+    - employeesWithTagsLabel: Label
+    - employeesWithoutTagsLabel: Label
+    - tagDistributionLabel: Label
+    - statisticsService: StatisticsService
+    + StatsPanel(Logic)
+    - refresh()
+    - updateUi(Statistics)
+}
+
+class StatisticsService {
+    - logic: Logic
+    + StatisticsService(Logic)
+    + getCurrentStatistics(): Statistics
+}
+
+class Statistics {
+    - totalEmployees: int
+    - uniqueTagCount: int
+    - mostCommonTag: String
+    - employeesWithTags: int
+    - employeesWithoutTags: int
+    - tagDistribution: String
+    + Statistics(List<Person>)
+    + getTotalEmployees(): int
+    + getUniqueTagCount(): int
+    + getMostCommonTag(): String
+    + getEmployeesWithTags(): int
+    + getEmployeesWithoutTags(): int
+    + getTagDistribution(): String
+    - findMostCommonTag(Map): String
+    - createTagDistribution(Map): String
+}
+
+interface Logic <<interface>> {
+    + getFilteredPersonList(): ObservableList<Person>
+}
+
+interface UiPart <<abstract>> {
+    # getRoot(): Region
+}
+
+StatsPanel --|> UiPart
+StatsPanel --> StatisticsService
+StatisticsService --> Logic
+StatisticsService --> Statistics
+Logic --> Person
+
+@enduml

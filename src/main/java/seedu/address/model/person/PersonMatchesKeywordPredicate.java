@@ -33,6 +33,7 @@ public class PersonMatchesKeywordPredicate implements Predicate<Person> {
                 || containsIgnoreCase(person.getPhone().value, keyword)
                 || containsIgnoreCase(person.getEmail().value, keyword)
                 || containsIgnoreCase(person.getRole().value, keyword)
+                || containsIgnoreCase(person.getDepartment().value, keyword)
                 || person.getTags().stream().anyMatch(tag -> containsIgnoreCase(tag.tagName, keyword));
     }
 

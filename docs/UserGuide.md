@@ -31,13 +31,13 @@ HRmanager is a **desktop app for managing employee and applicant records, optimi
 
   * `list` : Lists all employees currently shown in HRmanager.
 
-  * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds an employee named `John Doe` to HRmanager.
+  * `add n/John Doe p/98765432 e/johnd@example.com r/Software Engineer` : Adds an employee named `John Doe` to HRmanager.
 
   * `delete 3` : Deletes the 3rd employee shown in the current list.
 
   * `clear` : Deletes all employees.
 
-   * `exit` : Exits the app.
+  * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -82,6 +82,15 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+### Cycle through previous executed commands
+
+You can pre-fill the command box with your last successful command using the **PgUp (up arrow) key** on computer keyboards. This allows users to repeat their last commands without re-typing it in its entirety.
+
+* Use the PgUp (Up arrow) key to move towards older commands, PgDn (Down arrow) key to move towards latest commands.
+* Only successful past commands are saved.
+* Up to 5 past commands are saved. Thereafter, the oldest command is deleted to accomodate a new one.
+* The current pending command is saved when the command history is explored.
+* The latest command will not be saved if exactly same as the previous consecutive one.
 
 ### Adding an employee: `add`
 
@@ -170,13 +179,36 @@ Exits the program.
 
 Format: `exit`
 
+### Viewing statistics: `stats`
+
+Displays real-time statistics about your employee records in a dedicated panel on the right side of the application.
+
+The statistics panel automatically updates as you add, edit, or delete employees, providing instant visibility into your workforce metrics.
+
+**Statistics displayed:**
+- 👥 **Total employees**: Total number of employee records
+- 🏷️ **Unique tags**: Number of distinct tags used across all employees
+- 📈 **Most common tag**: The tag that appears most frequently (with count)
+- ✅ **Employees with tags**: Number of employees that have at least one tag
+- ❌ **Employees without tags**: Number of employees with no tags
+- 📋 **Tag distribution**: Top 5 most frequently used tags
+
+![stats panel](images/statspanel.png)
+
+<box type="tip" seamless>
+
+**Tip:** The stats panel is always visible and updates in real-time when you add, edit, or delete employees. No command is needed to view statistics!
+</box>
+
+Format: No command needed - statistics panel is always displayed.
+
 ### Saving the data
 
 HRmanager data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-HRmanager data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+HRmanager data are saved automatically as a JSON file `[JAR file location]/data/HRmanager.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 

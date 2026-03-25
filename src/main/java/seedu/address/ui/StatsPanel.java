@@ -49,27 +49,37 @@ public class StatsPanel extends UiPart<Region> {
      */
     public StatsPanel(Logic logic) {
         super(FXML);
+        assert logic != null : "Logic cannot be null";
+
         this.logic = logic;
         this.statisticsService = new StatisticsService(logic);
+        assert statisticsService != null : "StatisticsService should be initialized";
 
-        // Listen for changes to the person list - using anonymous class
+        // Listen for changes to the person list
         logic.getFilteredPersonList().addListener(new ListChangeListener<Person>() {
             @Override
             public void onChanged(Change<? extends Person> change) {
+                logger.fine("Person list changed, refreshing statistics");
                 refresh();
             }
         });
 
         refresh();
-        logger.info("StatsPanel initialized");
+        logger.info("StatsPanel initialized successfully");
     }
 
     /**
      * Refreshes all statistics in the panel.
      */
     private void refresh() {
+        assert statisticsService != null : "StatisticsService is null in refresh";
+
+        logger.finer("Refreshing statistics panel");
         Statistics stats = statisticsService.getCurrentStatistics();
+        assert stats != null : "Statistics object should not be null";
+
         updateUi(stats);
+        logger.finer("Statistics panel refresh completed");
     }
 
     /**
@@ -77,11 +87,22 @@ public class StatsPanel extends UiPart<Region> {
      * This method only handles UI updates, no calculations.
      */
     private void updateUi(Statistics stats) {
+        assert stats != null : "Statistics cannot be null";
+        assert totalEmployeesLabel != null : "totalEmployeesLabel not injected from FXML";
+        assert uniqueTagsLabel != null : "uniqueTagsLabel not injected from FXML";
+        assert mostCommonTagLabel != null : "mostCommonTagLabel not injected from FXML";
+        assert employeesWithTagsLabel != null : "employeesWithTagsLabel not injected from FXML";
+        assert employeesWithoutTagsLabel != null : "employeesWithoutTagsLabel not injected from FXML";
+        assert tagDistributionLabel != null : "tagDistributionLabel not injected from FXML";
+
         totalEmployeesLabel.setText(String.valueOf(stats.getTotalEmployees()));
         uniqueTagsLabel.setText(String.valueOf(stats.getUniqueTagCount()));
         mostCommonTagLabel.setText(stats.getMostCommonTag());
         employeesWithTagsLabel.setText(String.valueOf(stats.getEmployeesWithTags()));
         employeesWithoutTagsLabel.setText(String.valueOf(stats.getEmployeesWithoutTags()));
         tagDistributionLabel.setText(stats.getTagDistribution());
+
+        logger.finer("UI updated with: " + stats.getTotalEmployees() + " employees, "
+                + stats.getUniqueTagCount() + " unique tags");
     }
 }

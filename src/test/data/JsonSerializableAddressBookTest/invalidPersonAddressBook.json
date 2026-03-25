@@ -3,6 +3,7 @@
     "name": "Hans Muster",
     "phone": "9482424",
     "email": "invalid@email!3e",
-    "role": "Software Engineer"
+    "role": "Software Engineer",
+    "department": "Human Resources"
   } ]
 }

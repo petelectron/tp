@@ -5,10 +5,12 @@ package seedu.address.logic.commands;
  */
 public final class ConfirmationPromptFormatter {
 
-    private static final String PROMPT_TEMPLATE = "Please confirm this action.%n"
+    // Note: The window is exactly 3 lines big;
+    // users may not realize the existence of the last line cut off
+    // which can only be read by scrolling down
+    private static final String PROMPT_TEMPLATE = "Please confirm this action. Enter 'y' to proceed or 'n' to cancel.%n"
             + "Action: %s%n"
-            + "Impact: %s%n"
-            + "Enter 'y' to proceed or 'n' to cancel.";
+            + "Impact: %s%n";
 
     private ConfirmationPromptFormatter() {}
 
