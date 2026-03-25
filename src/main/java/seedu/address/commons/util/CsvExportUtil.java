@@ -10,6 +10,9 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Utility class for serialising a list of {@link Person} objects to a CSV file.
+ */
 public class CsvExportUtil {
     public static final String CSV_HEADER = "name,phone,email,address,tags";
 

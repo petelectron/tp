@@ -11,12 +11,11 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Locale;
 
 import static java.util.Objects.requireNonNull;
 
 /**
- * Terminates the program.
+ * Exports current employee list into a csv file in the target destination.
  */
 public class ExportCommand extends Command {
 
@@ -25,7 +24,7 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
         + ": Exports the current employee list into a local CSV file.\n"
         + "Parameters: Target file path "
-        + "Example: " + COMMAND_WORD + " /home/user/employees.csv";
+        + "Example: " + COMMAND_WORD + "C:\\Users\\user\\Downloads\\employees.csv";
 
     public static final String MESSAGE_SUCCESS = "Exported app data to csv file";
 

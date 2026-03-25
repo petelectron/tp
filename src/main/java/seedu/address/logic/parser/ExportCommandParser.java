@@ -5,6 +5,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+/**
+ * Parses input arguments and creates a new ExportCommand object
+ */
 public class ExportCommandParser implements Parser<ExportCommand> {
 
     /**
