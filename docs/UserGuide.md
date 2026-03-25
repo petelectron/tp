@@ -120,6 +120,7 @@ Edits an existing employee in HRmanager.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [r/ROLE] [t/TAG]…​`
 
+* You will be prompted to confirm the action before the command executes. Enter `y` to proceed or `n` to cancel.
 * Edits the employee at the specified `INDEX`. The index refers to the index number shown in the displayed employee list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Each optional field accepts at most 1 updated value, i.e. no duplicate fields.
@@ -157,6 +158,7 @@ Deletes one or more employees from the list using their displayed index numbers.
 
 Format: `delete INDEX [MORE_INDEXES]`
 
+* You will be prompted to confirm the action before the command executes. Enter `y` to proceed or `n` to cancel.
 * Deletes the employee(s) at the specified `INDEX`.
 * The index refers to the index number shown in the displayed employee list.
 * The index **must be a positive integer** 1, 2, 3, …​
@@ -173,11 +175,15 @@ Clears all entries from HRmanager.
 
 Format: `clear`
 
+* You will be prompted to confirm the action before the command executes. Enter `y` to proceed or `n` to cancel.
+
 ### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
+
+* You will be prompted to confirm the action before the command executes. Enter `y` to proceed or `n` to cancel.
 
 ### Viewing statistics: `stats`
 
