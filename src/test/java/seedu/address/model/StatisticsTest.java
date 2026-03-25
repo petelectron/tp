@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -42,7 +43,7 @@ public class StatisticsTest {
     @Test
     public void constructor_singlePersonWithoutTags_returnsCorrectStats() {
         // Create a person without tags explicitly instead of using ALICE
-        Person personWithoutTags = createPersonWithTags("Alice"); // No tags
+        Person personWithoutTags = createPersonWithTags("Alice", "Marketing"); // No tags
         List<Person> persons = Collections.singletonList(personWithoutTags);
 
         Statistics stats = new Statistics(persons);
@@ -57,7 +58,7 @@ public class StatisticsTest {
 
     @Test
     public void constructor_singlePersonWithTags_returnsCorrectStats() {
-        Person personWithTag = createPersonWithTags("Test Person", "HR");
+        Person personWithTag = createPersonWithTags("Test Person", "Marketing", "HR");
         List<Person> persons = Collections.singletonList(personWithTag);
 
         Statistics stats = new Statistics(persons);
@@ -72,11 +73,11 @@ public class StatisticsTest {
 
     @Test
     public void constructor_multiplePersonsWithTags_returnsCorrectStats() {
-        Person hr1 = createPersonWithTags("John", "HR");
-        Person hr2 = createPersonWithTags("Jane", "HR");
-        Person manager = createPersonWithTags("Bob", "Manager");
-        Person intern = createPersonWithTags("Alice", "Intern");
-        Person noTags = createPersonWithTags("Charlie");
+        Person hr1 = createPersonWithTags("John", "Marketing", "HR");
+        Person hr2 = createPersonWithTags("Jane", "Marketing", "HR");
+        Person manager = createPersonWithTags("Bob", "Sales", "Manager");
+        Person intern = createPersonWithTags("Alice", "Engineering", "Intern");
+        Person noTags = createPersonWithTags("Charlie", "Marketing");
 
         List<Person> persons = Arrays.asList(hr1, hr2, manager, intern, noTags);
         Statistics stats = new Statistics(persons);
@@ -95,7 +96,7 @@ public class StatisticsTest {
 
     @Test
     public void constructor_personWithMultipleTags_countsEachTag() {
-        Person multiTagPerson = createPersonWithTags("Multi", "HR", "Manager", "FullTime");
+        Person multiTagPerson = createPersonWithTags("Multi", "Engineering", "HR", "Manager", "FullTime");
         List<Person> persons = Collections.singletonList(multiTagPerson);
 
         Statistics stats = new Statistics(persons);
@@ -109,7 +110,7 @@ public class StatisticsTest {
 
     @Test
     public void constructor_moreThanFiveTags_showsOnlyTopFive() {
-        Person personWithManyTags = createPersonWithTags("Many",
+        Person personWithManyTags = createPersonWithTags("Many", "Engineering",
                 "Tag1", "Tag2", "Tag3", "Tag4", "Tag5", "Tag6");
         List<Person> persons = Collections.singletonList(personWithManyTags);
 
@@ -121,7 +122,7 @@ public class StatisticsTest {
     }
 
     // Helper method to create Person with tags
-    private Person createPersonWithTags(String name, String... tagNames) {
+    private Person createPersonWithTags(String name, String department, String... tagNames) {
         Set<Tag> tags = new HashSet<>();
         for (String tagName : tagNames) {
             tags.add(new Tag(tagName));
@@ -134,6 +135,7 @@ public class StatisticsTest {
                 new Phone("12345678"),
                 new Email(emailName + "@example.com"),
                 new Role("Employee"),
+                new Department(department),
                 tags
         );
     }
