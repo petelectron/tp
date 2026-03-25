@@ -23,15 +23,31 @@ public class RoleTest {
     public void isValidRole() {
         // null role
         assertThrows(NullPointerException.class, () -> Role.isValidRole(null));
+        
 
         // invalid roles
         assertFalse(Role.isValidRole("")); // empty string
         assertFalse(Role.isValidRole(" ")); // spaces only
+        assertFalse(Role.isValidRole("^")); // non-alphanumeric character
+        assertFalse(Role.isValidRole("!")); // non-alphanumeric character
+        assertFalse(Role.isValidRole("@")); // non-alphanumeric character
+        assertFalse(Role.isValidRole("-")); // one character
+        assertFalse(Role.isValidRole("HR*")); // contains  non-alphanumeric character
+        assertFalse(Role.isValidRole("HR_Department")); // contains underscore non-alphanumeric character
+        assertFalse(Role.isValidRole("HR-Department")); // contains hyphen non-alphanumeric character
+        assertFalse(Role.isValidRole("123456789012345678901234567890123456789012345678901")); // 51 characters
+        assertFalse(Role.isValidRole("Department 3 4th division head of marketing and security")); // 56 characters 
+
 
         // valid roles
         assertTrue(Role.isValidRole("Software Engineer"));
-        assertTrue(Role.isValidRole("-")); // one character
-        assertTrue(Role.isValidRole("Department 3 4th division head of marketing and security")); // long role
+        assertTrue(Role.isValidRole("HR")); // alphabets only
+        assertTrue(Role.isValidRole("123")); // numbers only
+        assertTrue(Role.isValidRole("HR123")); // alphanumeric
+        assertTrue(Role.isValidRole("h")); // single character
+        assertTrue(Role.isValidRole("H")); // single uppercase
+        assertTrue(Role.isValidRole("HR Department")); // contains space
+        assertTrue(Role.isValidRole("12345678901234567890123456789012345678901234567890")); // exactly 50 chars
     }
 
     @Test

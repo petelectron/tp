@@ -38,10 +38,11 @@ public class TagTest {
         assertFalse(Tag.isValidTagName("")); // empty string
         assertFalse(Tag.isValidTagName(" ")); // spaces only
         assertFalse(Tag.isValidTagName("^")); // non-alphanumeric character
-        assertFalse(Tag.isValidTagName("HR*")); // contains non-alphanumeric
-        assertFalse(Tag.isValidTagName("HR Department")); // contains space
-        assertFalse(Tag.isValidTagName("HR_Department")); // contains underscore
-        assertFalse(Tag.isValidTagName("HR-Department")); // contains hyphen
+        assertFalse(Tag.isValidTagName("!")); // non-alphanumeric character
+        assertFalse(Tag.isValidTagName("@")); // non-alphanumeric character
+        assertFalse(Tag.isValidTagName("HR*")); // contains  non-alphanumeric character
+        assertFalse(Tag.isValidTagName("HR_Department")); // contains underscore non-alphanumeric character
+        assertFalse(Tag.isValidTagName("HR-Department")); // contains hyphen non-alphanumeric character
         assertFalse(Tag.isValidTagName("123456789012345678901234567890123456789012345678901")); // 51 characters
 
         // valid tag names
@@ -50,6 +51,7 @@ public class TagTest {
         assertTrue(Tag.isValidTagName("HR123")); // alphanumeric
         assertTrue(Tag.isValidTagName("h")); // single character
         assertTrue(Tag.isValidTagName("H")); // single uppercase
+        assertTrue(Tag.isValidTagName("HR Department")); // contains space
         assertTrue(Tag.isValidTagName("12345678901234567890123456789012345678901234567890")); // exactly 50 chars
     }
 

@@ -10,9 +10,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Tag {
 
     public static final int MAX_LENGTH = 50;
-    public static final String MESSAGE_CONSTRAINTS = "Tags names should be alphanumeric and "
-            + "between 1 to " + MAX_LENGTH + " characters long";
-    public static final String VALIDATION_REGEX = "\\p{Alnum}{1," + MAX_LENGTH + "}";
+    public static final String MESSAGE_CONSTRAINTS = "Tag must be within a " + MAX_LENGTH 
+    + " char limit, and consist of alphanumeric or space only. Space cannot be the first character.";
+
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String VALIDATION_REGEX = "^(?! )[A-Za-z0-9 ]{1," + MAX_LENGTH + "}$";
 
     public final String tagName;
 
