@@ -171,6 +171,12 @@ Examples:
 * `search Betsy` followed by `delete 1` deletes the 1st employee in the results of the `search` command.
 * `delete 1 3 5` deletes the 1st, 3rd, and 5th employees in the displayed list.
 
+### Export employee data : `export`
+
+Exports the current list of employees into a CSV file, saved into user-specified local destination.
+
+Format: `export [FILE PATH]`
+
 ### Clearing all entries : `clear`
 
 Clears all entries from HRmanager.

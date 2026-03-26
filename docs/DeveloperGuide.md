@@ -613,6 +613,29 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
+### Use case 8 (UC8): Exporting current employee data
+
+**MSS**
+
+1. User requests to export current employee data into destination of choice.
+2. System resolves path and checks validity.
+3. System converts app data into csv format.
+4. System saves csv file into target destination.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. User input filepath is invalid.
+  * 2a1. System displays an error message.
+  
+    Use case resumes at Step 1.
+
+* 2b. File already exists at target destination.
+  * 2b1. System displays an error message.
+
+    Use case resumes at step 1.
+
 
 ### Non-Functional Requirements
 
@@ -842,7 +865,7 @@ testers are expected to do more *exploratory* testing.
        Expected: The employee is not edited. Error messages for duplicated prefix shown.
 
     8. Test case: `edit 0 n/Amy Cho` (Invalid index) <br>
-       Expected: TThe employee is not edited. An error message is shown, indicating invalid command format.
+       Expected: The employee is not edited. An error message is shown, indicating invalid command format.
 
     9. Test case: `edit n/James& p/11111111 e/bob@meme.com` (Invalid name)<br>
        Expected: The employee is not edited. The correct format for a valid name is shown.
@@ -852,6 +875,21 @@ testers are expected to do more *exploratory* testing.
 
     11. Other incorrect delete commands to try: `add`, `add johndoe p/3333` (no prefix), and other commands which deviate from the command format<br>
         Expected: Similar to previous.
+
+### Exporting employee list
+
+1. Editing an employee's details
+
+    1. Prerequisites: Existing list is non-empty, target destination is non-empty
+
+    2. Test case: `export C:\Users\username\Downloads\test.csv` (Valid entry, assuming tester doesn't have existing test.csv in Downloads folder)
+        Expected: A file test.csv is created in the User's Downloads folder, containing the current employee data in csv format.
+   
+    3. Test case: `export asasearoj` (Invalid path)
+        Expected: No csv file is created. An error message is shown, indicating invalid file path.
+   
+    4. Test case: `export C:\Users\username\Downloads\existingfile.csv` (Invalid entry, existing file in destination)
+       Expected: No csv file is created. An error message is shown, indicating existing file.
 
 
 ### Saving data
