@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
@@ -15,6 +17,11 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+
+    private static final String LABEL_PHONE = "Number: ";
+    private static final String LABEL_ROLE = "Role: ";
+    private static final String LABEL_DEPARTMENT = "Department: ";
+    private static final String LABEL_EMAIL = "Email: ";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -48,13 +55,24 @@ public class PersonCard extends UiPart<Region> {
      */
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
+        requireNonNull(person);
+
+        // Defensive assertions to ensure attributes are non-null
+        requireNonNull(person.getName(), "Person should have a name");
+        requireNonNull(person.getPhone(), "Person should have a phone");
+        requireNonNull(person.getRole(), "Person should have a role");
+        requireNonNull(person.getDepartment(), "Person should have a department");
+        requireNonNull(person.getEmail(), "Person should have an email");
+        requireNonNull(person.getTags(), "Person should have a tags set");
+
         this.person = person;
+
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        role.setText(person.getRole().value);
-        department.setText(person.getDepartment().value);
-        email.setText(person.getEmail().value);
+        phone.setText(LABEL_PHONE + person.getPhone().value);
+        role.setText(LABEL_ROLE + person.getRole().value);
+        department.setText(LABEL_DEPARTMENT + person.getDepartment().value);
+        email.setText(LABEL_EMAIL + person.getEmail().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
