@@ -20,9 +20,14 @@ checkstyle {
     toolVersion = '11.0.0'
 }
 
-test {
+tasks.withType(Test) {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
+    enableAssertions = true
+}
+
+tasks.named('run', JavaExec) {
+    enableAssertions = true
 }
 
 task coverage(type: JacocoReport) {
