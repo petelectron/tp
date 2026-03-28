@@ -64,7 +64,7 @@ public class LogicManager implements Logic {
     }
 
     private CommandResult handlePendingConfirmation(String commandText) throws CommandException {
-        assert pendingConfirmation != null : "handlePendingConfirmation called without a pending command";
+        requireNonNull(pendingConfirmation, "handlePendingConfirmation called without a pending command");
 
         String confirmationInput = commandText.trim();
         if (confirmationInput.equalsIgnoreCase("y")) {
