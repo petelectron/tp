@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,6 +14,17 @@ import org.junit.jupiter.api.Test;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonMatchesKeywordPredicateTest {
+
+    @Test
+    public void constructor_nullKeywordsList_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new PersonMatchesKeywordPredicate(null));
+    }
+
+    @Test
+    public void test_nullPerson_throwsNullPointerException() {
+        PersonMatchesKeywordPredicate predicate = new PersonMatchesKeywordPredicate(Collections.singletonList("Alice"));
+        assertThrows(NullPointerException.class, () -> predicate.test(null));
+    }
 
     @Test
     public void equals() {

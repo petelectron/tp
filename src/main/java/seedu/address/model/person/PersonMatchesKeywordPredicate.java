@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
@@ -12,12 +14,20 @@ import seedu.address.commons.util.ToStringBuilder;
 public class PersonMatchesKeywordPredicate implements Predicate<Person> {
     private final List<String> keywords;
 
+    /**
+     * Constructs a {@code PersonMatchesKeywordPredicate} with the specified keywords.
+     *
+     * @param keywords The list of keywords to test against.
+     */
     public PersonMatchesKeywordPredicate(List<String> keywords) {
-        this.keywords = keywords;
+        requireNonNull(keywords);
+        this.keywords = List.copyOf(keywords);
     }
 
     @Override
     public boolean test(Person person) {
+        requireNonNull(person);
+
         boolean allKeywordsBlank = keywords.stream().allMatch(String::isBlank);
         if (allKeywordsBlank) {
             return false;

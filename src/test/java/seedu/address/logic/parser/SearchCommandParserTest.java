@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.Collections;
 
@@ -14,6 +15,11 @@ import seedu.address.model.person.PersonMatchesKeywordPredicate;
 public class SearchCommandParserTest {
 
     private SearchCommandParser parser = new SearchCommandParser();
+
+    @Test
+    public void parse_nullArg_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> parser.parse(null));
+    }
 
     @Test
     public void parse_emptyArg_throwsParseException() {

@@ -27,13 +27,18 @@ public class SearchCommand extends Command {
 
     private final PersonMatchesKeywordPredicate predicate;
 
+    /**
+     * Creates a SearchCommand to find employees using the specified {@code predicate}.
+     */
     public SearchCommand(PersonMatchesKeywordPredicate predicate) {
+        requireNonNull(predicate);
         this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+
         model.updateFilteredPersonList(predicate);
         int matchedEmployees = model.getFilteredPersonList().size();
         return new CommandResult(String.format(MESSAGE_EMPLOYEES_LISTED_OVERVIEW, matchedEmployees));

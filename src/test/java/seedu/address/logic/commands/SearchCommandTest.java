@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -25,6 +26,19 @@ import seedu.address.model.person.PersonMatchesKeywordPredicate;
 public class SearchCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void constructor_nullPredicate_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new SearchCommand(null));
+    }
+
+    @Test
+    public void execute_nullModel_throwsNullPointerException() {
+        PersonMatchesKeywordPredicate predicate = new PersonMatchesKeywordPredicate(
+                Collections.singletonList("keyword"));
+        SearchCommand searchCommand = new SearchCommand(predicate);
+        assertThrows(NullPointerException.class, () -> searchCommand.execute(null));
+    }
 
     @Test
     public void equals() {
