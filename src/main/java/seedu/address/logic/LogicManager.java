@@ -1,5 +1,7 @@
 package seedu.address.logic;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
@@ -62,6 +64,8 @@ public class LogicManager implements Logic {
     }
 
     private CommandResult handlePendingConfirmation(String commandText) throws CommandException {
+        requireNonNull(pendingConfirmation, "handlePendingConfirmation called without a pending command");
+
         String confirmationInput = commandText.trim();
         if (confirmationInput.equalsIgnoreCase("y")) {
             Command commandToExecute = pendingConfirmation.command();
@@ -95,7 +99,12 @@ public class LogicManager implements Logic {
     /**
      * Represents a command awaiting user confirmation.
      */
-    private record PendingConfirmation(Command command, String actionDescription) {}
+    private record PendingConfirmation(Command command, String actionDescription) {
+        public PendingConfirmation {
+            requireNonNull(command);
+            requireNonNull(actionDescription);
+        }
+    }
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {

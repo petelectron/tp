@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Utility class to build consistent confirmation prompts for destructive commands.
  */
@@ -21,6 +23,8 @@ public final class ConfirmationPromptFormatter {
      * @param impactSummary Description of what will happen if the action proceeds.
      */
     public static String format(String actionSummary, String impactSummary) {
+        requireNonNull(actionSummary);
+        requireNonNull(impactSummary);
         return String.format(PROMPT_TEMPLATE, actionSummary, impactSummary);
     }
 }
