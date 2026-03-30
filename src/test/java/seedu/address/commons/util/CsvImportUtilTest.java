@@ -4,21 +4,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-import seedu.address.commons.exceptions.CsvParseException;
-import seedu.address.model.person.Person;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class CsvImportUtilTest {
-    private final CsvImportUtil parser = new CsvImportUtil();
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
+import seedu.address.commons.exceptions.CsvParseException;
+import seedu.address.model.person.Person;
+
+public class CsvImportUtilTest {
     @TempDir
     Path tempDir;
+
+    private final CsvImportUtil parser = new CsvImportUtil();
 
     @Test
     void parse_validCsvStandardColumnOrder_success() throws Exception {
