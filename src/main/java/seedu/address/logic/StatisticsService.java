@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.Statistics;
+import seedu.address.model.StatisticsMode;
 import seedu.address.model.person.Person;
 
 /**
@@ -35,10 +36,18 @@ public class StatisticsService {
      * Returns current statistics based on the filtered person list.
      */
     public Statistics getCurrentStatistics() {
+        return getCurrentStatistics(StatisticsMode.DEPARTMENT);
+    }
+
+    /**
+     * Returns current statistics based on the filtered person list and selected dashboard mode.
+     */
+    public Statistics getCurrentStatistics(StatisticsMode statisticsMode) {
+        requireNonNull(statisticsMode);
         logger.fine("Getting current statistics");
         ObservableList<Person> observableList = logic.getFilteredPersonList();
         // ObservableList is a List, so this works fine
         List<Person> personList = observableList;
-        return new Statistics(personList);
+        return new Statistics(personList, statisticsMode);
     }
 }

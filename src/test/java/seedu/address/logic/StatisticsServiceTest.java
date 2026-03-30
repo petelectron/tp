@@ -60,8 +60,8 @@ public class StatisticsServiceTest {
         Statistics stats = statisticsService.getCurrentStatistics();
 
         assertEquals(0, stats.getTotalEmployees());
-        assertEquals("None", stats.getMostCommonTag());
-        assertEquals("No tags yet", stats.getTagDistribution());
+        assertEquals("None", stats.getMostCommonValue());
+        assertEquals("No departments yet", stats.getValueDistribution());
     }
 
     @Test

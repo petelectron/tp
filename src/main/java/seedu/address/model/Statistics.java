@@ -1,15 +1,14 @@
 package seedu.address.model;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.statistics.DepartmentStatisticsCalculator;
+import seedu.address.model.statistics.StatisticsCalculator;
+import seedu.address.model.statistics.StatisticsComputation;
+import seedu.address.model.statistics.TagStatisticsCalculator;
 
 /**
  * Represents statistics calculated from employee records.
@@ -19,144 +18,82 @@ public class Statistics {
 
     private static final Logger logger = LogsCenter.getLogger(Statistics.class);
 
+    private final StatisticsMode statisticsMode;
     private final int totalEmployees;
-    private final int uniqueTagCount;
-    private final String mostCommonTag;
-    private final int employeesWithTags;
-    private final int employeesWithoutTags;
-    private final String tagDistribution;
+    private final int uniqueValueCount;
+    private final String mostCommonValue;
+    private final int employeesWithValue;
+    private final int employeesWithoutValue;
+    private final String valueDistribution;
 
     /**
-     * Creates a Statistics object by calculating from a list of persons.
+     * Creates a Statistics object by calculating from a list of persons in tag mode.
+     *
      * @param persons The list of persons to calculate statistics from
      */
     public Statistics(List<Person> persons) {
+        this(persons, StatisticsMode.TAG);
+    }
+
+    /**
+     * Creates a Statistics object by calculating from a list of persons with the selected mode.
+     *
+     * @param persons The list of persons to calculate statistics from
+     * @param statisticsMode The mode to calculate statistics for
+     */
+    public Statistics(List<Person> persons, StatisticsMode statisticsMode) {
         assert persons != null : "Person list cannot be null";
+        assert statisticsMode != null : "Statistics mode cannot be null";
 
+        this.statisticsMode = statisticsMode;
         this.totalEmployees = persons.size();
-        logger.fine("Calculating statistics for " + totalEmployees + " employees");
+        logger.fine("Calculating " + statisticsMode.getFullName() + " statistics for "
+                + totalEmployees + " employees");
 
-        // Calculate tag statistics
-        Set<String> uniqueTags = new java.util.HashSet<>();
-        Map<String, Integer> tagFrequency = new HashMap<>();
-        int employeesWithTagsCount = 0;
+        StatisticsComputation computation = getCalculatorForMode(statisticsMode).compute(persons);
+        this.employeesWithValue = computation.getEmployeesWithValue();
+        this.employeesWithoutValue = computation.getEmployeesWithoutValue();
+        this.uniqueValueCount = computation.getUniqueValueCount();
+        this.mostCommonValue = computation.getMostCommonValue();
+        this.valueDistribution = computation.getDistribution();
 
-        for (Person person : persons) {
-            assert person != null : "Person in list cannot be null";
-
-            Set<Tag> personTags = person.getTags();
-            assert personTags != null : "Person tags cannot be null";
-
-            if (!personTags.isEmpty()) {
-                employeesWithTagsCount++;
-                for (Tag tag : personTags) {
-                    assert tag != null : "Tag cannot be null";
-                    assert tag.tagName != null : "Tag name cannot be null";
-
-                    String tagName = tag.tagName;
-                    uniqueTags.add(tagName);
-                    tagFrequency.put(tagName, tagFrequency.getOrDefault(tagName, 0) + 1);
-                }
-            }
-        }
-
-        this.employeesWithTags = employeesWithTagsCount;
-        this.employeesWithoutTags = totalEmployees - employeesWithTagsCount;
-        assert employeesWithTags + employeesWithoutTags == totalEmployees : "Employee counts inconsistent";
-
-        this.uniqueTagCount = uniqueTags.size();
-        assert uniqueTagCount >= 0 : "Unique tag count cannot be negative";
-
-        this.mostCommonTag = findMostCommonTag(tagFrequency);
-        this.tagDistribution = createTagDistribution(tagFrequency);
-
-        logger.fine("Statistics calculated: " + uniqueTagCount + " unique tags, "
-                + employeesWithTags + " employees with tags");
+        logger.fine("Statistics calculated in " + statisticsMode.getFullName() + " mode: "
+                + uniqueValueCount + " unique values, " + employeesWithValue + " employees with values");
     }
 
-    /**
-     * Finds the most common tag from the frequency map.
-     * @param tagFrequency Map of tag names to their frequencies
-     * @return String representation of the most common tag with count, or "None" if no tags exist
-     */
-    private String findMostCommonTag(Map<String, Integer> tagFrequency) {
-        assert tagFrequency != null : "Tag frequency map cannot be null";
-
-        if (tagFrequency.isEmpty()) {
-            logger.fine("No tags found in data");
-            return "None";
-        }
-
-        String mostCommon = "";
-        int maxFrequency = 0;
-
-        for (Map.Entry<String, Integer> entry : tagFrequency.entrySet()) {
-            assert entry.getKey() != null : "Tag name in entry is null";
-            assert entry.getValue() != null && entry.getValue() > 0 : "Tag frequency should be positive";
-
-            if (entry.getValue() > maxFrequency) {
-                maxFrequency = entry.getValue();
-                mostCommon = entry.getKey();
-            }
-        }
-
-        assert maxFrequency > 0 : "Max frequency should be positive";
-        assert !mostCommon.isEmpty() : "Most common tag should not be empty when tags exist";
-
-        String result = mostCommon + " (" + maxFrequency + ")";
-        logger.fine("Most common tag: " + result);
-        return result;
+    private StatisticsCalculator getCalculatorForMode(StatisticsMode mode) {
+        return switch (mode) {
+        case TAG -> new TagStatisticsCalculator();
+        case DEPARTMENT -> new DepartmentStatisticsCalculator();
+        };
     }
 
-    /**
-     * Creates a formatted string of the top 5 tags by frequency.
-     * @param tagFrequency Map of tag names to their frequencies
-     * @return Formatted string of tag distribution, or "No tags yet" if no tags exist
-     */
-    private String createTagDistribution(Map<String, Integer> tagFrequency) {
-        assert tagFrequency != null : "Tag frequency map cannot be null";
-
-        if (tagFrequency.isEmpty()) {
-            logger.fine("No tags to display in distribution");
-            return "No tags yet";
-        }
-
-        String distribution = tagFrequency.entrySet()
-                .stream()
-                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .limit(5)
-                .map(entry -> "• " + entry.getKey() + ": " + entry.getValue())
-                .collect(Collectors.joining("\n"));
-
-        assert distribution != null : "Tag distribution should not be null";
-        assert !distribution.isEmpty() : "Tag distribution should not be empty when tags exist";
-
-        logger.fine("Tag distribution created with " + distribution.split("\n").length + " entries");
-        return distribution;
+    public StatisticsMode getStatisticsMode() {
+        return statisticsMode;
     }
 
-    // Getters
+    // Existing getters are preserved for compatibility with current UI and tests.
     public int getTotalEmployees() {
         return totalEmployees;
     }
 
-    public int getUniqueTagCount() {
-        return uniqueTagCount;
+    public int getUniqueValueCount() {
+        return uniqueValueCount;
     }
 
-    public String getMostCommonTag() {
-        return mostCommonTag;
+    public String getMostCommonValue() {
+        return mostCommonValue;
     }
 
-    public int getEmployeesWithTags() {
-        return employeesWithTags;
+    public int getEmployeesWithValue() {
+        return employeesWithValue;
     }
 
-    public int getEmployeesWithoutTags() {
-        return employeesWithoutTags;
+    public int getEmployeesWithoutValue() {
+        return employeesWithoutValue;
     }
 
-    public String getTagDistribution() {
-        return tagDistribution;
+    public String getValueDistribution() {
+        return valueDistribution;
     }
 }

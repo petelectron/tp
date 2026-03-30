@@ -21,6 +21,12 @@
         </style>
     </Label>
 
+    <HBox spacing="10">
+        <Label text="Current dashboard:" styleClass="stats-label"/>
+        <Label fx:id="tagLegendLabel" text="Tag" styleClass="stats-label"/>
+        <Label fx:id="deptLegendLabel" text="Dept" styleClass="stats-label"/>
+    </HBox>
+
     <!-- Separator line -->
     <Region styleClass="separator-line" prefHeight="1"/>
 
@@ -32,22 +38,22 @@
         </HBox>
 
         <HBox spacing="10">
-            <Label text="🏷️ Unique tags:" styleClass="stats-label" prefWidth="140"/>
+            <Label fx:id="uniqueMetricTextLabel" text="🏷️ Unique tags:" styleClass="stats-label" prefWidth="140"/>
             <Label fx:id="uniqueTagsLabel" styleClass="stats-value"/>
         </HBox>
 
         <HBox spacing="10">
-            <Label text="📈 Most common tag:" styleClass="stats-label" prefWidth="140"/>
+            <Label fx:id="mostCommonMetricTextLabel" text="📈 Most common tag:" styleClass="stats-label" prefWidth="140"/>
             <Label fx:id="mostCommonTagLabel" styleClass="stats-value"/>
         </HBox>
 
-        <HBox spacing="10">
-            <Label text="✅ Employees with tags:" styleClass="stats-label" prefWidth="140"/>
+        <HBox spacing="10" fx:id="employeesWithRow">
+            <Label fx:id="employeesWithMetricTextLabel" text="✅ Employees with tags:" styleClass="stats-label" prefWidth="140"/>
             <Label fx:id="employeesWithTagsLabel" styleClass="stats-value"/>
         </HBox>
 
-        <HBox spacing="10">
-            <Label text="❌ Without tags:" styleClass="stats-label" prefWidth="140"/>
+        <HBox spacing="10" fx:id="employeesWithoutRow">
+            <Label fx:id="employeesWithoutMetricTextLabel" text="❌ Without tags:" styleClass="stats-label" prefWidth="140"/>
             <Label fx:id="employeesWithoutTagsLabel" styleClass="stats-value"/>
         </HBox>
     </VBox>
@@ -55,8 +61,8 @@
     <!-- Separator line -->
     <Region styleClass="separator-line" prefHeight="1"/>
 
-    <!-- Tag Distribution -->
-    <Label text="📋 Tag Distribution (Top 5)" styleClass="stats-label"/>
+    <!-- Distribution -->
+    <Label fx:id="distributionHeaderLabel" text="📋 Tag Distribution (Top 5)" styleClass="stats-label"/>
 
     <Label fx:id="tagDistributionLabel" styleClass="tag-distribution" wrapText="true"/>
 

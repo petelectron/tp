@@ -33,11 +33,11 @@ public class StatisticsTest {
         Statistics stats = new Statistics(emptyList);
 
         assertEquals(0, stats.getTotalEmployees());
-        assertEquals(0, stats.getUniqueTagCount());
-        assertEquals("None", stats.getMostCommonTag());
-        assertEquals(0, stats.getEmployeesWithTags());
-        assertEquals(0, stats.getEmployeesWithoutTags());
-        assertEquals("No tags yet", stats.getTagDistribution());
+        assertEquals(0, stats.getUniqueValueCount());
+        assertEquals("None", stats.getMostCommonValue());
+        assertEquals(0, stats.getEmployeesWithValue());
+        assertEquals(0, stats.getEmployeesWithoutValue());
+        assertEquals("No tags yet", stats.getValueDistribution());
     }
 
     @Test
@@ -49,11 +49,11 @@ public class StatisticsTest {
         Statistics stats = new Statistics(persons);
 
         assertEquals(1, stats.getTotalEmployees());
-        assertEquals(0, stats.getUniqueTagCount());
-        assertEquals("None", stats.getMostCommonTag());
-        assertEquals(0, stats.getEmployeesWithTags());
-        assertEquals(1, stats.getEmployeesWithoutTags());
-        assertEquals("No tags yet", stats.getTagDistribution());
+        assertEquals(0, stats.getUniqueValueCount());
+        assertEquals("None", stats.getMostCommonValue());
+        assertEquals(0, stats.getEmployeesWithValue());
+        assertEquals(1, stats.getEmployeesWithoutValue());
+        assertEquals("No tags yet", stats.getValueDistribution());
     }
 
     @Test
@@ -64,11 +64,11 @@ public class StatisticsTest {
         Statistics stats = new Statistics(persons);
 
         assertEquals(1, stats.getTotalEmployees());
-        assertEquals(1, stats.getUniqueTagCount());
-        assertEquals("HR (1)", stats.getMostCommonTag());
-        assertEquals(1, stats.getEmployeesWithTags());
-        assertEquals(0, stats.getEmployeesWithoutTags());
-        assertEquals("• HR: 1", stats.getTagDistribution());
+        assertEquals(1, stats.getUniqueValueCount());
+        assertEquals("HR (1)", stats.getMostCommonValue());
+        assertEquals(1, stats.getEmployeesWithValue());
+        assertEquals(0, stats.getEmployeesWithoutValue());
+        assertEquals("• HR: 1", stats.getValueDistribution());
     }
 
     @Test
@@ -83,12 +83,12 @@ public class StatisticsTest {
         Statistics stats = new Statistics(persons);
 
         assertEquals(5, stats.getTotalEmployees());
-        assertEquals(3, stats.getUniqueTagCount());
-        assertEquals("HR (2)", stats.getMostCommonTag());
-        assertEquals(4, stats.getEmployeesWithTags());
-        assertEquals(1, stats.getEmployeesWithoutTags());
+        assertEquals(3, stats.getUniqueValueCount());
+        assertEquals("HR (2)", stats.getMostCommonValue());
+        assertEquals(4, stats.getEmployeesWithValue());
+        assertEquals(1, stats.getEmployeesWithoutValue());
 
-        String distribution = stats.getTagDistribution();
+        String distribution = stats.getValueDistribution();
         org.junit.jupiter.api.Assertions.assertTrue(distribution.contains("HR: 2"));
         org.junit.jupiter.api.Assertions.assertTrue(distribution.contains("Manager: 1"));
         org.junit.jupiter.api.Assertions.assertTrue(distribution.contains("Intern: 1"));
@@ -102,10 +102,10 @@ public class StatisticsTest {
         Statistics stats = new Statistics(persons);
 
         assertEquals(1, stats.getTotalEmployees());
-        assertEquals(3, stats.getUniqueTagCount());
-        assertEquals("HR (1)", stats.getMostCommonTag());
-        assertEquals(1, stats.getEmployeesWithTags());
-        assertEquals(0, stats.getEmployeesWithoutTags());
+        assertEquals(3, stats.getUniqueValueCount());
+        assertEquals("HR (1)", stats.getMostCommonValue());
+        assertEquals(1, stats.getEmployeesWithValue());
+        assertEquals(0, stats.getEmployeesWithoutValue());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class StatisticsTest {
 
         Statistics stats = new Statistics(persons);
 
-        String distribution = stats.getTagDistribution();
+        String distribution = stats.getValueDistribution();
         int lineCount = distribution.split("\n").length;
         assertEquals(5, lineCount);
     }
