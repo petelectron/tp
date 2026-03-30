@@ -92,7 +92,9 @@ public class ImportCommand extends Command implements ConfirmableCommand {
             String.format(MESSAGE_SUCCESS, persons.size(), path.toAbsolutePath()));
     }
 
-    /** Converts the raw string to a {@link Path}, throwing {@link CommandException} on failure. */
+    /**
+     * Converts the raw string to a {@link Path}, throwing {@link CommandException} on failure.
+     * */
     private Path resolvePath() throws CommandException {
         try {
             return Paths.get(filePath);
@@ -101,7 +103,9 @@ public class ImportCommand extends Command implements ConfirmableCommand {
         }
     }
 
-    /** Checks that {@code path} points to an existing regular file. */
+    /**
+     * Checks that {@code path} points to an existing regular file.
+     * */
     private void validatePath(Path path) throws CommandException {
         if (!Files.exists(path)) {
             throw new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, path));
@@ -111,7 +115,9 @@ public class ImportCommand extends Command implements ConfirmableCommand {
         }
     }
 
-    /** Delegates to {@link CsvImportUtil} and translates checked exceptions into {@link CommandException}. */
+    /**
+     * Delegates to {@link CsvImportUtil} and translates checked exceptions into {@link CommandException}.
+     * */
     private List<Person> readCsv(Path path) throws CommandException {
         CsvImportUtil parser = new CsvImportUtil();
         try {
