@@ -34,6 +34,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private StatsPanel statsPanel;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -125,7 +126,7 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        StatsPanel statsPanel = new StatsPanel(logic);
+        statsPanel = new StatsPanel(logic);
         statsPanelPlaceholder.getChildren().add(statsPanel.getRoot());
     }
 
@@ -183,6 +184,7 @@ public class MainWindow extends UiPart<Stage> {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+            commandResult.getStatisticsMode().ifPresent(mode -> statsPanel.setStatisticsMode(mode));
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
