@@ -90,17 +90,18 @@ public class CsvImportUtil {
 
         for (int i = 0; i < headers.size(); i++) {
 
-            if (headers.get(i).equals(HEADER_NAME)) {
+            String header = headers.get(i).toLowerCase();
+            if (header.equals(HEADER_NAME)) {
                 idxName = i;
-            } else if (headers.get(i).equals(HEADER_PHONE)) {
+            } else if (header.equals(HEADER_PHONE)) {
                 idxPhone = i;
-            } else if (headers.get(i).equals(HEADER_EMAIL)) {
+            } else if (header.equals(HEADER_EMAIL)) {
                 idxEmail = i;
-            } else if (headers.get(i).equals(HEADER_ROLE)) {
+            } else if (header.equals(HEADER_ROLE)) {
                 idxRole = i;
-            } else if (headers.get(i).equals(HEADER_TAGS)) {
+            } else if (header.equals(HEADER_TAGS)) {
                 idxTags = i;
-            } else if (headers.get(i).equals(HEADER_DEPARTMENT)) {
+            } else if (header.equals(HEADER_DEPARTMENT)) {
                 idxDepartment = i;
             }
         }
