@@ -69,7 +69,7 @@ HRmanager is a **desktop app for managing employee and applicant records, optimi
 
 ### Viewing help : `help`
 
-* Shows a message explaining how to access the help page.
+Shows a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
 
@@ -78,7 +78,7 @@ Format: `help`
 
 ### Listing all employees : `list`
 
-* Shows a list of all employees in HRmanager.
+Shows a list of all employees in HRmanager.
 
 Format: `list`
 
@@ -99,32 +99,43 @@ Examples:
 
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com r/Associate Director d/Finance p/1234567 t/criminal`
 
-### Parameter details for each field:
+
+### Parameter restrictions for each field:
 
 #### Name (`n/`)
 
-* 
+* __Characters:__ The name should consist of only alphanumeric characters and/or hyphens (`-`) and/or spaces (` `) and cannot be blank. The name should not contain consecutive hyphens or spaces. The name should not start or end with a hyphen or space. No other characters are allowed.
+* __Case sensitivity:__ The name entered is case-insensitive eg. adding `John Doe` will be invalid if `john doe` already exists in HRmanager.
+* __Input length:__ The name must be between 1 and 50 characters long (inclusive).
 
 #### Phone (`p/`)
 
-* 
+* __Characters:__ The number should consist of only numeric digits. Do not include spaces, extensions or country codes. No other characters are allowed.
+* __Input length:__ The number must be between 3 and 16 digits long (inclusive).
 
 #### Email (`e/`)
 
-*
-
+* __Characters:__ The email must follow the format local-part@domain. The local-part may contain alphanumeric characters and `+`, `_`, `.`, `-`, but cannot start or end with special characters. The domain consists of labels separated by periods (`.`); each label must start and end with alphanumeric characters, may contain hyphens (-), and the final label must be at least 2 characters long. No other characters are allowed.
+* __Case sensitivity:__ The email entered is case-insensitive eg. `john.doe@example.com` will be the same as `John.Doe@Example.COM`.
+* __Input length:__ The email must be between 1 and 50 characters long (inclusive).
 
 #### Role (`r/`)
 
-*
+* __Characters:__ The role should consist of only alphanumeric characters and/or hyphens (`-`) and/or spaces (` `) and cannot be blank. The role should not contain consecutive hyphens or spaces. The role should not start or end with a hyphen or space. No other characters are allowed.
+* __Case sensitivity:__ The role entered is case-insensitive eg. inputting `Software Engineer` will be the same as `software engineer` and `SOFTWARE ENGINEER`.
+* __Input length:__ The role must be between 1 and 30 characters long (inclusive).
 
 #### Department (`d/`)
 
-*
+* __Characters:__ The department should consist of only alphanumeric characters and/or hyphens (`-`) and/or spaces (` `) and cannot be blank. The department should not contain consecutive hyphens or spaces. The department should not start or end with a hyphen or space. No other characters are allowed.
+* __Case sensitivity:__ The department entered is case-insensitive eg. inputting `Human Resources` will be the same as `human resources` and `HUMAN RESOURCES`.
+* __Input length:__ The department must be between 1 and 30 characters long (inclusive).
 
 #### Tag (`t/`)
 
-*
+* __Characters:__ The tag should consist of only alphanumeric characters and/or hyphens (`-`) and/or spaces (` `) and cannot be blank. The tag should not contain consecutive hyphens or spaces. The tag should not start or end with a hyphen or space. No other characters are allowed.
+* __Case sensitivity:__ The tag entered is case-insensitive eg. inputting `friend` will be the same as `Friend` and `FRIEND`.
+* __Input length:__ The tag must be between 1 and 30 characters long (inclusive).
 
 
 ### Searching employees by name: `search`
