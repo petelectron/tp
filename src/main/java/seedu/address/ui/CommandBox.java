@@ -102,10 +102,15 @@ public class CommandBox extends UiPart<Region> {
         try {
             commandExecutor.execute(commandText);
 
-            boolean isConfirmationAnswer = commandText.equalsIgnoreCase("y") || commandText.equalsIgnoreCase("n");
+            boolean isConfirmationAnswer =
+                "y".equalsIgnoreCase(commandText) ||
+                "n".equalsIgnoreCase(commandText);
 
-            // only keep non-confirmation commands in history
+            // if NOT confirmation command AND
+            // (history is empty OR last cmd in history is different from current cmd),
+            // then add to history
             if (!isConfirmationAnswer
+                    // if history is empty or last cmd in history is different from current cmd, add to history
                     && (commandHistory.isEmpty() || !commandHistory.get(commandHistory.size() - 1).equals(commandText))) {
                 commandHistory.add(commandText);
                 if (commandHistory.size() > 10) { // Only keep the 10 most recent entries; O(10) = O(1) time complexity
@@ -115,6 +120,7 @@ public class CommandBox extends UiPart<Region> {
             historyIndex = commandHistory.size(); // reset history index to end
             pendingInput = "";
             commandTextField.setText("");
+
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
         }
