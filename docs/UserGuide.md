@@ -184,62 +184,26 @@ Examples:
 * `search zzz` shows `0 employees listed!` if no employee names match.
 
 
-### Switching the statistics dashboard mode: `stat`
+### Viewing statistics: `stat`
 
-The statistics panel is always visible on the right side of HRmanager. The `stat` command does **not** open the panel; instead, it
-switches the panel between its available dashboard modes.
+* Displays real-time statistics about your employee records in a dedicated panel on the right side of the application.
 
-Format: `stat MODE`
+* The statistics panel automatically updates as you add, edit, or delete employees, providing instant visibility into your workforce metrics.
 
-Accepted modes:
-* `t`
-* `tag`
-* `d`
-* `dept`
-* `department`
+Format:
 
-What this feature does:
-* Switches the right-side statistics panel between **Tag** mode and **Department** mode.
-* Updates immediately after the mode is changed.
-* Continues to auto-refresh whenever you add, edit, or delete employees.
-* Uses the full employee list stored in HRmanager.
+**Statistics displayed:**
+- 👥 **Total employees**: Total number of employee records
+- 🏷️ **Unique tags**: Number of distinct tags used across all employees
+- 📈 **Most common tag**: The tag that appears most frequently (with count)
+- ✅ **Employees with tags**: Number of employees that have at least one tag
+- ❌ **Employees without tags**: Number of employees with no tags
+- 📋 **Tag distribution**: Top 5 most frequently used tags
 
-Additional constraints:
-* Exactly **one** mode must be provided.
-* Mode names are case-insensitive. e.g. `stat TAG` and `stat dept` are valid.
-* Extra words are not allowed. e.g. `stat tag department` is invalid.
-* When HRmanager starts, the statistics panel defaults to **Department** mode.
+![stats panel](images/statspanel.png)
 
-What is shown in each mode:
 
-**Department mode**
-* 👥 **Total employees**
-* 🏢 **Unique departments**
-* 📈 **Most common department**
-* 📋 **Department distribution**
-
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/statspanel-department-placeholder.png`
-
-**Tag mode**
-* 👥 **Total employees**
-* 🏷️ **Unique tags**
-* 📈 **Most common tag**
-* ✅ **Employees with tags**
-* ❌ **Employees without tags**
-* 📋 **Tag distribution**
-
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/statspanel-tag-placeholder.png`
-
-Examples:
-* `stat d` switches the panel to **Department** mode.
-* `stat dept` also switches the panel to **Department** mode.
-* `stat tag` switches the panel to **Tag** mode.
-* `stat t` also switches the panel to **Tag** mode.
-
-<box type="tip" seamless>
-
-**Tip:** Use `stat d` when you want a department-level overview, and `stat t` when you want to inspect tag usage trends.
-</box>
+**Tip:** The stats panel is always visible and updates in real-time when you add, edit, or delete employees. No command is needed to view statistics!
 
 <br>
 
