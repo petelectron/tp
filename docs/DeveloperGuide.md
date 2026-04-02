@@ -628,7 +628,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. User input filepath is invalid.
   * 2a1. System displays an error message.
-  
+
     Use case resumes at Step 1.
 
 * 2b. File already exists at target destination.
@@ -884,10 +884,10 @@ testers are expected to do more *exploratory* testing.
 
     2. Test case: `export C:\Users\username\Downloads\test.csv` (Valid entry, assuming tester doesn't have existing test.csv in Downloads folder)
         Expected: A file test.csv is created in the User's Downloads folder, containing the current employee data in csv format.
-   
+
     3. Test case: `export asasearoj` (Invalid path)
         Expected: No csv file is created. An error message is shown, indicating invalid file path.
-   
+
     4. Test case: `export C:\Users\username\Downloads\existingfile.csv` (Invalid entry, existing file in destination)
        Expected: No csv file is created. An error message is shown, indicating existing file.
 

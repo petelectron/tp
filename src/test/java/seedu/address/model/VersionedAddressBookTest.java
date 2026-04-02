@@ -116,3 +116,4 @@ public class VersionedAddressBookTest {
         assertTrue(versionedBook1.equals(versionedBook2));
     }
 }
+
