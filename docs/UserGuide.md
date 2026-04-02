@@ -118,22 +118,34 @@ Format: `list`
 <br>
 
 
-### Adding an employee: `add`
+### Adding an employee : `add`
 
 Adds an employee to HRmanager.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL r/ROLE d/DEPARTMENT [t/TAG]…​`
+
+What this feature does:
+* Adds a new employee persistently into HRmanager.
+* Captures and stores their essential contact and job role details.
 
 <box type="tip" seamless>
 
 **Tip:** An employee can have any number of tags (including 0)
 </box>
 
+Additional constraints:
+* The employee to be added cannot already exist in HRmanager (based on a case-insensitive match on the name).
+* Every field (name, phone, email, role, department) must be provided in the command. 
+
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com r/Receptionist d/Operations`
+* `add n/John Doe p/98765432 e/johnd@example.com r/Receptionist d/Operations` adds an employee named John Doe with the specified details.
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com r/Associate Director d/Finance p/1234567 t/criminal` adds an employee named Betsy Crowe with two tags, `friend` and `criminal`.
 
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com r/Associate Director d/Finance p/1234567 t/criminal`
+**Successful add command output:**
 
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/add-command-placeholder.png`
+
+<br>
 
 ### Parameter restrictions for each field:
 
