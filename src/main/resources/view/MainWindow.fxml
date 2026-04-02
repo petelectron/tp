@@ -59,7 +59,7 @@
 
           <!-- Right side: Stats Panel with ScrollPane -->
           <ScrollPane fx:id="statsScrollPane" styleClass="pane-with-border stats-scroll-pane"
-                      minWidth="400" prefWidth="400" maxWidth="400"
+                      minWidth="280" prefWidth="280" maxWidth="280"
                       fitToWidth="true" fitToHeight="false"
                       vbarPolicy="AS_NEEDED">
             <StackPane fx:id="statsPanelPlaceholder"/>
