@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -63,10 +64,12 @@ public class Statistics {
     }
 
     private StatisticsCalculator getCalculatorForMode(StatisticsMode mode) {
+        Objects.requireNonNull(mode);
         return switch (mode) {
         case TAG -> new TagStatisticsCalculator();
         case DEPARTMENT -> new DepartmentStatisticsCalculator();
         case ROLE -> new RoleStatisticsCalculator();
+        default -> throw new IllegalArgumentException("Unsupported mode: " + mode);
         };
     }
 
