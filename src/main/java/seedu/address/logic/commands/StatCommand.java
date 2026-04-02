@@ -39,5 +39,3 @@ public class StatCommand extends Command {
                 statisticsMode);
     }
 }
-
-

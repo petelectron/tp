@@ -22,9 +22,8 @@ public class StatisticsTest {
 
     @Test
     public void constructor_nullPersonList_throwsAssertionError() {
-        org.junit.jupiter.api.Assertions.assertThrows(AssertionError.class, () -> {
-            new Statistics(null);
-        });
+        org.junit.jupiter.api.Assertions.assertThrows(AssertionError.class, () ->
+                new Statistics(null));
     }
 
     @Test
@@ -119,6 +118,114 @@ public class StatisticsTest {
         String distribution = stats.getValueDistribution();
         int lineCount = distribution.split("\n").length;
         assertEquals(6, lineCount);
+    }
+
+    // ---- getStatisticsMode ----
+
+    @Test
+    public void getStatisticsMode_defaultConstructor_returnsTag() {
+        Statistics stats = new Statistics(Collections.emptyList());
+        assertEquals(StatisticsMode.TAG, stats.getStatisticsMode());
+    }
+
+    @Test
+    public void getStatisticsMode_explicitTagMode_returnsTag() {
+        Statistics stats = new Statistics(Collections.emptyList(), StatisticsMode.TAG);
+        assertEquals(StatisticsMode.TAG, stats.getStatisticsMode());
+    }
+
+    @Test
+    public void getStatisticsMode_departmentMode_returnsDepartment() {
+        Statistics stats = new Statistics(Collections.emptyList(), StatisticsMode.DEPARTMENT);
+        assertEquals(StatisticsMode.DEPARTMENT, stats.getStatisticsMode());
+    }
+
+    // ---- null-mode assertion ----
+
+    @Test
+    public void constructor_nullMode_throwsAssertionError() {
+        org.junit.jupiter.api.Assertions.assertThrows(AssertionError.class, () ->
+                new Statistics(Collections.emptyList(), null));
+    }
+
+    // ---- DEPARTMENT mode: empty list ----
+
+    @Test
+    public void departmentMode_emptyPersonList_returnsEmptyStats() {
+        Statistics stats = new Statistics(Collections.emptyList(), StatisticsMode.DEPARTMENT);
+
+        assertEquals(0, stats.getTotalEmployees());
+        assertEquals(0, stats.getUniqueValueCount());
+        assertEquals("None", stats.getMostCommonValue());
+        assertEquals(0, stats.getEmployeesWithValue());
+        assertEquals(0, stats.getEmployeesWithoutValue());
+        assertEquals("No departments yet", stats.getValueDistribution());
+    }
+
+    // ---- DEPARTMENT mode: single person with a department ----
+
+    @Test
+    public void departmentMode_singlePersonWithDepartment_returnsCorrectStats() {
+        Person person = createPersonWithDepartment("Alice Tan", "Engineering");
+        Statistics stats = new Statistics(Collections.singletonList(person), StatisticsMode.DEPARTMENT);
+
+        assertEquals(1, stats.getTotalEmployees());
+        assertEquals(1, stats.getUniqueValueCount());
+        assertEquals("Engineering (1)", stats.getMostCommonValue());
+        assertEquals(1, stats.getEmployeesWithValue());
+        assertEquals(0, stats.getEmployeesWithoutValue());
+        assertEquals("• Engineering: 1", stats.getValueDistribution());
+    }
+
+    // ---- DEPARTMENT mode: multiple persons ----
+
+    @Test
+    public void departmentMode_multiplePersons_returnsCorrectDistribution() {
+        List<Person> persons = Arrays.asList(
+                createPersonWithDepartment("Alice Tan", "Engineering"),
+                createPersonWithDepartment("Bob Lim", "Engineering"),
+                createPersonWithDepartment("Carol Ng", "Marketing"),
+                createPersonWithDepartment("David Lee", "Marketing")
+        );
+        Statistics stats = new Statistics(persons, StatisticsMode.DEPARTMENT);
+
+        assertEquals(4, stats.getTotalEmployees());
+        assertEquals(2, stats.getUniqueValueCount());
+        assertEquals(4, stats.getEmployeesWithValue());
+        assertEquals(0, stats.getEmployeesWithoutValue());
+
+        String dist = stats.getValueDistribution();
+        org.junit.jupiter.api.Assertions.assertTrue(dist.contains("Engineering: 2"));
+        org.junit.jupiter.api.Assertions.assertTrue(dist.contains("Marketing: 2"));
+    }
+
+    // ---- DEPARTMENT mode: tie-breaking sorted alphabetically ----
+
+    @Test
+    public void departmentMode_tieInFrequency_distributionSortedAlphabetically() {
+        List<Person> persons = Arrays.asList(
+                createPersonWithDepartment("Ethan Ong", "Zebra"),
+                createPersonWithDepartment("Felix Goh", "Alpha")
+        );
+        Statistics stats = new Statistics(persons, StatisticsMode.DEPARTMENT);
+
+        String dist = stats.getValueDistribution();
+        org.junit.jupiter.api.Assertions.assertTrue(
+                dist.indexOf("Alpha") < dist.indexOf("Zebra"),
+                "Equal-frequency departments should be sorted alphabetically");
+    }
+
+    // Helper method to create Person with a specific department (no tags)
+    private Person createPersonWithDepartment(String name, String department) {
+        String emailName = name.toLowerCase().replaceAll("[^a-z0-9]", "x");
+        return new Person(
+                new Name(name),
+                new Phone("12345678"),
+                new Email(emailName + "@example.com"),
+                new Role("Employee"),
+                new Department(department),
+                new HashSet<>()
+        );
     }
 
     // Helper method to create Person with tags
