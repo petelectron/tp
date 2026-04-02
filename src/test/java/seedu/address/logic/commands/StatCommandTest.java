@@ -51,6 +51,19 @@ public class StatCommandTest {
     }
 
     @Test
+    public void execute_roleMode_returnsCorrectFeedbackAndMode() {
+        StatCommand command = new StatCommand(StatisticsMode.ROLE);
+        CommandResult result = command.execute(model);
+
+        assertEquals(
+                String.format(StatCommand.MESSAGE_SUCCESS, StatisticsMode.ROLE.getFullName()),
+                result.getFeedbackToUser());
+        assertEquals(Optional.of(StatisticsMode.ROLE), result.getStatisticsMode());
+        assertFalse(result.isShowHelp());
+        assertFalse(result.isExit());
+    }
+
+    @Test
     public void execute_nullModel_throwsNullPointerException() {
         StatCommand command = new StatCommand(StatisticsMode.TAG);
         assertThrows(NullPointerException.class, () -> command.execute(null));
