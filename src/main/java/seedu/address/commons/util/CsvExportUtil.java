@@ -13,7 +13,7 @@ import seedu.address.model.person.Person;
  * Utility class for serialising a list of {@link Person} objects to a CSV file.
  */
 public class CsvExportUtil {
-    public static final String CSV_HEADER = "name,phone,email,address,tags";
+    public static final String CSV_HEADER = "name,phone,email,role,department,tags";
 
     /**
      * Writes {@code persons} to {@code csvPath} in CSV format.
@@ -51,9 +51,10 @@ public class CsvExportUtil {
         String phone = quote(person.getPhone().value);
         String email = quote(person.getEmail().value);
         String role = quote(person.getRole().value);
+        String department = quote(person.getDepartment().value);
         String tags = formatTags(person);
 
-        return String.join(",", name, phone, email, role, tags);
+        return String.join(",", name, phone, email, role, department, tags);
     }
 
     private String formatTags(Person person) {
