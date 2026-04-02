@@ -9,8 +9,7 @@ import java.util.Optional;
 public enum StatisticsMode {
 
     TAG("tag", "t"),
-    DEPARTMENT("department", "d"),
-    ROLE("role", "r");
+    DEPARTMENT("department", "d");
 
     private final String fullName;
     private final String shorthand;

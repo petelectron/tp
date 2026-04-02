@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
 import seedu.address.model.statistics.DepartmentStatisticsCalculator;
-import seedu.address.model.statistics.RoleStatisticsCalculator;
 import seedu.address.model.statistics.StatisticsCalculator;
 import seedu.address.model.statistics.StatisticsComputation;
 import seedu.address.model.statistics.TagStatisticsCalculator;
@@ -66,7 +65,6 @@ public class Statistics {
         return switch (mode) {
         case TAG -> new TagStatisticsCalculator();
         case DEPARTMENT -> new DepartmentStatisticsCalculator();
-        case ROLE -> new RoleStatisticsCalculator();
         };
     }
 

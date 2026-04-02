@@ -33,9 +33,6 @@ public class StatsPanel extends UiPart<Region> {
     private Label deptLegendLabel;
 
     @FXML
-    private Label roleLegendLabel;
-
-    @FXML
     private Label uniqueMetricTextLabel;
 
     @FXML
@@ -153,8 +150,7 @@ public class StatsPanel extends UiPart<Region> {
     }
 
     private void updateModeLabels() {
-        switch (currentMode) {
-        case TAG:
+        if (currentMode == StatisticsMode.TAG) {
             uniqueMetricTextLabel.setText("🏷️ Unique tags:");
             mostCommonMetricTextLabel.setText("📈 Most common tag:");
             employeesWithMetricTextLabel.setText("✅ Employees with tags:");
@@ -166,9 +162,7 @@ public class StatsPanel extends UiPart<Region> {
             employeesWithoutRow.setVisible(true);
             tagLegendLabel.setStyle(ACTIVE_LEGEND_STYLE);
             deptLegendLabel.setStyle(INACTIVE_LEGEND_STYLE);
-            roleLegendLabel.setStyle(INACTIVE_LEGEND_STYLE);
-            break;
-        case DEPARTMENT:
+        } else {
             uniqueMetricTextLabel.setText("🏢 Unique dept:");
             mostCommonMetricTextLabel.setText("📈 Most common dept:");
             distributionHeaderLabel.setText("📋 Dept Distribution");
@@ -178,22 +172,6 @@ public class StatsPanel extends UiPart<Region> {
             employeesWithoutRow.setVisible(false);
             tagLegendLabel.setStyle(INACTIVE_LEGEND_STYLE);
             deptLegendLabel.setStyle(ACTIVE_LEGEND_STYLE);
-            roleLegendLabel.setStyle(INACTIVE_LEGEND_STYLE);
-            break;
-        case ROLE:
-            uniqueMetricTextLabel.setText("👤 Unique roles:");
-            mostCommonMetricTextLabel.setText("📈 Most common role:");
-            distributionHeaderLabel.setText("📋 Role Distribution");
-            employeesWithRow.setManaged(false);
-            employeesWithRow.setVisible(false);
-            employeesWithoutRow.setManaged(false);
-            employeesWithoutRow.setVisible(false);
-            tagLegendLabel.setStyle(INACTIVE_LEGEND_STYLE);
-            deptLegendLabel.setStyle(INACTIVE_LEGEND_STYLE);
-            roleLegendLabel.setStyle(ACTIVE_LEGEND_STYLE);
-            break;
-        default:
-            throw new AssertionError("Unknown StatisticsMode: " + currentMode);
         }
     }
 }

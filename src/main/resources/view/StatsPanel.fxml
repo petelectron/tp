@@ -25,7 +25,6 @@
         <Label text="Current dashboard:" styleClass="stats-label"/>
         <Label fx:id="tagLegendLabel" text="Tag" styleClass="stats-label"/>
         <Label fx:id="deptLegendLabel" text="Dept" styleClass="stats-label"/>
-        <Label fx:id="roleLegendLabel" text="Role" styleClass="stats-label"/>
     </HBox>
 
     <!-- Separator line -->
@@ -33,7 +32,7 @@
 
     <!-- Statistics -->
     <VBox spacing="8">
-        <HBox spacing="10" alignment="CENTER_LEFT">
+        <HBox spacing="10">
             <Label text="👥 Total employees:" styleClass="stats-label" prefWidth="140"/>
             <Label fx:id="totalEmployeesLabel" styleClass="stats-value"/>
         </HBox>
