@@ -9,14 +9,23 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Department {
 
+    public static final int MAX_LENGTH = 30;
     public static final String MESSAGE_CONSTRAINTS =
-            "Departments can take any values, and it should not be blank";
+            "Departments should only consist of alphanumeric characters, "
+            + "hyphens and spaces, and be between 1 and " + MAX_LENGTH + " characters long.\n"
+            + "The department should not start or end with a space or hyphen, "
+            + "and it should not contain consecutive spaces or hyphens.";
 
     /*
-     * The first character must not be a whitespace,
+     * The first character of the department must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX =
+        "^(?!.*[ -]{2})" // no consecutive spaces or hyphens
+        + "[a-zA-Z0-9]" // starts with an alphanumeric character
+        + "([a-zA-Z0-9 -]{0," + (MAX_LENGTH - 2) + "}" // alphanumeric, " ", "-" in the middle
+        + "[a-zA-Z0-9])?" // ends with an alphanumeric character
+        + "$";
 
     public final String value;
 
@@ -28,7 +37,7 @@ public class Department {
     public Department(String department) {
         requireNonNull(department);
         checkArgument(isValidDepartment(department), MESSAGE_CONSTRAINTS);
-        value = department;
+        value = department.toLowerCase();
     }
 
     /**
@@ -55,12 +64,12 @@ public class Department {
         }
 
         Department otherDepartment = (Department) other;
-        return value.equals(otherDepartment.value);
+        return value.equalsIgnoreCase(otherDepartment.value);
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return value.toLowerCase().hashCode();
     }
 }
 

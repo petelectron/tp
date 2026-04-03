@@ -24,30 +24,41 @@ public class RoleTest {
         // null role
         assertThrows(NullPointerException.class, () -> Role.isValidRole(null));
 
-
-        // invalid roles
+        // --- INVALID ROLES ---
         assertFalse(Role.isValidRole("")); // empty string
         assertFalse(Role.isValidRole(" ")); // spaces only
-        assertFalse(Role.isValidRole("^")); // non-alphanumeric character
+        assertFalse(Role.isValidRole("-")); // hyphen only
+        assertFalse(Role.isValidRole("^")); // only non-alphanumeric characters
         assertFalse(Role.isValidRole("!")); // non-alphanumeric character
         assertFalse(Role.isValidRole("@")); // non-alphanumeric character
-        assertFalse(Role.isValidRole("-")); // one character
-        assertFalse(Role.isValidRole("HR*")); // contains  non-alphanumeric character
-        assertFalse(Role.isValidRole("HR_Department")); // contains underscore non-alphanumeric character
-        assertFalse(Role.isValidRole("HR-Department")); // contains hyphen non-alphanumeric character
+        assertFalse(Role.isValidRole("HR*")); // contains non-alphanumeric symbols
+        assertFalse(Role.isValidRole("HR_Department")); // underscore is not allowed
         assertFalse(Role.isValidRole("123456789012345678901234567890123456789012345678901")); // 51 characters
-        assertFalse(Role.isValidRole("Department 3 4th division head of marketing and security")); // 56 characters
+        assertFalse(Role.isValidRole("Software Engineer Manager Head2")); // 31 characters
 
+        // Edge Case: Leading/Trailing separators
+        assertFalse(Role.isValidRole(" Software Engineer")); // starts with a space
+        assertFalse(Role.isValidRole("Software Engineer ")); // ends with a space
+        assertFalse(Role.isValidRole("-Software Engineer")); // starts with a hyphen
+        assertFalse(Role.isValidRole("Software Engineer-")); // ends with a hyphen
 
-        // valid roles
-        assertTrue(Role.isValidRole("Software Engineer"));
+        // Edge Case: Consecutive separators
+        assertFalse(Role.isValidRole("Software  Engineer")); // consecutive spaces
+        assertFalse(Role.isValidRole("Software--Engineer")); // consecutive hyphens
+        assertFalse(Role.isValidRole("Software- Engineer")); // consecutive hyphen and space
+        assertFalse(Role.isValidRole("Software -Engineer")); // consecutive space and hyphen
+
+        // --- VALID ROLES ---
+        assertTrue(Role.isValidRole("a")); // single character
+        assertTrue(Role.isValidRole("A")); // single capital character
+        assertTrue(Role.isValidRole("1")); // single number
+        assertTrue(Role.isValidRole("Software Engineer")); // alphabets with space
         assertTrue(Role.isValidRole("HR")); // alphabets only
         assertTrue(Role.isValidRole("123")); // numbers only
         assertTrue(Role.isValidRole("HR123")); // alphanumeric
-        assertTrue(Role.isValidRole("h")); // single character
-        assertTrue(Role.isValidRole("H")); // single uppercase
-        assertTrue(Role.isValidRole("HR Department")); // contains space
-        assertTrue(Role.isValidRole("12345678901234567890123456789012345678901234567890")); // exactly 50 chars
+        assertTrue(Role.isValidRole("Software-Engineer")); // with hyphen
+        assertTrue(Role.isValidRole("Lead-Eng 2nd")); // complex separators with alphanumeric
+        assertTrue(Role.isValidRole("123456789012345678901234567890")); // exactly 30 chars
     }
 
     @Test
@@ -56,6 +67,11 @@ public class RoleTest {
 
         // same values -> returns true
         assertTrue(role.equals(new Role("Valid Role")));
+
+        // case insensitive: different case -> returns true
+        assertTrue(role.equals(new Role("valid role")));
+        assertTrue(role.equals(new Role("Valid role")));
+        assertTrue(role.equals(new Role("VALID ROLE")));
 
         // same object -> returns true
         assertTrue(role.equals(role));

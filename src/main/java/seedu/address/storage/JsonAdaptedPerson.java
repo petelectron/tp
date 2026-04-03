@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
@@ -24,6 +26,8 @@ import seedu.address.model.tag.Tag;
 class JsonAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+
+    private static final Logger logger = LogsCenter.getLogger(JsonAdaptedPerson.class);
 
     private final String name;
     private final String phone;
@@ -70,54 +74,68 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
+        logger.fine("Converting JsonAdaptedPerson to Person model for name: " + name);
+
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
         }
 
         if (name == null) {
+            logger.warning("Missing name field in JSON data");
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
         if (!Name.isValidName(name)) {
+            logger.warning("Invalid name format: " + name);
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
         final Name modelName = new Name(name);
 
         if (phone == null) {
+            logger.warning("Missing phone field in JSON data");
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
         }
         if (!Phone.isValidPhone(phone)) {
+            logger.warning("Invalid phone format: " + phone);
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
         }
         final Phone modelPhone = new Phone(phone);
 
         if (email == null) {
+            logger.warning("Missing email field in JSON data");
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
         }
         if (!Email.isValidEmail(email)) {
+            logger.warning("Invalid email format: " + email);
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
         }
         final Email modelEmail = new Email(email);
 
         if (role == null) {
+            logger.warning("Missing role field in JSON data");
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Role.class.getSimpleName()));
         }
         if (!Role.isValidRole(role)) {
+            logger.warning("Invalid role format: " + role);
             throw new IllegalValueException(Role.MESSAGE_CONSTRAINTS);
         }
         final Role modelRole = new Role(role);
 
         if (department == null) {
+            logger.warning("Missing department field in JSON data");
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Department.class.getSimpleName()));
         }
         if (!Department.isValidDepartment(department)) {
+            logger.warning("Invalid department format: " + department);
             throw new IllegalValueException(Department.MESSAGE_CONSTRAINTS);
         }
         final Department modelDepartment = new Department(department);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelRole, modelDepartment, modelTags);
+        Person person = new Person(modelName, modelPhone, modelEmail, modelRole, modelDepartment, modelTags);
+        logger.fine("Successfully converted JsonAdaptedPerson to Person: " + person.getName());
+        return person;
     }
 
 }

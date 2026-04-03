@@ -82,7 +82,7 @@ public class StatCommandParserTest {
 
     @Test
     public void parse_unknownMode_throwsParseException() {
-        assertParseFailure(parser, "unknown", expectedMessage);
+        assertParseFailure(parser, "invalid", expectedMessage);
     }
 
     @Test

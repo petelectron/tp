@@ -5,9 +5,11 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -23,6 +25,8 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * @see Person#isSamePerson(Person)
  */
 public class UniquePersonList implements Iterable<Person> {
+
+    private static final Logger logger = LogsCenter.getLogger(UniquePersonList.class);
 
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
     private final ObservableList<Person> internalUnmodifiableList =
@@ -42,10 +46,14 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void add(Person toAdd) {
         requireNonNull(toAdd);
+
         if (contains(toAdd)) {
+            logger.warning("Attempted to add duplicate person: " + toAdd.getName());
             throw new DuplicatePersonException();
         }
+
         internalList.add(toAdd);
+        logger.fine("Added person: " + toAdd.getName() + ", list size now: " + internalList.size());
     }
 
     /**
@@ -58,13 +66,16 @@ public class UniquePersonList implements Iterable<Person> {
 
         int index = internalList.indexOf(target);
         if (index == -1) {
+            logger.warning("Target person not found for editing: " + target.getName());
             throw new PersonNotFoundException();
         }
 
         if (!target.isSamePerson(editedPerson) && contains(editedPerson)) {
+            logger.warning("Edited person would create duplicate: " + editedPerson.getName());
             throw new DuplicatePersonException();
         }
 
+        logger.fine("Replacing person: " + target.getName() + " with: " + editedPerson.getName());
         internalList.set(index, editedPerson);
     }
 
@@ -74,9 +85,13 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void remove(Person toRemove) {
         requireNonNull(toRemove);
+
         if (!internalList.remove(toRemove)) {
+            logger.warning("Person not found for removal: " + toRemove.getName());
             throw new PersonNotFoundException();
         }
+
+        logger.fine("Removed person: " + toRemove.getName() + ", list size now: " + internalList.size());
     }
 
     public void setPersons(UniquePersonList replacement) {

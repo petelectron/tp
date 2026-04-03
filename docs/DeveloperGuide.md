@@ -546,8 +546,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 2.
 
-* 5b. The tag name provided is invalid (e.g., blank, exceeds 50 characters, or contains non-alphanumeric characters).
-    * 5b1. System shows an error message: "Tags names should be alphanumeric and between 1 to 50 characters long".
+* 5b. The tag name provided is invalid (e.g., blank, exceeds 30 characters, or contains non-alphanumeric characters).
+    * 5b1. System shows an error message: "Tags should only consist of alphanumeric characters, hyphens and spaces, and be between 1 and 30 characters long. The tag should not start or end with a space or hyphen, and it should not contain consecutive spaces or hyphens."
 
     Use case resumes at step 4.
 
@@ -666,7 +666,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Employee Record**: A collection of information stored in the system about an employee, such as name, email, phone number, role, and department.
 * **Command Line Interface (CLI)**: A text-based interface where users interact with the application by typing commands.
 * **Department**: The organizational unit an employee belongs to (e.g., `Engineering`, `Finance`, `Human Resources`).
-* **Tag**: A label that can be attached to an employee record for categorization purposes. Tags must be alphanumeric and 1-50 characters in length. Examples include "HR", "Manager", "FullTime", "Intern".
+* **Tag**: A label that can be attached to an employee record for categorization purposes. Tags must be alphanumeric and 1-30 characters in length. Examples include "HR", "Manager", "FullTime", "Intern".
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -711,13 +711,13 @@ testers are expected to do more *exploratory* testing.
        Expected: The employee is added. The success message is shown, along with the added details.
 
     4. Test case: `add k n/Amy Choo p/22222222 e/amy@example.com r/Head of Office d/Operations t/friend` (Preamble is not a space)<br>
-       Expected: The employee is added. The success message is shown, along with the added details.
+       Expected: The employee is not added. Error message for invalid command format,along with an example of the correct format, shown.
 
-    5. Test case: `add n/Bob Choo p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Same exact name with existing entry)<br>
+    5. Test case: `add n/Bob Choo p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Same exact name with existing entry, despite different details)<br>
        Expected: The employee is not added. Duplicate error message is shown, indicating an employee with same name already exists.
 
-    6. Test case: `add  n/Lance Choo p/33333333 e/lance@example.com r/Head of HR d/Human Resources t/friend t/husband` (Multiple tags)<br>
-       Expected: The employee is added. The success message is shown, along with the added details.
+    6. Test case: `add  n/Lance Choo p/33333333 e/lance@example.com r/Head of HR d/Human Resources t/friend t/friend t/husband` (Multiple tags)<br>
+       Expected: The employee is added. The success message is shown, along with the added details. Note that duplicate tags are accepted as one tag.
 
     7. Test case: `add n/Amy Cho n/Bob Choo p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Two names))<br>
        Expected: The employee is not added. Error messages for duplicated prefix shown.
@@ -736,9 +736,6 @@ testers are expected to do more *exploratory* testing.
 
     12. Test case: `add n/Peppa Pig e/peppa@example.com r/Head of Media d/Media` (No phone number) or similar absence of necessary attributes <br>
         Expected: The employee is not added. Error message is shown, along with the correct format and required parameters.
-
-    13. Test case: `add n/Pikachu p/11111111 e/bob@meme.com r/Head of Operations d/Operations` (No optional Tag)<br>
-         Expected: The employee is added. The success message is shown, along with the added details.
 
     14. Other incorrect delete commands to try: `add`, `add johndoe p/3333` (no prefix), and other commands which deviate from the command format<br>
         Expected: Similar to previous.
@@ -796,13 +793,15 @@ testers are expected to do more *exploratory* testing.
       Expected: First employee is tagged with both "HR" and "Manager". Success message shown.
 
    4. Test case: `tag 2 t/` (empty tag)<br>
-      Expected: No tag is added. Error details shown: "Tags names should be alphanumeric and between 1 to 50 characters long".
+      Expected: No tag is added. Error details shown: "Tags should only consist of alphanumeric characters, hyphens and spaces, and be between 1 and 30 characters long. The tag should not start or end with a space or hyphen, and it should not contain consecutive spaces or hyphens."
+
+
 
    5. Test case: `tag 2 t/HR_Department` (contains underscore)<br>
       Expected: No tag is added. Error details shown due to non-alphanumeric character.
 
-   6. Test case: `tag 2 t/[a string of 51 characters]`<br>
-      Expected: No tag is added. Error details shown due to exceeding 50-character limit.
+   6. Test case: `tag 2 t/[a string of 31 characters]`<br>
+      Expected: No tag is added. Error details shown due to exceeding 30-character limit.
 
    7. Test case: `tag 2 t/HR` (when employee already has "HR" tag)<br>
       Expected: No duplicate tag is added. Error details shown indicating duplicate tag.

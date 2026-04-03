@@ -9,9 +9,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Name {
 
+    public static final int MAX_LENGTH = 50;
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only consist of letters, "
-            + "hyphens and spaces, and be between 2 and 50 characters long.\n"
+            "Names should only consist of alphanumeric characters, "
+            + "hyphens and spaces, and be between 1 and " + MAX_LENGTH + " characters long.\n"
             + "The name should not start or end with a space or hyphen, "
             + "and it should not contain consecutive spaces or hyphens.";
 
@@ -19,8 +20,12 @@ public class Name {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[A-Za-z](?:[A-Za-z]|"
-        + "[ -](?=[A-Za-z])){0,48}[A-Za-z]";
+    public static final String VALIDATION_REGEX =
+        "^(?!.*[ -]{2})" // no consecutive spaces or hyphens
+        + "[a-zA-Z0-9]" // starts with an alphanumeric character
+        + "([a-zA-Z0-9 -]{0," + (MAX_LENGTH - 2) + "}" // alphanumeric, " ", "-" in the middle
+        + "[a-zA-Z0-9])?" // ends with an alphanumeric character
+        + "$";
 
     public final String fullName;
 
@@ -32,7 +37,7 @@ public class Name {
     public Name(String name) {
         requireNonNull(name);
         checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
-        fullName = name;
+        fullName = name.toLowerCase();
     }
 
     /**
@@ -60,12 +65,12 @@ public class Name {
         }
 
         Name otherName = (Name) other;
-        return fullName.equals(otherName.fullName);
+        return fullName.equalsIgnoreCase(otherName.fullName);
     }
 
     @Override
     public int hashCode() {
-        return fullName.hashCode();
+        return fullName.toLowerCase().hashCode();
     }
 
 }

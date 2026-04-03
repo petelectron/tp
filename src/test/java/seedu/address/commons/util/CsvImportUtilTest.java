@@ -29,7 +29,7 @@ public class CsvImportUtilTest {
         );
         List<Person> persons = parser.parse(csv);
         assertEquals(1, persons.size());
-        assertEquals("Alice Tan", persons.get(0).getName().fullName);
+        assertEquals("alice tan", persons.get(0).getName().fullName);
         assertEquals("91234567", persons.get(0).getPhone().value);
         assertEquals("alice@example.com", persons.get(0).getEmail().value);
     }
@@ -38,11 +38,11 @@ public class CsvImportUtilTest {
     void parse_validCsvNonstandardColumnOrder_success() throws Exception {
         Path csv = writeCsv(
             "tags,phone,name,role,department,email",
-            "Junior,91234567,Alice Tan,Software Engineer,Backend,alice@example.com"
+            "junior,91234567,alice tan,software engineer,backend,alice@example.com"
         );
         List<Person> persons = parser.parse(csv);
         assertEquals(1, persons.size());
-        assertEquals("Alice Tan", persons.get(0).getName().fullName);
+        assertEquals("alice tan", persons.get(0).getName().fullName);
         assertEquals("91234567", persons.get(0).getPhone().value);
         assertEquals("alice@example.com", persons.get(0).getEmail().value);
     }

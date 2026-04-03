@@ -51,6 +51,14 @@ public class CsvImportUtil {
     public List<Person> parse(Path csvPath) throws IOException, CsvParseException {
         List<Person> persons = new ArrayList<>();
 
+        // Reset column indices for fresh parse
+        idxName = -1;
+        idxPhone = -1;
+        idxEmail = -1;
+        idxRole = -1;
+        idxDepartment = -1;
+        idxTags = -1;
+
         try (BufferedReader reader = Files.newBufferedReader(csvPath)) {
             String headerLine = null;
             int lineNumber = 0;
