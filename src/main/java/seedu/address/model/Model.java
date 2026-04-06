@@ -84,4 +84,31 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Saves the current address book state in history.
+     */
+    void commitAddressBook();
+
+    /**
+     * Restores the previous address book state from history.
+     * @return true if undo was successful, false if there are no states to undo.
+     */
+    boolean undoAddressBook();
+
+    /**
+     * Restores a previously undone address book state from history.
+     * @return true if redo was successful, false if there are no states to redo.
+     */
+    boolean redoAddressBook();
+
+    /**
+     * Returns true if there are address book states to undo.
+     */
+    boolean canUndoAddressBook();
+
+    /**
+     * Returns true if there are address book states to redo.
+     */
+    boolean canRedoAddressBook();
 }

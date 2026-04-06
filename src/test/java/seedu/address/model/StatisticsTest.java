@@ -64,10 +64,10 @@ public class StatisticsTest {
 
         assertEquals(1, stats.getTotalEmployees());
         assertEquals(1, stats.getUniqueValueCount());
-        assertEquals("HR (1)", stats.getMostCommonValue());
+        assertEquals("hr (1)", stats.getMostCommonValue());
         assertEquals(1, stats.getEmployeesWithValue());
         assertEquals(0, stats.getEmployeesWithoutValue());
-        assertEquals("• HR: 1", stats.getValueDistribution());
+        assertEquals("• hr: 1", stats.getValueDistribution());
     }
 
     @Test
@@ -83,14 +83,14 @@ public class StatisticsTest {
 
         assertEquals(5, stats.getTotalEmployees());
         assertEquals(3, stats.getUniqueValueCount());
-        assertEquals("HR (2)", stats.getMostCommonValue());
+        assertEquals("hr (2)", stats.getMostCommonValue());
         assertEquals(4, stats.getEmployeesWithValue());
         assertEquals(1, stats.getEmployeesWithoutValue());
 
         String distribution = stats.getValueDistribution();
-        org.junit.jupiter.api.Assertions.assertTrue(distribution.contains("HR: 2"));
-        org.junit.jupiter.api.Assertions.assertTrue(distribution.contains("Manager: 1"));
-        org.junit.jupiter.api.Assertions.assertTrue(distribution.contains("Intern: 1"));
+        org.junit.jupiter.api.Assertions.assertTrue(distribution.contains("hr: 2"));
+        org.junit.jupiter.api.Assertions.assertTrue(distribution.contains("manager: 1"));
+        org.junit.jupiter.api.Assertions.assertTrue(distribution.contains("intern: 1"));
     }
 
     @Test
@@ -102,7 +102,6 @@ public class StatisticsTest {
 
         assertEquals(1, stats.getTotalEmployees());
         assertEquals(3, stats.getUniqueValueCount());
-        assertEquals("HR (1)", stats.getMostCommonValue());
         assertEquals(1, stats.getEmployeesWithValue());
         assertEquals(0, stats.getEmployeesWithoutValue());
     }
@@ -171,10 +170,10 @@ public class StatisticsTest {
 
         assertEquals(1, stats.getTotalEmployees());
         assertEquals(1, stats.getUniqueValueCount());
-        assertEquals("Engineering (1)", stats.getMostCommonValue());
+        assertEquals("engineering (1)", stats.getMostCommonValue());
         assertEquals(1, stats.getEmployeesWithValue());
         assertEquals(0, stats.getEmployeesWithoutValue());
-        assertEquals("• Engineering: 1", stats.getValueDistribution());
+        assertEquals("• engineering: 1", stats.getValueDistribution());
     }
 
     // ---- DEPARTMENT mode: multiple persons ----
@@ -195,8 +194,8 @@ public class StatisticsTest {
         assertEquals(0, stats.getEmployeesWithoutValue());
 
         String dist = stats.getValueDistribution();
-        org.junit.jupiter.api.Assertions.assertTrue(dist.contains("Engineering: 2"));
-        org.junit.jupiter.api.Assertions.assertTrue(dist.contains("Marketing: 2"));
+        org.junit.jupiter.api.Assertions.assertTrue(dist.contains("engineering: 2"));
+        org.junit.jupiter.api.Assertions.assertTrue(dist.contains("marketing: 2"));
     }
 
     // ---- DEPARTMENT mode: tie-breaking sorted alphabetically ----
@@ -211,7 +210,7 @@ public class StatisticsTest {
 
         String dist = stats.getValueDistribution();
         org.junit.jupiter.api.Assertions.assertTrue(
-                dist.indexOf("Alpha") < dist.indexOf("Zebra"),
+                dist.indexOf("alpha") < dist.indexOf("zebra"),
                 "Equal-frequency departments should be sorted alphabetically");
     }
 

@@ -56,8 +56,8 @@ public class CommandTestUtil {
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_ROLE_DESC = " " + PREFIX_ROLE; // empty string not allowed for roles
-    public static final String INVALID_DEPARTMENT_DESC = " " + PREFIX_DEPARTMENT; // empty string not allowed
+    public static final String INVALID_ROLE_DESC = " " + PREFIX_ROLE + "#cheerleader"; // '#' not allowed in roles
+    public static final String INVALID_DEPARTMENT_DESC = " " + PREFIX_DEPARTMENT + " "; // empty not allowed in dept
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";

@@ -54,6 +54,11 @@ public class StatisticsModeTest {
         assertEquals(Optional.of(StatisticsMode.DEPARTMENT), StatisticsMode.fromUserInput("DEPT"));
     }
 
+    @Test
+    public void fromUserInput_uppercaseRole_returnsRole() {
+        assertEquals(Optional.of(StatisticsMode.ROLE), StatisticsMode.fromUserInput("ROLE"));
+    }
+
     // ---- fromUserInput: whitespace trimming ----
 
     @Test
@@ -64,6 +69,11 @@ public class StatisticsModeTest {
     @Test
     public void fromUserInput_whitespaceDept_returnsDepartment() {
         assertEquals(Optional.of(StatisticsMode.DEPARTMENT), StatisticsMode.fromUserInput("  dept  "));
+    }
+
+    @Test
+    public void fromUserInput_whitespaceRole_returnsRole() {
+        assertEquals(Optional.of(StatisticsMode.ROLE), StatisticsMode.fromUserInput("  role  "));
     }
 
     // ---- fromUserInput: invalid / null inputs ----
@@ -80,7 +90,7 @@ public class StatisticsModeTest {
 
     @Test
     public void fromUserInput_unknownString_returnsEmptyOptional() {
-        assertEquals(Optional.empty(), StatisticsMode.fromUserInput("role"));
+        assertEquals(Optional.empty(), StatisticsMode.fromUserInput("invalid"));
     }
 
     @Test
@@ -100,19 +110,26 @@ public class StatisticsModeTest {
         assertEquals("department", StatisticsMode.DEPARTMENT.getFullName());
     }
 
+    @Test
+    public void getFullName_role_returnsRole() {
+        assertEquals("role", StatisticsMode.ROLE.getFullName());
+    }
+
     // ---- enum basics ----
 
     @Test
-    public void values_containsTagAndDepartment() {
+    public void values_containsTagDepartmentAndRole() {
         StatisticsMode[] modes = StatisticsMode.values();
-        assertEquals(2, modes.length);
+        assertEquals(3, modes.length);
         assertTrue(java.util.Arrays.asList(modes).contains(StatisticsMode.TAG));
         assertTrue(java.util.Arrays.asList(modes).contains(StatisticsMode.DEPARTMENT));
+        assertTrue(java.util.Arrays.asList(modes).contains(StatisticsMode.ROLE));
     }
 
     @Test
     public void fromUserInput_validReturnIsPresent() {
         assertTrue(StatisticsMode.fromUserInput("t").isPresent());
+        assertTrue(StatisticsMode.fromUserInput("r").isPresent());
         assertFalse(StatisticsMode.fromUserInput("xyz").isPresent());
     }
 }

@@ -62,16 +62,15 @@ public abstract class AbstractValueStatisticsCalculator implements StatisticsCal
             return "None";
         }
 
-        String mostCommon = "";
-        int maxFrequency = 0;
+        String mostCommon = valueFrequency.entrySet()
+            .stream()
+            .sorted(Map.Entry.<String, Integer>comparingByValue().reversed()
+                    .thenComparing(Map.Entry::getKey, String.CASE_INSENSITIVE_ORDER))
+            .map(Map.Entry::getKey)
+            .findFirst()
+            .orElse("");
 
-        for (Map.Entry<String, Integer> entry : valueFrequency.entrySet()) {
-            if (entry.getValue() > maxFrequency) {
-                maxFrequency = entry.getValue();
-                mostCommon = entry.getKey();
-            }
-        }
-
+        int maxFrequency = valueFrequency.get(mostCommon);
         return mostCommon + " (" + maxFrequency + ")";
     }
 

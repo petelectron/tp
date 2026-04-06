@@ -14,8 +14,9 @@ public class StatCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Switches the HR statistics dashboard view.\n"
-            + "Parameters: MODE (t|tag|d|dept|department)\n"
-            + "Examples: " + COMMAND_WORD + " t, " + COMMAND_WORD + " d, or " + COMMAND_WORD + " dept";
+            + "Parameters: MODE (t|tag|d|dept|department|r|role)\n"
+            + "Examples: " + COMMAND_WORD + " t, " + COMMAND_WORD + " d, "
+            + "or " + COMMAND_WORD + " r, or " + COMMAND_WORD + " role";
 
     public static final String MESSAGE_SUCCESS = "Switched HR statistics dashboard to %s distribution.";
 

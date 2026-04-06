@@ -114,6 +114,8 @@ public class DeleteCommand extends Command implements ConfirmableCommand {
 
         logger.fine("Deleted " + uniqueIndexes.size() + " unique employee(s) successfully");
 
+        model.commitAddressBook();
+
         return new CommandResult(String.format(
                 MESSAGE_DELETE_PERSON_SUCCESS,
                 uniqueIndexes.size() + " employee(s)"
