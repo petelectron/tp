@@ -31,7 +31,12 @@ public class ClearCommand extends Command implements ConfirmableCommand {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.setAddressBook(new AddressBook());
+        AddressBook currentAddressBook = new AddressBook(model.getAddressBook());
+        AddressBook clearedAddressBook = new AddressBook();
+        model.setAddressBook(clearedAddressBook);
+        if (!currentAddressBook.equals(clearedAddressBook)) {
+            model.commitAddressBook();
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
