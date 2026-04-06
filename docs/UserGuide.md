@@ -179,7 +179,7 @@ Examples:
 
 Finds employees whose fields contain all of the given keywords.
 
-Format: `search KEYWORD [MORE_KEYWORDS]...`
+Format: `search KEYWORD [MORE_KEYWORDS]...` (each keyword separated by a space)
 
 What this feature does:
 * Filters the employee list to show only those who match all provided keywords.
