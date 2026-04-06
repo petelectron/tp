@@ -41,6 +41,11 @@ public class ImportCommandTest {
 
         private AddressBook addressBook = new AddressBook();
         private AddressBook lastSetAddressBook = null;
+        private boolean commitCalled = false;
+
+        public boolean isCommitCalled() {
+            return commitCalled;
+        }
 
         public AddressBook getLastSetAddressBook() {
             return lastSetAddressBook;
@@ -58,7 +63,7 @@ public class ImportCommandTest {
 
         @Override
         public void commitAddressBook() {
-            throw new AssertionError("This method should not be called.");
+            this.commitCalled = true;
         }
 
         @Override
@@ -153,9 +158,11 @@ public class ImportCommandTest {
     void execute_validCsvMultiplePeople_allPersonsImported() throws Exception {
         Path csv = writeCsv(VALID_HEADER, VALID_ROW_1, VALID_ROW_2);
 
-        new ImportCommand(csv.toString()).execute(model);
+        ImportCommand cmd = new ImportCommand(csv.toString());
+        cmd.execute(model);
 
         assertEquals(2, model.lastSetAddressBook.getPersonList().size());
+        assertTrue(model.isCommitCalled());
     }
 
     @Test
