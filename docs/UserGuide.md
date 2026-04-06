@@ -221,27 +221,61 @@ Examples:
 <br>
 
 
-### Viewing statistics: `stat`
+### Switching the statistics dashboard mode: `stat`
 
-* Displays real-time statistics about your employee records in a dedicated panel on the right side of the application.
+Switches the right-side HR statistics dashboard to a selected mode so you can focus on the metric that matters now.
 
-* The statistics panel automatically updates as you add, edit, or delete employees, providing instant visibility into your workforce metrics.
+Format: `stat MODE`
 
-Format:
+What this feature does:
+* Changes the dashboard between **tag**, **department**, and **role** distributions.
+* Gives an at-a-glance view of workforce composition by showing total employees and grouped distribution trends.
+* Helps HR quickly see which tags, departments, and roles exist, so they can search and manage records more efficiently.
+* Uses the full employee records in HRmanager for dashboard computation.
+* Shows organisation-wide metrics based on the full employee dataset, even when the on-screen list is filtered (for example after `search`).
 
-**Statistics displayed:**
-- 👥 **Total employees**: Total number of employee records
-- 🏷️ **Unique tags**: Number of distinct tags used across all employees
-- 📈 **Most common tag**: The tag that appears most frequently (with count)
-- ✅ **Employees with tags**: Number of employees that have at least one tag
-- ❌ **Employees without tags**: Number of employees with no tags
-- 📋 **Tag distribution**: Top 5 most frequently used tags
+Supported modes:
+* `t` or `tag` - Shows tag-focused statistics.
+* `d`, `dept`, or `department` - Shows department-focused statistics.
+* `r` or `role` - Shows role-focused statistics.
 
-![stats panel](images/statspanel.png)
+<box type="info" seamless>
+
+**Mode-specific display behavior:**
+* All modes show total employees.
+* **Tag mode:** Unique tags, most common tag, employees with tags, employees without tags, and tag distribution.
+* **Department mode:** Unique departments, most common department, and department distribution.
+* **Role mode:** Unique roles, most common role, and role distribution.
+* For all modes, distribution values are shown top-to-bottom in descending count (highest at the top, lowest at the bottom).
+* If multiple values have the same count, they are ordered alphabetically (case-insensitive).
+* For all modes, values are computed from the full HRmanager dataset (global distribution), not only the currently filtered on-screen list.
+</box>
+
+Additional constraints:
+* Exactly **one** mode must be provided.
+* The mode is case-insensitive.
+* If the input format is invalid, HRmanager shows the `stat` command usage message.
+
+Examples:
+* `stat t` switches the dashboard to tag distribution mode.
+* `stat department` switches the dashboard to department distribution mode.
+* `stat r` switches the dashboard to role distribution mode.
+
+**Tag mode dashboard (`stat t` or `stat tag`):**
+
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/stat-tag-mode-placeholder.png`
+
+**Department mode dashboard (`stat d`, `stat dept`, or `stat department`):**
+
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/stat-department-mode-placeholder.png`
+
+**Role mode dashboard (`stat r` or `stat role`):**
+
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/stat-role-mode-placeholder.png`
 
 <box type="tip" seamless>
 
-**Tip:** The stats panel is always visible and updates in real-time when you add, edit, or delete employees. No command is needed to view statistics!
+**Tip:** The stats panel updates automatically after employee record changes (for example `add`, `edit`, `delete`, `clear`) while staying in the currently selected mode.
 </box>
 
 <br>
@@ -443,7 +477,7 @@ Action     | Format, Examples
 **List**   | `list`
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL r/ROLE d/DEPARTMENT [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com r/Software Engineer d/Engineering t/friend t/colleague`
 **Search** | `search KEYWORD...`<br> e.g., `search James`
-**Stat** | `stat MODE`<br> e.g., `stat dept`, `stat tag`
+**Stat** | `stat MODE`<br> e.g., `stat tag`, `stat dept`, `stat role`
 **Cycle commands** | up/down arrow keys
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [r/ROLE] [d/DEPARTMENT] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com d/Finance`
 **Delete** | `delete INDEX [MORE_INDEXES]` or `del INDEX [MORE_INDEXES]`<br> e.g., `delete 3`, `delete 1 4 5`
@@ -451,8 +485,3 @@ Action     | Format, Examples
 **Import** | `import [FILE PATH]`<br> e.g., `export C:\Users\John\Desktop\employees.csv`
 **Export** | `export [FILE PATH]`<br> e.g., `export C:\Users\John\Desktop\employees.csv`
 **Exit**   | `exit`
-
-
-
-
-
