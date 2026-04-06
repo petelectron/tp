@@ -28,7 +28,6 @@ import seedu.address.model.person.Person;
  */
 public class DeleteCommandTest {
 
-    private static final String EMPLOYEE_FORMAT = "%d employee(s)";
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
@@ -37,7 +36,7 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(List.of(INDEX_FIRST_PERSON));
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                String.format(EMPLOYEE_FORMAT, 1));
+                personToDelete.getName().fullName);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
@@ -62,7 +61,7 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(List.of(INDEX_FIRST_PERSON));
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                String.format(EMPLOYEE_FORMAT, 1));
+                personToDelete.getName().fullName);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
@@ -124,7 +123,7 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(List.of(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON));
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                String.format(EMPLOYEE_FORMAT, 2));
+                personToDelete1.getName().fullName + ", " + personToDelete2.getName().fullName);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete1);
@@ -143,7 +142,7 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(List.of(INDEX_FIRST_PERSON, INDEX_FIRST_PERSON));
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                String.format(EMPLOYEE_FORMAT, 1));
+                personToDelete.getName().fullName);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
@@ -162,7 +161,7 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(List.of(INDEX_SECOND_PERSON, INDEX_FIRST_PERSON));
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                String.format(EMPLOYEE_FORMAT, 2));
+                personToDelete1.getName().fullName + ", " + personToDelete2.getName().fullName);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete1);
@@ -185,7 +184,8 @@ public class DeleteCommandTest {
 
         // Duplicates are filtered out, so message correctly reports 3 unique employees deleted
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                String.format(EMPLOYEE_FORMAT, 3));
+                personToDelete1.getName().fullName + ", "
+                        + personToDelete2.getName().fullName + ", " + personToDelete3.getName().fullName);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         // 3 unique persons are deleted

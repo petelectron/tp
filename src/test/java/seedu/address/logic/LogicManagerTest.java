@@ -69,11 +69,11 @@ public class LogicManagerTest {
     @Test
     public void execute_commandExecutionError_throwsCommandException() throws Exception {
         String deleteCommand = "delete 9";
-        assertCommandSuccess(deleteCommand, getDeleteConfirmationPrompt(1), model);
+        assertCommandSuccess(deleteCommand, getDeleteConfirmationPrompt("#9"), model);
         assertCommandException("y", MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         String deleteAliasCommand = "del 9";
-        assertCommandSuccess(deleteAliasCommand, getDeleteConfirmationPrompt(1), model);
+        assertCommandSuccess(deleteAliasCommand, getDeleteConfirmationPrompt("#9"), model);
         assertCommandException("Y", MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
@@ -122,11 +122,12 @@ public class LogicManagerTest {
     @Test
     public void execute_confirmableCommandConfirmed_executesSuccessfully() throws Exception {
         model.addPerson(new PersonBuilder(AMY).withTags().build());
+        String name = model.getFilteredPersonList().get(0).getName().fullName;
 
         String deleteCommand = "delete 1";
-        assertCommandSuccess(deleteCommand, getDeleteConfirmationPrompt(1), model);
+        assertCommandSuccess(deleteCommand, getDeleteConfirmationPrompt(name), model);
 
-        String expectedDeleteSuccess = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, "1 employee(s)");
+        String expectedDeleteSuccess = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, name);
         assertCommandSuccess("y", expectedDeleteSuccess, model);
         assertTrue(logic.getFilteredPersonList().isEmpty());
     }
@@ -134,8 +135,9 @@ public class LogicManagerTest {
     @Test
     public void execute_confirmableCommandCancelled_doesNotExecute() throws Exception {
         model.addPerson(new PersonBuilder(AMY).withTags().build());
+        String name = model.getFilteredPersonList().get(0).getName().fullName;
 
-        assertCommandSuccess("delete 1", getDeleteConfirmationPrompt(1), model);
+        assertCommandSuccess("delete 1", getDeleteConfirmationPrompt(name), model);
         assertCommandSuccess("n", String.format(MESSAGE_COMMAND_CANCELLED, DeleteCommand.ACTION_DESCRIPTION), model);
 
         assertEquals(1, logic.getFilteredPersonList().size());
@@ -144,8 +146,9 @@ public class LogicManagerTest {
     @Test
     public void execute_confirmableCommandInvalidConfirmationInput_keepsPendingState() throws Exception {
         model.addPerson(new PersonBuilder(AMY).withTags().build());
+        String name = model.getFilteredPersonList().get(0).getName().fullName;
 
-        assertCommandSuccess("delete 1", getDeleteConfirmationPrompt(1), model);
+        assertCommandSuccess("delete 1", getDeleteConfirmationPrompt(name), model);
         assertCommandSuccess("abc", MESSAGE_INVALID_CONFIRMATION_INPUT, model);
         assertCommandSuccess("n", String.format(MESSAGE_COMMAND_CANCELLED, DeleteCommand.ACTION_DESCRIPTION), model);
 
@@ -239,8 +242,10 @@ public class LogicManagerTest {
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
 
-    private String getDeleteConfirmationPrompt(int uniqueCount) {
-        String actionSummary = String.format(DeleteCommand.ACTION_SUMMARY_FORMAT, uniqueCount);
-        return ConfirmationPromptFormatter.format(actionSummary, DeleteCommand.IMPACT_SUMMARY);
+    private String getDeleteConfirmationPrompt(String... targetLabels) {
+        String actionSummary = String.format(DeleteCommand.ACTION_SUMMARY_FORMAT, targetLabels.length);
+        String impactSummary = String.format(DeleteCommand.IMPACT_SUMMARY_WITH_NAMES_FORMAT,
+                String.join(", ", targetLabels));
+        return ConfirmationPromptFormatter.format(actionSummary, impactSummary);
     }
 }
