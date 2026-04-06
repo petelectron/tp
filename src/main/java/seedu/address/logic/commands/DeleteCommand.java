@@ -57,6 +57,18 @@ public class DeleteCommand extends Command implements ConfirmableCommand {
     }
 
     @Override
+    public void validateBeforeConfirm(Model model) throws CommandException {
+        requireNonNull(model);
+        List<Person> lastShownList = model.getFilteredPersonList();
+        for (Index index : getUniqueIndexes()) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                logger.fine("Pre-confirmation validation failed for out-of-range index: " + index.getOneBased());
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+        }
+    }
+
+    @Override
     public String getConfirmationPrompt() {
         int uniqueCount = getUniqueIndexes().size();
         assert uniqueCount > 0 : "Delete confirmation should refer to at least one unique index";
@@ -73,14 +85,7 @@ public class DeleteCommand extends Command implements ConfirmableCommand {
         List<Person> lastShownList = model.getFilteredPersonList();
         List<String> targetLabels = getUniqueIndexes().stream()
                 .sorted((a, b) -> Integer.compare(a.getZeroBased(), b.getZeroBased()))
-                .map(index -> {
-                    int zeroBased = index.getZeroBased();
-                    if (zeroBased < lastShownList.size()) {
-                        return lastShownList.get(zeroBased).getName().fullName;
-                    }
-                    // Keep current behavior for invalid indices while still showing what user keyed in.
-                    return "#" + index.getOneBased();
-                })
+                .map(index -> lastShownList.get(index.getZeroBased()).getName().fullName)
                 .collect(Collectors.toList());
 
         String actionSummary = String.format(ACTION_SUMMARY_FORMAT, targetLabels.size());
