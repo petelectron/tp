@@ -26,7 +26,7 @@ public class ImportCommand extends Command implements ConfirmableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports employee list from local CSV file, "
         + "replacing the current app data. "
         + "Parameters: file path of target csv file\n"
-        + "Example: "
+        + "Example:"
         + "import C:\\Users\\user\\Downloads\\employees.csv";
 
     public static final String MESSAGE_SUCCESS = "Imported employee list from local file.";
@@ -34,7 +34,6 @@ public class ImportCommand extends Command implements ConfirmableCommand {
     public static final String IMPACT_SUMMARY =
         "New employee list will be created from local data, overwriting existing import list.";
     public static final String ACTION_DESCRIPTION = "import local list";
-
 
 
     public static final String MESSAGE_FILE_NOT_FOUND =
@@ -57,6 +56,8 @@ public class ImportCommand extends Command implements ConfirmableCommand {
         "Target file is empty!\nTo clear current list, use 'clear' command.";
 
     private final String filePath;
+    private Path validatedPath;
+    private List<Person> validatedPersons;
 
     /**
      * Constructs an ImportCommand instance given a file path.
@@ -76,27 +77,32 @@ public class ImportCommand extends Command implements ConfirmableCommand {
         return ACTION_DESCRIPTION;
     }
 
-
     @Override
-    public CommandResult execute(Model model) throws CommandException {
+    public void validateBeforeConfirm(Model model) throws CommandException {
         requireNonNull(model);
 
         Path path = resolvePath();
         validatePath(path);
 
-        try {
-            long bytes = Files.size(path);
-            if (bytes > MAX_BYTES) {
-                return new CommandResult(MESSAGE_FILE_SIZE_OVER_LIMIT);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        validatedPath = path;
+        validatedPersons = readCsv(path);
+    }
 
-        List<Person> persons = readCsv(path);
+    @Override
+    public CommandResult execute(Model model) throws CommandException {
+        requireNonNull(model);
 
-        if (persons.isEmpty()) {
-            return new CommandResult(MESSAGE_EMPTY_FILE);
+        Path path = validatedPath;
+        List<Person> persons = validatedPersons;
+
+        // Clear cached pre-validation results after handoff to execution.
+        validatedPath = null;
+        validatedPersons = null;
+
+        if (path == null || persons == null) {
+            path = resolvePath();
+            validatePath(path);
+            persons = readCsv(path);
         }
 
         model.commitAddressBook();
@@ -130,6 +136,14 @@ public class ImportCommand extends Command implements ConfirmableCommand {
         }
         if (!Files.isRegularFile(path)) {
             throw new CommandException(String.format(MESSAGE_NOT_A_FILE, path));
+        }
+        try {
+            long bytes = Files.size(path);
+            if (bytes > MAX_BYTES) {
+                throw new CommandException(MESSAGE_FILE_SIZE_OVER_LIMIT);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -59,21 +59,30 @@ public class AddCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        assert toAdd != null : "Person to add cannot be null";
-
         logger.info("Attempting to add person: " + toAdd.getName());
 
-        if (model.hasPerson(toAdd)) {
-            logger.warning("Duplicate person attempted: " + toAdd.getName());
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (hasDuplicatePerson(model)) {
+            handleDuplicatePersonInModel();
         }
 
-        assert !model.hasPerson(toAdd) : "Person should not exist before adding";
+        addPersonToModel(model);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+    }
+
+    private boolean hasDuplicatePerson(Model model) {
+        return model.hasPerson(toAdd);
+    }
+
+    private void handleDuplicatePersonInModel() throws CommandException {
+        logger.warning("Duplicate person attempted: " + toAdd.getName());
+        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+    }
+
+    private void addPersonToModel(Model model) {
         model.addPerson(toAdd);
-        assert model.hasPerson(toAdd) : "Person should exist after adding";
         logger.fine("Successfully added person: " + toAdd.getName());
         model.commitAddressBook();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
     @Override

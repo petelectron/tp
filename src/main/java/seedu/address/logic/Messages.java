@@ -13,8 +13,18 @@ import seedu.address.model.person.Person;
 public class Messages {
 
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
+    public static final String MESSAGE_MISSING_PARAMETER = "Invalid command format!"
+            + " Missing parameter(s) or prefixes for those parameters.\n%1$s";
+    public static final String MESSAGE_PREAMBLE_NOT_EMPTY = "Invalid command format!"
+            + " Preamble (characters between command and first prefix) should be empty.\n%1$s";
+    public static final String MESSAGE_SEARCH_EXCEED_MAX_KEYWORDS = "Too many keywords provided!"
+            + " Maximum allowed is %d.\n%2$s";
+    public static final String MESSAGE_SEARCH_KEYWORD_TOO_LONG = "Keyword exceeds"
+            + " maximum length of %d characters.\n%2$s";
+    public static final String MESSAGE_SEARCH_KEYWORD_NOT_ALPHANUMERIC = "Keyword contains"
+            + " non-alphanumeric characters.\n%1$s";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
-    public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid";
+    public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid.";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_INVALID_CONFIRMATION_INPUT =
             "Invalid confirmation input.\n"

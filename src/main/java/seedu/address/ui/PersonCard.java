@@ -18,7 +18,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
-    private static final String LABEL_PHONE = "Number: ";
+    private static final String LABEL_PHONE = "Phone: ";
     private static final String LABEL_ROLE = "Role: ";
     private static final String LABEL_DEPARTMENT = "Department: ";
     private static final String LABEL_EMAIL = "Email: ";
