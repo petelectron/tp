@@ -13,8 +13,12 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonTest {
@@ -23,6 +27,18 @@ public class PersonTest {
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
         Person person = new PersonBuilder().build();
         assertThrows(UnsupportedOperationException.class, () -> person.getTags().remove(0));
+    }
+
+    @Test
+    public void constructor_moreThanMaxTags_throwsIllegalArgumentException() {
+        Set<Tag> tooManyTags = new HashSet<>();
+        for (int i = 1; i <= Person.MAX_TAG_COUNT + 1; i++) {
+            tooManyTags.add(new Tag("tag" + i));
+        }
+
+        assertThrows(IllegalArgumentException.class, Person.MESSAGE_TAG_COUNT_CONSTRAINTS, () ->
+            new Person(ALICE.getName(), ALICE.getPhone(), ALICE.getEmail(),
+                ALICE.getRole(), ALICE.getDepartment(), tooManyTags));
     }
 
     @Test
@@ -96,5 +112,11 @@ public class PersonTest {
                 + ", email=" + ALICE.getEmail() + ", role=" + ALICE.getRole() + ", department="
                 + ALICE.getDepartment() + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
+    }
+
+    @Test
+    public void hashCode_sameValues_sameHashCode() {
+        Person aliceCopy = new PersonBuilder(ALICE).build();
+        assertEquals(ALICE.hashCode(), aliceCopy.hashCode());
     }
 }

@@ -46,6 +46,7 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
@@ -233,5 +234,20 @@ public class EditCommandParserTest {
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_tooManyTags_failure() {
+        String userInput = INDEX_FIRST_PERSON.getOneBased() + buildTagDescriptors(Person.MAX_TAG_COUNT + 1);
+
+        assertParseFailure(parser, userInput, Person.MESSAGE_TAG_COUNT_CONSTRAINTS);
+    }
+
+    private static String buildTagDescriptors(int tagCount) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 1; i <= tagCount; i++) {
+            builder.append(" ").append(PREFIX_TAG).append("tag").append(i);
+        }
+        return builder.toString();
     }
 }
