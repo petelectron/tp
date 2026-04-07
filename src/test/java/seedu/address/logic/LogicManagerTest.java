@@ -27,6 +27,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ConfirmationPromptFormatter;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -148,6 +149,22 @@ public class LogicManagerTest {
         assertCommandSuccess("n", String.format(MESSAGE_COMMAND_CANCELLED, DeleteCommand.ACTION_DESCRIPTION), model);
 
         assertEquals(1, logic.getFilteredPersonList().size());
+    }
+
+    @Test
+    public void execute_confirmableEditValidationFailure_doesNotSetPendingConfirmation() throws Exception {
+        assertCommandException("edit 1 n/Alice", MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        assertCommandSuccess(ListCommand.COMMAND_WORD, ListCommand.MESSAGE_SUCCESS, model);
+    }
+
+    @Test
+    public void execute_confirmableImportValidationFailure_doesNotSetPendingConfirmation() throws Exception {
+        Path missingPath = temporaryFolder.resolve("missing-employees.csv");
+        String importCommand = "import " + missingPath;
+
+        assertCommandException(importCommand, String.format(ImportCommand.MESSAGE_FILE_NOT_FOUND, missingPath));
+        assertCommandSuccess(ListCommand.COMMAND_WORD, ListCommand.MESSAGE_SUCCESS, model);
     }
 
     /**

@@ -39,7 +39,7 @@ public class EditCommand extends Command implements ConfirmableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the displayed person list. "
-            + "Existing values will be overwritten by the input values."
+            + "Existing values will be overwritten by the input values. "
             + "Accepts 0-1 input values for each field, with at least 1 input value overall.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
@@ -94,17 +94,25 @@ public class EditCommand extends Command implements ConfirmableCommand {
     }
 
     @Override
+    public void validateBeforeConfirm(Model model) throws CommandException {
+        requireNonNull(model);
+        List<Person> lastShownList = model.getFilteredPersonList();
+        requireNonNull(lastShownList);
+
+        Person personToEdit = getPersonToEdit(lastShownList);
+        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        requireNonNull(editedPerson);
+
+        ensureNoDuplicatePerson(model, personToEdit, editedPerson);
+    }
+
+    @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
         requireNonNull(lastShownList);
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToEdit = lastShownList.get(index.getZeroBased());
-        assert personToEdit != null : "Person to edit cannot be null";
+        Person personToEdit = getPersonToEdit(lastShownList);
 
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
         requireNonNull(editedPerson);
@@ -115,9 +123,7 @@ public class EditCommand extends Command implements ConfirmableCommand {
         requireNonNull(editedPerson.getRole());
         requireNonNull(editedPerson.getDepartment());
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
+        ensureNoDuplicatePerson(model, personToEdit, editedPerson);
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -126,6 +132,23 @@ public class EditCommand extends Command implements ConfirmableCommand {
 
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+    }
+
+    private Person getPersonToEdit(List<Person> lastShownList) throws CommandException {
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        Person personToEdit = lastShownList.get(index.getZeroBased());
+        requireNonNull(personToEdit);
+        return personToEdit;
+    }
+
+    private void ensureNoDuplicatePerson(Model model, Person personToEdit, Person editedPerson)
+            throws CommandException {
+        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
     }
 
     /**

@@ -50,6 +50,8 @@ public class ImportCommand extends Command implements ConfirmableCommand {
         "Target file is empty!\nTo clear current list, use 'clear' command.";
 
     private final String filePath;
+    private Path validatedPath;
+    private List<Person> validatedPersons;
 
     /**
      * Constructs an ImportCommand instance given a file path.
@@ -69,15 +71,34 @@ public class ImportCommand extends Command implements ConfirmableCommand {
         return ACTION_DESCRIPTION;
     }
 
-
     @Override
-    public CommandResult execute(Model model) throws CommandException {
+    public void validateBeforeConfirm(Model model) throws CommandException {
         requireNonNull(model);
 
         Path path = resolvePath();
         validatePath(path);
 
-        List<Person> persons = readCsv(path);
+        validatedPath = path;
+        validatedPersons = readCsv(path);
+    }
+
+
+    @Override
+    public CommandResult execute(Model model) throws CommandException {
+        requireNonNull(model);
+
+        Path path = validatedPath;
+        List<Person> persons = validatedPersons;
+
+        // Clear cached pre-validation results after handoff to execution.
+        validatedPath = null;
+        validatedPersons = null;
+
+        if (path == null || persons == null) {
+            path = resolvePath();
+            validatePath(path);
+            persons = readCsv(path);
+        }
 
         model.commitAddressBook();
 

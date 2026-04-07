@@ -157,6 +157,7 @@ public class StatsPanel extends UiPart<Region> {
         case TAG:
             uniqueMetricTextLabel.setText("🏷️ Unique tags:");
             mostCommonMetricTextLabel.setText("📈 Most common tag:");
+            distributionHeaderLabel.setText("📋 Tag Distribution");
             employeesWithMetricTextLabel.setText("✅ Employees with tags:");
             employeesWithRow.setManaged(true);
             employeesWithRow.setVisible(true);
