@@ -1,0 +1,84 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+skinparam Participant {
+    BackgroundColor LightBlue
+    BorderColor Black
+    FontColor Black
+    FontStyle bold
+}
+
+box UI #LightBlue
+    participant "StatsPanel" as StatsPanel
+end box
+
+box Logic #LightGreen
+    participant "LogicManager" as LogicManager
+    participant "AddCommand" as AddCommand
+end box
+
+box Model #LightPink
+    participant "Model" as Model
+    participant "ObservableList" as ObservableList
+end box
+
+box Service #LightYellow
+    participant "StatisticsService" as StatsService
+    participant "Statistics" as Statistics
+end box
+
+-> LogicManager : execute("add ...")
+activate LogicManager
+
+LogicManager -> AddCommand : execute(model)
+activate AddCommand
+
+AddCommand -> Model : addPerson(person)
+activate Model
+
+Model --> AddCommand : person added
+deactivate Model
+
+AddCommand --> LogicManager : CommandResult
+deactivate AddCommand
+
+LogicManager --> : CommandResult
+deactivate LogicManager
+
+== StatsPanel Auto-Update ==
+
+ObservableList -> StatsPanel : ListChangeEvent
+activate StatsPanel
+
+StatsPanel -> StatsPanel : refresh()
+activate StatsPanel
+
+StatsPanel -> StatsService : getCurrentStatistics()
+activate StatsService
+
+StatsService -> Model : getFilteredPersonList()
+activate Model
+
+Model --> StatsService : ObservableList<Person>
+deactivate Model
+
+StatsService -> Statistics : new Statistics(personList)
+activate Statistics
+
+Statistics --> StatsService : Statistics object
+deactivate Statistics
+
+StatsService --> StatsPanel : Statistics
+deactivate StatsService
+
+StatsPanel -> StatsPanel : updateUi(Statistics)
+activate StatsPanel
+
+StatsPanel -> StatsPanel : setText(labels)
+StatsPanel --> StatsPanel : labels updated
+deactivate StatsPanel
+
+StatsPanel --> ObservableList : refresh complete
+deactivate StatsPanel
+
+@enduml
