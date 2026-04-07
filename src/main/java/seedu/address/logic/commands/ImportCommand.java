@@ -27,8 +27,8 @@ public class ImportCommand extends Command implements ConfirmableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports employee list from local CSV file, "
         + "replacing the current app data. "
         + "Parameters: file path of target csv file\n"
-        + "Example:"
-        + "import C:\\Users\\user\\Downloads\\employees.csv";
+        + "Example: "
+        + COMMAND_WORD + " C:\\Users\\user\\Downloads\\employees.csv";
 
     public static final String MESSAGE_SUCCESS = "Imported %d employee(s) from %s";
     public static final String ACTION_SUMMARY = "Import local list.";

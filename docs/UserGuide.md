@@ -443,24 +443,39 @@ Alternative ways to import:
 
 **⚠️ Confirmation Required:** This command requires confirmation before execution to prevent accidental data loss. See [Confirmation Prompts](#confirmation-prompts) for details on how to respond.
 </box>
+<box type="info" seamless>
+
+**🔁 Undo Possible:** `import` command can be reversed if executed recently. See [Undo](#undo-an-executed-command--undo) for details.
+</box>
 
 <br>
 
 
 ### Export employee data : `export`
 
-Exports the current list of employees into a CSV file, saved into user-specified local destination.
+Exports the current list of employees into a CSV (comma-separated values) file, saved into user-specified local destination.
 
 Format: `export [FILE PATH]`
+
+Notes:
+* The full list of employees is exported, even when your view of the list is narrowed using the search function.
+* [FILE PATH] must end in ".csv". Exporting to other file formats is currently not supported.
+* Entering only a file name (e.g. "employees.csv") will export the current list into HRmanager's home folder.
+* No overwriting of local files is allowed.
+
+Examples:
+* `export employees.csv`
+* `export C:\Users\username\Desktop\2026_employee_list.csv`
+
+Exported file format:
+
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/exported-csv-placeholder.png`
 
 <box type="info" seamless>
 
 **⚠️ Confirmation Required:** This command requires confirmation before execution to prevent accidental edits. See [Confirmation Prompts](#confirmation-prompts) for details on how to respond.
 </box>
 <box type="info" seamless>
-
-**🔁 Undo Possible:** `import` (but NOT `export`) command can be reversed if executed recently. See [Undo](#undo-an-executed-command--undo) for details.
-</box>
 
 <br>
 

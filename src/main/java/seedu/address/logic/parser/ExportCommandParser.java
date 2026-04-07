@@ -18,10 +18,14 @@ public class ExportCommandParser implements Parser<ExportCommand> {
      */
     @Override
     public ExportCommand parse(String args) throws ParseException {
-        String trimmed = args.trim();
+        String trimmed = args.trim().replace("\"", ""); //remove spaces and quotes
         if (trimmed.isEmpty()) {
             throw new ParseException(
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+        }
+        if (!trimmed.endsWith(".csv")) {
+            throw new ParseException(
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_INVALID_EXTENSION));
         }
         return new ExportCommand(trimmed);
     }
