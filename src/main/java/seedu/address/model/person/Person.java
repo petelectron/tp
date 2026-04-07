@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
@@ -16,6 +17,8 @@ import seedu.address.model.tag.Tag;
  */
 public class Person {
 
+    public static final int MAX_TAG_COUNT = 20;
+
     // Identity fields
     private final Name name;
     private final Phone phone;
@@ -31,6 +34,7 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Role role, Department department, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, role, department, tags);
+        checkArgument(tags.size() <= MAX_TAG_COUNT, Tag.MESSAGE_TOO_MANY_TAGS);
         this.name = name;
         this.phone = phone;
         this.email = email;

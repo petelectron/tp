@@ -9,6 +9,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -22,7 +23,6 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final int MAX_TAGS = 20;
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -153,15 +153,14 @@ public class ParserUtil {
     public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
         requireNonNull(tags);
 
-        if (tags.size() > Tag.MAX_TAGS) {
-            throw new ParseException(
-                    String.format(Tag.MESSAGE_TOO_MANY_TAGS, Tag.MAX_TAGS, tags.size()));
-        }
-
         final Set<Tag> tagSet = new HashSet<>();
 
         for (String tagName : tags) {
             tagSet.add(parseTag(tagName));
+        }
+
+        if (tagSet.size() > Person.MAX_TAG_COUNT) {
+            throw new ParseException(Tag.MESSAGE_TAG_COUNT_CONSTRAINTS);
         }
 
         return tagSet;

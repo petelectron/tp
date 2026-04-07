@@ -195,10 +195,10 @@ public class CsvImportUtil {
                     .map(Tag::new)
                     .collect(Collectors.toSet());
 
-            if (tags.size() > Tag.MAX_TAGS) {
+            if (tags.size() > Person.MAX_TAG_COUNT) {
                 throw new CsvParseException(
-                        String.format("Line %d: " + Tag.MESSAGE_TOO_MANY_TAGS,
-                                lineNumber, Tag.MAX_TAGS, tags.size()));
+                        String.format("Line %d: " + Tag.MESSAGE_TAG_COUNT_CONSTRAINTS,
+                                lineNumber, Person.MAX_TAG_COUNT, tags.size()));
             }
 
             return tags;
