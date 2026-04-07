@@ -107,7 +107,7 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 Additional notes:
-* Extraneous parameters are ignored (for example, `help 123` is treated as `help`).
+* Extraneous parameters are ignored (for example, `help 123` is treated as `help`). See: [Extraneous parameters](#features-1)
 
 Examples:
 * `help`
@@ -122,7 +122,7 @@ Shows a list of all employees in HRmanager.
 Format: `list`
 
 Additional notes:
-* Extraneous parameters are ignored (for example, `list abc` is treated as `list`).
+* Extraneous parameters are ignored (for example, `list abc` is treated as `list`). See: [Extraneous parameters](#features-1)
 * Running `list` returns the display to the full global employee list after any narrowed search results view.
 
 Examples:
@@ -312,8 +312,11 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [r/ROLE] [d/DEPARTMENT] [t/TAG]
 * Each optional field accepts at most 1 updated value, i.e. no duplicate fields.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the employee will be removed i.e. adding of tags is not cumulative.
-* You can remove all the employee's tags by typing `t/` without
-    specifying any tags after it.
+* You can remove all the employee's tags by typing `t/` without specifying any tags after it.
+
+Examples:
+*  `edit 1 p/91234567 e/johndoe@example.com` edits the phone number and email address of the 1st employee to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 2 n/Betsy Crower d/Marketing t/` edits the name and department of the 2nd employee to be `Betsy Crower` and `Marketing`, and clears all existing tags.
 
 <box type="info" seamless>
 
@@ -323,10 +326,6 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [r/ROLE] [d/DEPARTMENT] [t/TAG]
 
 **🔁 Undo Possible:** This command can be reversed if executed recently. See [Undo](#undo-an-executed-command--undo) for details.
 </box>
-
-Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` edits the phone number and email address of the 1st employee to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower d/Marketing t/` edits the name and department of the 2nd employee to be `Betsy Crower` and `Marketing`, and clears all existing tags.
 
 <br>
 
@@ -344,15 +343,6 @@ What this feature does:
 * Works on the employee list that is currently shown on screen.
 * Supports deleting several employees in one command.
 * If deletion is done from a filtered list (for example after `search`), the main window remains on the filtered list view after successful deletion.
-
-<box type="info" seamless>
-
-**⚠️ Confirmation Required:** This command requires confirmation before execution to prevent accidental deletion. See [Confirmation Prompts](#confirmation-prompts) for details on how to respond.
-</box>
-<box type="info" seamless>
-
-**🔁 Undo Possible:** This command can be reversed if executed recently. See [Undo](#undo-an-executed-command--undo) for details.
-</box>
 
 Additional constraints:
 * At least **one** index must be provided.
@@ -372,6 +362,15 @@ Examples:
 **Successful delete command output:**
 
 > **PNG placeholder:** Insert a screenshot here, e.g. `images/delete-command-placeholder.png`
+
+<box type="info" seamless>
+
+**⚠️ Confirmation Required:** This command requires confirmation before execution to prevent accidental deletion. See [Confirmation Prompts](#confirmation-prompts) for details on how to respond.
+</box>
+<box type="info" seamless>
+
+**🔁 Undo Possible:** This command can be reversed if executed recently. See [Undo](#undo-an-executed-command--undo) for details.
+</box>
 
 <br>
 
