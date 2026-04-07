@@ -39,7 +39,7 @@ public class EditCommand extends Command implements ConfirmableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the displayed person list. "
-            + "Existing values will be overwritten by the input values."
+            + "Existing values will be overwritten by the input values. "
             + "Accepts 0-1 input values for each field, with at least 1 input value overall.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
