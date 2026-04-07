@@ -18,6 +18,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Role;
+import seedu.address.model.tag.Tag;
 
 public class JsonAdaptedPersonTest {
     private static final String INVALID_NAME = "R@chel";
@@ -148,7 +149,7 @@ public class JsonAdaptedPersonTest {
                 new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ROLE, VALID_DEPARTMENT,
                         tooManyTags);
 
-        assertThrows(IllegalValueException.class, Person.MESSAGE_TAG_COUNT_CONSTRAINTS, person::toModelType);
+        assertThrows(IllegalValueException.class, Tag.MESSAGE_TAG_COUNT_CONSTRAINTS, person::toModelType);
     }
 
 }
