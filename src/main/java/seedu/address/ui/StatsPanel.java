@@ -89,13 +89,10 @@ public class StatsPanel extends UiPart<Region> {
         this.statisticsService = new StatisticsService(logic);
         this.currentMode = StatisticsMode.DEPARTMENT;
 
-        // Listen for changes to the person list.
-        logic.getFilteredPersonList().addListener(new ListChangeListener<Person>() {
-            @Override
-            public void onChanged(Change<? extends Person> change) {
-                logger.fine("Person list changed, refreshing statistics");
-                refresh();
-            }
+        // Listen for changes to the full address book list used by StatisticsService.
+        logic.getAddressBook().getPersonList().addListener((ListChangeListener<Person>) change -> {
+            logger.fine("Address book list changed, refreshing statistics");
+            refresh();
         });
 
         refresh();

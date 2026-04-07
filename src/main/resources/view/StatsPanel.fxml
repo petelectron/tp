@@ -7,10 +7,10 @@
 <?import javafx.scene.layout.Region?>
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      styleClass="stats-panel" spacing="10" maxWidth="Infinity">
+      styleClass="stats-panel" spacing="10" prefWidth="350">
 
     <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
+        <Insets top="15" right="15" bottom="15" left="15"/>
     </padding>
 
     <!-- Header -->
