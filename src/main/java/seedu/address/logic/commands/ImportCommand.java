@@ -45,10 +45,10 @@ public class ImportCommand extends Command implements ConfirmableCommand {
         "The provided file path is invalid: %s";
     public static final String MESSAGE_NOT_CSV =
         "Only csv files are supported";
-    public static final int maxKilobytes = 100;
-    public static final int maxBytes = 100000; //100kb
+    public static final int MAX_KILOBYTES = 100;
+    public static final int MAX_BYTES = 100000; //100kb
     public static final String MESSAGE_FILE_SIZE_OVER_LIMIT =
-        String.format("Target file exceeds the limit of %d kB (%d bytes)", maxKilobytes, maxBytes);
+        String.format("Target file exceeds the limit of %d kB (%d bytes)", MAX_KILOBYTES, MAX_BYTES);
     public static final String MESSAGE_CSV_PARSE_ERROR =
         "Failed to parse CSV file — %s";
     public static final String MESSAGE_IO_ERROR =
@@ -86,7 +86,7 @@ public class ImportCommand extends Command implements ConfirmableCommand {
 
         try {
             long bytes = Files.size(path);
-            if (bytes > maxBytes) {
+            if (bytes > MAX_BYTES) {
                 return new CommandResult(MESSAGE_FILE_SIZE_OVER_LIMIT);
             }
         } catch (IOException e) {
