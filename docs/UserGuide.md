@@ -6,7 +6,7 @@
 
 # HRmanager User Guide
 
-HRmanager is a **desktop app for managing employee and applicant records, optimized for use via a Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, HRmanager can help you manage HR records faster than traditional GUI apps.
+HRmanager is a **desktop app for managing employee and applicant records, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, HRmanager can help you manage HR records faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -106,6 +106,12 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+Additional notes:
+* Extraneous parameters are ignored (for example, `help 123` is treated as `help`).
+
+Examples:
+* `help`
+
 <br>
 
 
@@ -114,6 +120,13 @@ Format: `help`
 Shows a list of all employees in HRmanager.
 
 Format: `list`
+
+Additional notes:
+* Extraneous parameters are ignored (for example, `list abc` is treated as `list`).
+* Running `list` returns the display to the full global employee list after any narrowed search results view.
+
+Examples:
+* `list`
 
 <br>
 
@@ -207,6 +220,7 @@ Additional constraints:
 * A maximum of **5** keywords can be supplied in a single command.
 * Each keyword must be **alphanumeric** only (no spaces or special characters).
 * Each keyword must be at most **20** characters long.
+* To return to the full employee list after `search`, run `list`.
 
 Examples:
 * `search John` returns employees with "John" anywhere in their fields (e.g., `John Doe`).
@@ -248,6 +262,7 @@ Supported modes:
 * **Role mode:** Unique roles, most common role, and role distribution.
 * For all modes, distribution values are shown top-to-bottom in descending count (highest at the top, lowest at the bottom).
 * If multiple values have the same count, they are ordered alphabetically (case-insensitive).
+* If multiple values tie for the highest count, the displayed most common value (tag/department/role) is the alphabetically first one (case-insensitive).
 * For all modes, values are computed from the full HRmanager dataset (global distribution), not only the currently filtered on-screen list.
 </box>
 
@@ -331,6 +346,7 @@ What this feature does:
 * Removes one or more employees permanently from HRmanager.
 * Works on the employee list that is currently shown on screen.
 * Supports deleting several employees in one command.
+* If deletion is done from a filtered list (for example after `search`), the main window remains on the filtered list view after successful deletion.
 
 <box type="info" seamless>
 
@@ -340,7 +356,7 @@ What this feature does:
 Additional constraints:
 * At least **one** index must be provided.
 * Each index must be a **positive non-zero integer**: `1`, `2`, `3`, ...
-* A maximum of **100** indexes can be supplied in a single command.
+* A maximum of **10** indexes can be supplied in a single command.
 * Indexes are based on the **current displayed list**, not on a hidden or previously shown list.
 * If any supplied index is out of range, the deletion fails and no employee is deleted.
 * Repeated indexes are accepted, but duplicate indexes are ignored internally.
@@ -366,6 +382,12 @@ Clears all entries from HRmanager.
 
 Format: `clear`
 
+Additional notes:
+* Extraneous parameters are ignored (for example, `clear now` is treated as `clear`).
+
+Examples:
+* `clear`
+
 <box type="info" seamless>
 
 **⚠️ Confirmation Required:** This command requires confirmation before execution to prevent accidental data loss. See [Confirmation Prompts](#confirmation-prompts) for details on how to respond.
@@ -388,6 +410,12 @@ Format: `export [FILE PATH]`
 Exits the program.
 
 Format: `exit`
+
+Additional notes:
+* Extraneous parameters are ignored (for example, `exit now` is treated as `exit`).
+
+Examples:
+* `exit`
 
 <box type="info" seamless>
 
