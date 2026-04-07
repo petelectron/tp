@@ -24,6 +24,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final double MIN_WINDOW_WIDTH = 1020;
+    private static final double MIN_WINDOW_HEIGHT = 600;
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -66,6 +68,7 @@ public class MainWindow extends UiPart<Stage> {
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
+        enforceMinimumWindowSize();
 
         setAccelerators();
 
@@ -128,6 +131,11 @@ public class MainWindow extends UiPart<Stage> {
 
         statsPanel = new StatsPanel(logic);
         statsPanelPlaceholder.getChildren().add(statsPanel.getRoot());
+    }
+
+    private void enforceMinimumWindowSize() {
+        primaryStage.setMinWidth(MIN_WINDOW_WIDTH);
+        primaryStage.setMinHeight(MIN_WINDOW_HEIGHT);
     }
 
     /**
@@ -202,3 +210,4 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 }
+

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="HRmanager" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+         title="HRmanager" minWidth="1020" minHeight="600" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
@@ -48,9 +48,9 @@
         </StackPane>
 
         <!-- HBox to hold both person list and stats panel side by side -->
-        <HBox VBox.vgrow="ALWAYS">
+        <HBox fx:id="mainContentPane" VBox.vgrow="ALWAYS">
           <!-- Left side: Person List - grows to fill available space -->
-          <VBox styleClass="pane-with-border" HBox.hgrow="ALWAYS">
+          <VBox fx:id="personListContainer" styleClass="pane-with-border" HBox.hgrow="ALWAYS">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
@@ -59,7 +59,7 @@
 
           <!-- Right side: Stats Panel with ScrollPane -->
           <ScrollPane fx:id="statsScrollPane" styleClass="pane-with-border stats-scroll-pane"
-                      minWidth="400" prefWidth="400" maxWidth="400"
+                      minWidth="480" prefWidth="480" maxWidth="480"
                       fitToWidth="true" fitToHeight="false"
                       vbarPolicy="AS_NEEDED">
             <StackPane fx:id="statsPanelPlaceholder"/>
