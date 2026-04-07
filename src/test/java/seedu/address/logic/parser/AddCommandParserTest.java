@@ -244,7 +244,7 @@ public class AddCommandParserTest {
         String input = NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ROLE_DESC_BOB + DEPARTMENT_DESC_BOB
                 + buildTagDescriptors(Person.MAX_TAG_COUNT + 1);
 
-        assertParseFailure(parser, input, Person.MESSAGE_TAG_COUNT_CONSTRAINTS);
+        assertParseFailure(parser, input, Tag.MESSAGE_TAG_COUNT_CONSTRAINTS);
     }
 
     private static String buildTagDescriptors(int tagCount) {

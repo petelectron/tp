@@ -36,7 +36,7 @@ public class PersonTest {
             tooManyTags.add(new Tag("tag" + i));
         }
 
-        assertThrows(IllegalArgumentException.class, Person.MESSAGE_TAG_COUNT_CONSTRAINTS, () ->
+        assertThrows(IllegalArgumentException.class, Tag.MESSAGE_TAG_COUNT_CONSTRAINTS, () ->
             new Person(ALICE.getName(), ALICE.getPhone(), ALICE.getEmail(),
                 ALICE.getRole(), ALICE.getDepartment(), tooManyTags));
     }

@@ -240,7 +240,7 @@ public class EditCommandParserTest {
     public void parse_tooManyTags_failure() {
         String userInput = INDEX_FIRST_PERSON.getOneBased() + buildTagDescriptors(Person.MAX_TAG_COUNT + 1);
 
-        assertParseFailure(parser, userInput, Person.MESSAGE_TAG_COUNT_CONSTRAINTS);
+        assertParseFailure(parser, userInput, Tag.MESSAGE_TAG_COUNT_CONSTRAINTS);
     }
 
     private static String buildTagDescriptors(int tagCount) {

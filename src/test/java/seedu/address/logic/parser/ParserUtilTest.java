@@ -237,6 +237,6 @@ public class ParserUtilTest {
         }
 
         Executable parseTooManyTags = () -> ParserUtil.parseTags(tooManyTags);
-        assertThrows(ParseException.class, Person.MESSAGE_TAG_COUNT_CONSTRAINTS, parseTooManyTags);
+        assertThrows(ParseException.class, Tag.MESSAGE_TAG_COUNT_CONSTRAINTS, parseTooManyTags);
     }
 }
