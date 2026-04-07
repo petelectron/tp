@@ -12,6 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
@@ -134,6 +135,9 @@ public class ParserUtil {
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
             tagSet.add(parseTag(tagName));
+        }
+        if (tagSet.size() > Person.MAX_TAG_COUNT) {
+            throw new ParseException(Person.MESSAGE_TAG_COUNT_CONSTRAINTS);
         }
         return tagSet;
     }

@@ -6,17 +6,21 @@ import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
@@ -38,6 +42,11 @@ public class ParserUtilTest {
     private static final String VALID_TAG_2 = "neighbour";
 
     private static final String WHITESPACE = " \t\r\n";
+
+    @Test
+    public void constructor_defaultConstructor_instanceCreated() {
+        assertTrue(new ParserUtil() instanceof ParserUtil);
+    }
 
     @Test
     public void parseIndex_invalidInput_throwsParseException() {
@@ -218,5 +227,16 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseTags_moreThanMaxTags_throwsParseException() {
+        List<String> tooManyTags = new ArrayList<>();
+        for (int i = 1; i <= Person.MAX_TAG_COUNT + 1; i++) {
+            tooManyTags.add("tag" + i);
+        }
+
+        Executable parseTooManyTags = () -> ParserUtil.parseTags(tooManyTags);
+        assertThrows(ParseException.class, Person.MESSAGE_TAG_COUNT_CONSTRAINTS, parseTooManyTags);
     }
 }

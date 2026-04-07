@@ -15,6 +15,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Role;
 
@@ -134,6 +135,20 @@ public class JsonAdaptedPersonTest {
                 new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ROLE, VALID_DEPARTMENT,
                         invalidTags);
         assertThrows(IllegalValueException.class, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_tooManyTags_throwsIllegalValueException() {
+        List<JsonAdaptedTag> tooManyTags = new ArrayList<>();
+        for (int i = 1; i <= Person.MAX_TAG_COUNT + 1; i++) {
+            tooManyTags.add(new JsonAdaptedTag("tag" + i));
+        }
+
+        JsonAdaptedPerson person =
+                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ROLE, VALID_DEPARTMENT,
+                        tooManyTags);
+
+        assertThrows(IllegalValueException.class, Person.MESSAGE_TAG_COUNT_CONSTRAINTS, person::toModelType);
     }
 
 }
