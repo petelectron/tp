@@ -131,8 +131,8 @@
         "viewing-help-help": "Viewing help : help",
         "listing-all-employees-list": "Listing all employees : list",
         "adding-an-employee-add": "Adding an employee : add",
-        "parameter-restrictions-for-each-field": "Parameter restrictions for each field:",
-        "searching-for-an-employee-search": "Searching for an employee : search",
+        "parameter-restrictions-for-each-field": "Parameter restrictions for each field",
+        "searching-for-employees-search": "Searching for employees : search",
         "switching-the-statistics-dashboard-mode-stat": "Switching the statistics dashboard mode: stat",
         "editing-an-employee-edit": "Editing an employee : edit",
         "deleting-an-employee-delete": "Deleting an employee : delete",
@@ -148,6 +148,7 @@
         "editing-the-data-file": "Editing the data file",
         "faq": "FAQ",
         "known-issues": "Known issues",
+        "future-implementations-coming-in-future-versions": "Future implementations - Coming in future versions",
         "command-summary": "Command summary"
       },
       "headingKeywords": {}
