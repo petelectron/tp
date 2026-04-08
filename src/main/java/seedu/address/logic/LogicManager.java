@@ -46,6 +46,14 @@ public class LogicManager implements Logic {
         addressBookParser = new AddressBookParser();
     }
 
+    /**
+     * Parses and executes the given user input.
+     *
+     * @param commandText Raw user input to execute.
+     * @return Result of command execution.
+     * @throws CommandException If command execution fails.
+     * @throws ParseException If the input cannot be parsed into a command.
+     */
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
@@ -107,26 +115,51 @@ public class LogicManager implements Logic {
         }
     }
 
+    /**
+     * Returns the current address book data.
+     *
+     * @return Read-only address book view.
+     */
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return model.getAddressBook();
     }
 
+    /**
+     * Returns the filtered list of persons currently shown by the model.
+     *
+     * @return Observable filtered person list.
+     */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return model.getFilteredPersonList();
     }
 
+    /**
+     * Returns the path to the address book data file.
+     *
+     * @return Path to the storage file.
+     */
     @Override
     public Path getAddressBookFilePath() {
         return model.getAddressBookFilePath();
     }
 
+    /**
+     * Returns the current GUI settings.
+     *
+     * @return Active GUI settings.
+     */
     @Override
     public GuiSettings getGuiSettings() {
         return model.getGuiSettings();
     }
 
+    /**
+     * Updates GUI settings in the model.
+     *
+     * @param guiSettings GUI settings to apply.
+     */
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);

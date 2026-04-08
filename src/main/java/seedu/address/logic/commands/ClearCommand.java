@@ -17,17 +17,33 @@ public class ClearCommand extends Command implements ConfirmableCommand {
             "All employee records will be permanently removed.";
     public static final String ACTION_DESCRIPTION = "clear all employees";
 
+    /**
+     * Returns the confirmation prompt for this clear command.
+     *
+     * @return Confirmation prompt shown before execution.
+     */
     @Override
     public String getConfirmationPrompt() {
         return ConfirmationPromptFormatter.format(ACTION_SUMMARY, IMPACT_SUMMARY);
     }
 
+    /**
+     * Returns a short description of the command action.
+     *
+     * @return Action description used in cancellation feedback.
+     */
     @Override
     public String getActionDescription() {
         return ACTION_DESCRIPTION;
     }
 
 
+    /**
+     * Clears all employees from the address book.
+     *
+     * @param model Model on which the command operates.
+     * @return Command result indicating clear success.
+     */
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);

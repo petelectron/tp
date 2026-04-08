@@ -72,16 +72,32 @@ public class ImportCommand extends Command implements ConfirmableCommand {
         this.filePath = filePath;
     }
 
+    /**
+     * Returns the confirmation prompt for this import command.
+     *
+     * @return Confirmation prompt shown before execution.
+     */
     @Override
     public String getConfirmationPrompt() {
         return ConfirmationPromptFormatter.format(ACTION_SUMMARY, IMPACT_SUMMARY);
     }
 
+    /**
+     * Returns a short description of the command action.
+     *
+     * @return Action description used in cancellation feedback.
+     */
     @Override
     public String getActionDescription() {
         return ACTION_DESCRIPTION;
     }
 
+    /**
+     * Validates file path and CSV content before showing confirmation.
+     *
+     * @param model Current model state.
+     * @throws CommandException If path validation or CSV parsing fails.
+     */
     @Override
     public void validateBeforeConfirm(Model model) throws CommandException {
         requireNonNull(model);
@@ -97,6 +113,13 @@ public class ImportCommand extends Command implements ConfirmableCommand {
         }
     }
 
+    /**
+     * Executes the import and replaces current address book data with parsed CSV entries.
+     *
+     * @param model Model on which the command operates.
+     * @return Command result indicating import outcome.
+     * @throws CommandException If validation or parsing fails during execution.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -177,6 +200,12 @@ public class ImportCommand extends Command implements ConfirmableCommand {
         }
     }
 
+    /**
+     * Returns whether this command is equal to another object.
+     *
+     * @param other Object to compare against.
+     * @return {@code true} if both commands refer to the same file path.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {

@@ -24,6 +24,12 @@ public class PersonMatchesKeywordPredicate implements Predicate<Person> {
         this.keywords = List.copyOf(keywords);
     }
 
+    /**
+     * Returns whether the given {@code person} matches at least one non-blank keyword.
+     *
+     * @param person Person to test.
+     * @return {@code true} if any keyword matches a searchable field in the person.
+     */
     @Override
     public boolean test(Person person) {
         requireNonNull(person);
@@ -51,6 +57,12 @@ public class PersonMatchesKeywordPredicate implements Predicate<Person> {
         return value.toLowerCase(Locale.ROOT).contains(keyword.toLowerCase(Locale.ROOT));
     }
 
+    /**
+     * Returns whether this predicate is equal to another object.
+     *
+     * @param other Object to compare against.
+     * @return {@code true} if both predicates contain the same keywords.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -66,6 +78,11 @@ public class PersonMatchesKeywordPredicate implements Predicate<Person> {
         return keywords.equals(otherPersonMatchesKeywordPredicate.keywords);
     }
 
+    /**
+     * Returns a string representation of this predicate.
+     *
+     * @return String form containing the configured keywords.
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this).add("keywords", keywords).toString();

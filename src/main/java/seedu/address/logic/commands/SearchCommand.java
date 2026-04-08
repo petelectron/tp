@@ -36,6 +36,12 @@ public class SearchCommand extends Command {
         this.predicate = predicate;
     }
 
+    /**
+     * Executes the search by updating the filtered person list with this command's predicate.
+     *
+     * @param model Model on which the command operates.
+     * @return Command result indicating number of matched employees.
+     */
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
@@ -45,6 +51,12 @@ public class SearchCommand extends Command {
         return new CommandResult(String.format(MESSAGE_EMPLOYEES_LISTED_OVERVIEW, matchedEmployees));
     }
 
+    /**
+     * Returns whether this command is equal to another object.
+     *
+     * @param other Object to compare against.
+     * @return {@code true} if both commands use the same predicate.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -60,6 +72,11 @@ public class SearchCommand extends Command {
         return predicate.equals(otherSearchCommand.predicate);
     }
 
+    /**
+     * Returns a string representation of this command.
+     *
+     * @return String form containing the search predicate.
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this)

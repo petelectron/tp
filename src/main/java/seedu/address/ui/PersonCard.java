@@ -78,6 +78,11 @@ public class PersonCard extends UiPart<Region> {
                 .forEach(tag -> tags.getChildren().add(new Label(tag.getTagName())));
     }
 
+    /**
+     * Returns the person represented by this card.
+     *
+     * @return Person displayed by this UI component.
+     */
     public Person getPerson() {
         return person;
     }
