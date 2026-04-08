@@ -47,7 +47,7 @@ public class PersonMatchesKeywordPredicateTest {
     }
 
     @Test
-    public void test_nameContainsAllKeywords_returnsTrue() {
+    public void test_personContainsAnyKeyword_returnsTrue() {
         PersonMatchesKeywordPredicate predicate =
                 new PersonMatchesKeywordPredicate(Collections.singletonList("Alice"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
@@ -67,13 +67,16 @@ public class PersonMatchesKeywordPredicateTest {
         predicate = new PersonMatchesKeywordPredicate(Arrays.asList("Alice", "   "));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
+        predicate = new PersonMatchesKeywordPredicate(Arrays.asList("Carol", "Alice"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
         predicate = new PersonMatchesKeywordPredicate(Arrays.asList("Alice", "12345", "friend"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withRole("UI Designer").withTags("friend").build()));
     }
 
     @Test
-    public void test_nameDoesNotContainAllKeywords_returnsFalse() {
+    public void test_personContainsNoKeyword_returnsFalse() {
         PersonMatchesKeywordPredicate predicate = new PersonMatchesKeywordPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
 
@@ -83,10 +86,10 @@ public class PersonMatchesKeywordPredicateTest {
         predicate = new PersonMatchesKeywordPredicate(Arrays.asList("Carol"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
-        predicate = new PersonMatchesKeywordPredicate(Arrays.asList("Alice", "Carol"));
+        predicate = new PersonMatchesKeywordPredicate(Arrays.asList("Carol", "xyz"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
-        predicate = new PersonMatchesKeywordPredicate(Arrays.asList("xyz", "Alice"));
+        predicate = new PersonMatchesKeywordPredicate(Arrays.asList("notpresent", "   "));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
         predicate = new PersonMatchesKeywordPredicate(Arrays.asList("notpresent"));
@@ -106,12 +109,14 @@ public class PersonMatchesKeywordPredicateTest {
     @Test
     public void test_eachFieldMatchForBranchCoverage_returnsTrue() {
         Person person = new PersonBuilder().withName("Alice Bob").withPhone("91234567")
-                .withEmail("alice@email.com").withRole("UI Designer").withTags("friend").build();
+                .withEmail("alice@email.com").withRole("UI Designer").withDepartment("Platform Ops")
+                .withTags("friend").build();
 
         assertTrue(new PersonMatchesKeywordPredicate(Collections.singletonList("Alice")).test(person));
         assertTrue(new PersonMatchesKeywordPredicate(Collections.singletonList("9123")).test(person));
         assertTrue(new PersonMatchesKeywordPredicate(Collections.singletonList("email.com")).test(person));
         assertTrue(new PersonMatchesKeywordPredicate(Collections.singletonList("Designer")).test(person));
+        assertTrue(new PersonMatchesKeywordPredicate(Collections.singletonList("Platform")).test(person));
         assertTrue(new PersonMatchesKeywordPredicate(Collections.singletonList("friend")).test(person));
     }
 

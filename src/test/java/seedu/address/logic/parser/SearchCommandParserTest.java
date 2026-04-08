@@ -1,9 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.Messages.MESSAGE_SEARCH_EXCEED_MAX_KEYWORDS;
-import static seedu.address.logic.Messages.MESSAGE_SEARCH_KEYWORD_NOT_ALPHANUMERIC;
-import static seedu.address.logic.Messages.MESSAGE_SEARCH_KEYWORD_TOO_LONG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -33,27 +30,20 @@ public class SearchCommandParserTest {
     public void parse_keywordTooLong_throwsParseException() {
         String longKeyword = "a".repeat(SearchCommand.MAX_KEYWORD_LENGTH + 1);
         assertParseFailure(parser, longKeyword,
-                String.format(MESSAGE_SEARCH_KEYWORD_TOO_LONG,
-                    SearchCommand.MAX_KEYWORD_LENGTH, SearchCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_tooManyKeywords_throwsParseException() {
         assertParseFailure(parser, "a b c d e f",
-                String.format(MESSAGE_SEARCH_EXCEED_MAX_KEYWORDS,
-                    SearchCommand.MAX_KEYWORDS, SearchCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_nonAlphanumericKeyword_throwsParseException() {
-        assertParseFailure(parser, "Alice-123",
-                String.format(MESSAGE_SEARCH_KEYWORD_NOT_ALPHANUMERIC, SearchCommand.MESSAGE_USAGE));
-
-        assertParseFailure(parser, "ab-",
-            String.format(MESSAGE_SEARCH_KEYWORD_NOT_ALPHANUMERIC, SearchCommand.MESSAGE_USAGE));
-
-        assertParseFailure(parser, "ab_cd",
-            String.format(MESSAGE_SEARCH_KEYWORD_NOT_ALPHANUMERIC, SearchCommand.MESSAGE_USAGE));
+    public void parse_specialCharacterKeywords_returnsSearchCommand() {
+        java.util.List<String> keywords = java.util.List.of("Alice-123", "ab_cd", "user@example.com", "@");
+        SearchCommand expectedSearchCommand = new SearchCommand(new PersonMatchesKeywordPredicate(keywords));
+        assertParseSuccess(parser, String.join(" ", keywords), expectedSearchCommand);
     }
 
     @Test
@@ -77,6 +67,13 @@ public class SearchCommandParserTest {
         SearchCommand expectedSearchCommand =
             new SearchCommand(new PersonMatchesKeywordPredicate(java.util.List.of("Alice", "Bob", "12c")));
         assertParseSuccess(parser, "Alice Bob 12c", expectedSearchCommand);
+    }
+
+    @Test
+    public void parse_maxKeywordCount_returnsSearchCommand() {
+        java.util.List<String> keywords = java.util.List.of("a", "b", "c", "d", "e");
+        SearchCommand expectedSearchCommand = new SearchCommand(new PersonMatchesKeywordPredicate(keywords));
+        assertParseSuccess(parser, String.join(" ", keywords), expectedSearchCommand);
     }
 
     @Test

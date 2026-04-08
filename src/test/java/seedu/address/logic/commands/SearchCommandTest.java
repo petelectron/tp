@@ -118,13 +118,23 @@ public class SearchCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_andSearchAcrossFields() {
-        String expectedMessage = String.format(SearchCommand.MESSAGE_EMPLOYEES_LISTED_OVERVIEW, 2);
+    public void execute_multipleKeywords_orSearchAcrossFields() {
+        String expectedMessage = String.format(SearchCommand.MESSAGE_EMPLOYEES_LISTED_OVERVIEW, 7);
         PersonMatchesKeywordPredicate predicate = preparePredicate("Ku examp");
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL, FIONA), model.getFilteredPersonList());
+        assertEquals(getTypicalPersons(), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_specialCharacterKeyword_matchesEmailField() {
+        String expectedMessage = String.format(SearchCommand.MESSAGE_EMPLOYEES_LISTED_OVERVIEW, 7);
+        PersonMatchesKeywordPredicate predicate = preparePredicate("@");
+        SearchCommand command = new SearchCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(getTypicalPersons(), model.getFilteredPersonList());
     }
 
     @Test

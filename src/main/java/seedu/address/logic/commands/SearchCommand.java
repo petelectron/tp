@@ -7,23 +7,24 @@ import seedu.address.model.Model;
 import seedu.address.model.person.PersonMatchesKeywordPredicate;
 
 /**
- * Searches and lists all employees whose fields contain all argument keywords.
+ * Searches and lists all employees whose fields contain at least one argument keyword.
  * Keyword matching is case insensitive.
  */
 public class SearchCommand extends Command {
 
     public static final String COMMAND_WORD = "search";
     public static final int MAX_KEYWORDS = 5;
-    public static final int MAX_KEYWORD_LENGTH = 20;
-    public static final String KEYWORD_ALPHANUMERIC_REGEX = "[A-Za-z0-9]+";
+    public static final int MAX_KEYWORD_LENGTH = 50;
     public static final String MESSAGE_EMPLOYEES_LISTED_OVERVIEW = "%1$d employees listed!";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches all employees whose fields contain all "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches all employees whose fields contain at "
+        + "least one "
         + "specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
         + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-        + "Constraints: 1 to " + MAX_KEYWORDS + " keywords, each keyword must be alphanumeric and at most "
+        + "Constraints: 1 to " + MAX_KEYWORDS + " keywords, each keyword must contain non-whitespace "
+        + "characters only and be at most "
         + MAX_KEYWORD_LENGTH + " characters.\n"
-        + "Example: " + COMMAND_WORD + " alice eng";
+        + "Example: " + COMMAND_WORD + " alice@company.com eng-team";
 
     private final PersonMatchesKeywordPredicate predicate;
 
