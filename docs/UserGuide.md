@@ -140,7 +140,7 @@ Additional notes:
 
 Successful command output:
 
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
+![list command](images/listCommand.png)
 
 <br>
 
@@ -436,14 +436,9 @@ Additional notes:
 * Entering only a file name (e.g. "employees.csv") will export the current list into HRmanager's home folder.
 * Overwriting existing files is __not allowed__.
 
-Exported file format:
-
-![export command](images/exportCommand.png)
-
 Successful command output:
 
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
-
+![export command](images/exportCommand.png)
 <box type="info" seamless>
 
 **⚠️ Confirmation Required:** This command requires confirmation before execution to prevent accidental edits. See [Confirmation Prompts](#confirmation-prompts) for details on how to respond.
