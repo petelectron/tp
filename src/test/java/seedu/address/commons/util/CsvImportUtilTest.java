@@ -141,6 +141,18 @@ public class CsvImportUtilTest {
         assertThrows(CsvParseException.class, () -> parser.parse(csv));
     }
 
+    @Test
+    void parse_overLimit_throwsCsvParseException() throws Exception {
+        // Write 201 rows to exceed the 200 limit
+        StringBuilder content = new StringBuilder("name,phone,email,role,department\n");
+        for (int i = 1; i <= 201; i++) {
+            content.append(String.format("Person %d,91234%d,person%d@example.com,Role%d,Dept%d\n",
+                i, 500 + i, i, i, i));
+        }
+        Path csv = writeCsv(content.toString());
+        assertThrows(CsvParseException.class, () -> parser.parse(csv));
+    }
+
     //helpers
     private Path writeCsv(String... lines) {
         return writeRaw(String.join("\n", lines));

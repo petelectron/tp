@@ -86,7 +86,7 @@ public class CsvImportUtil {
             List<String> names = new ArrayList<>();
             while ((line = reader.readLine()) != null) {
                 lineNumber++;
-                if (employeeNumber > MAX_SIZE) {
+                if (employeeNumber >= MAX_SIZE) {
                     throw new CsvParseException(String.format(
                         "Your import file is too large.\nHRmanager supports a maximum of %d employees.", MAX_SIZE));
                 }

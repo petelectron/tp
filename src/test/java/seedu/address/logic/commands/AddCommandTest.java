@@ -54,6 +54,15 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_overLimit_throwsCommandException() {
+        Person validPerson = new PersonBuilder().build();
+        AddCommand addCommand = new AddCommand(validPerson);
+        ModelStubWithLimitReached modelStub = new ModelStubWithLimitReached();
+
+        assertThrows(CommandException.class, AddCommand.MESSAGE_OVER_LIMIT, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
@@ -228,6 +237,35 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+    }
+
+    /**
+     * A Model stub that has reached the maximum capacity of 200 persons.
+     */
+    private class ModelStubWithLimitReached extends ModelStubAcceptingPersonAdded {
+        @Override
+        public boolean hasPerson(Person person) {
+            return false; // Person doesn't exist yet
+        }
+
+        @Override
+        public void addPerson(Person person) {
+            requireNonNull(person);
+            if (personsAdded.size() >= 200) {
+                throw new RuntimeException(AddCommand.MESSAGE_OVER_LIMIT);
+            }
+            personsAdded.add(person);
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            AddressBook addressBook = new AddressBook();
+            // Fill the address book with 200 persons to reach the limit
+            for (int i = 0; i < 200; i++) {
+                addressBook.addPerson(new PersonBuilder().withName("Person " + i).build());
+            }
+            return addressBook;
         }
     }
 
