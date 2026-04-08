@@ -30,7 +30,7 @@ import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing person in the HRmanager.
  */
 public class EditCommand extends Command implements ConfirmableCommand {
 

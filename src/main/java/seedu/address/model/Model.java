@@ -35,17 +35,17 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' HRmanager file path.
      */
     Path getAddressBookFilePath();
 
     /**
-     * Sets the user prefs' address book file path.
+     * Sets the user prefs' HRmanager file path.
      */
     void setAddressBookFilePath(Path addressBookFilePath);
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
+     * Replaces HRmanager data with the data in {@code addressBook}.
      */
     void setAddressBook(ReadOnlyAddressBook addressBook);
 
@@ -53,26 +53,26 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a person with the same identity as {@code person} exists in the HRmanager.
      */
     boolean hasPerson(Person person);
 
     /**
      * Deletes the given person.
-     * The person must exist in the address book.
+     * The person must exist in the HRmanager.
      */
     void deletePerson(Person target);
 
     /**
      * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * {@code person} must not already exist in the HRmanager.
      */
     void addPerson(Person person);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * {@code target} must exist in the HRmanager.
+     * The person identity of {@code editedPerson} must not be the same as another existing person in the HRmanager.
      */
     void setPerson(Person target, Person editedPerson);
 
@@ -86,29 +86,29 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
-     * Saves the current address book state in history.
+     * Saves the current HRmanager state in history.
      */
     void commitAddressBook();
 
     /**
-     * Restores the previous address book state from history.
+     * Restores the previous HRmanager state from history.
      * @return true if undo was successful, false if there are no states to undo.
      */
     boolean isUndoAddressBookSuccessful();
 
     /**
-     * Restores a previously undone address book state from history.
+     * Restores a previously undone HRmanager state from history.
      * @return true if redo was successful, false if there are no states to redo.
      */
     boolean isRedoAddressBookSuccessful();
 
     /**
-     * Returns true if there are address book states to undo.
+     * Returns true if there are HRmanager states to undo.
      */
     boolean canUndoAddressBook();
 
     /**
-     * Returns true if there are address book states to redo.
+     * Returns true if there are HRmanager states to redo.
      */
     boolean canRedoAddressBook();
 }

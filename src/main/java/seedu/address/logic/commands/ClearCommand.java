@@ -6,7 +6,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 
 /**
- * Clears the address book.
+ * Clears the HRmanager.
  */
 public class ClearCommand extends Command implements ConfirmableCommand {
 

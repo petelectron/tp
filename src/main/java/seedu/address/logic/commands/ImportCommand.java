@@ -112,7 +112,7 @@ public class ImportCommand extends Command implements ConfirmableCommand {
 
         model.commitAddressBook();
 
-        // Build a fresh address book and populate it atomically
+        // Build a fresh HRmanager and populate it atomically
         AddressBook newBook = new AddressBook();
         persons.forEach(newBook::addPerson);
         model.setAddressBook(newBook);

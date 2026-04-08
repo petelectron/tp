@@ -40,7 +40,7 @@ public class VersionedAddressBook extends AddressBook {
     }
 
     /**
-     * Saves the current address book state in the history.
+     * Saves the current HRmanager state in the history.
      */
     public void commit() {
         // Remove all states after the current pointer to discard undone states
@@ -60,7 +60,7 @@ public class VersionedAddressBook extends AddressBook {
     }
 
     /**
-     * Restores the previous address book state from history.
+     * Restores the previous HRmanager state from history.
      */
     public void undo() {
         requireNonNull(addressBookStateList);
@@ -71,7 +71,7 @@ public class VersionedAddressBook extends AddressBook {
     }
 
     /**
-     * Restores a previously undone address book state from history.
+     * Restores a previously undone HRmanager state from history.
      */
     public void redo() {
         requireNonNull(addressBookStateList);
@@ -82,14 +82,14 @@ public class VersionedAddressBook extends AddressBook {
     }
 
     /**
-     * Returns true if {@code undo()} has address book states to undo.
+     * Returns true if {@code undo()} has HRmanager states to undo.
      */
     public boolean canUndo() {
         return currentStatePointer > 0;
     }
 
     /**
-     * Returns true if {@code redo()} has address book states to redo.
+     * Returns true if {@code redo()} has HRmanager states to redo.
      */
     public boolean canRedo() {
         return currentStatePointer < addressBookStateList.size() - 1;

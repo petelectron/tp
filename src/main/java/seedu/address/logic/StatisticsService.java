@@ -36,7 +36,7 @@ public class StatisticsService {
     }
 
     /**
-     * Returns current statistics based on the full address book.
+     * Returns current statistics based on the full HRmanager.
      *
      * <p>This method uses the default statistics mode, which is {@link StatisticsMode#DEPARTMENT}.
      *
@@ -47,9 +47,9 @@ public class StatisticsService {
     }
 
     /**
-     * Returns current statistics based on the full address book and selected dashboard mode.
+     * Returns current statistics based on the full HRmanager and selected dashboard mode.
      *
-     * <p>The statistics are computed from all employees in the address book,
+     * <p>The statistics are computed from all employees in the HRmanager,
      * regardless of any active filters (e.g., search results).
      *
      * @param statisticsMode The mode to calculate statistics for (TAG, DEPARTMENT, or ROLE). Must not be null.

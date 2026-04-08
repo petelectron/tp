@@ -33,7 +33,7 @@ public class ExportCommand extends Command implements ConfirmableCommand {
     public static final String ACTION_DESCRIPTION = "export full local list";
 
     public static final String MESSAGE_EMPTY_EXPORT =
-        "Address book is empty — an empty CSV (header only) was written to: %s";
+        "HRmanager is empty — an empty CSV (header only) was written to: %s";
     public static final String MESSAGE_INVALID_PATH =
         "The provided file path is invalid: %s";
     public static final String MESSAGE_FILE_ALREADY_EXISTS =
