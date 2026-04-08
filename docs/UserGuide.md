@@ -24,7 +24,7 @@ Here is a quick guide to jump straight to the section you need:
 * [Viewing help: `help`](#viewing-help-help)
 * [Listing all employees: `list`](#listing-all-employees-list)
 * [Adding an employee: `add`](#adding-an-employee-add)
-* [Searching employees by name: `search`](#searching-employees-by-name-search)
+* [Searching employees by keyword: `search`](#searching-for-employees-search)
 * [Switching the statistics dashboard mode: `stat`](#switching-the-statistics-dashboard-mode-stat)
 * [Cycle through previous executed commands](#cycle-through-previous-executed-commands)
 * [Editing an employee: `edit`](#editing-an-employee-edit)
@@ -101,87 +101,75 @@ Here is a quick guide to jump straight to the section you need:
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
-
-![help message](images/helpMessage.png)
+Shows a dialog box with a link to te User Guide explaining how to use the app.
 
 Format: `help`
+
+Examples:
+* `help`
 
 Additional notes:
 * Extraneous parameters are ignored (for example, `help 123` is treated as `help`). See: [Extraneous parameters](#features-1)
 
-Examples:
-* `help`
+Successful command output:
+
+![help command](images/helpCommand.png)
 
 <br>
 
 
 ### Listing all employees : `list`
 
-Shows a list of all employees in HRmanager.
+Shows a list of all employees in HRmanager, sorted by the order they were added (most recent at the bottom).
 
 Format: `list`
 
-What this feature does:
-* Employees are sorted based on the order they were added, with the most recently added employee shown at the bottom of the list.
-
+Examples:
+* `list`
 
 Additional notes:
 * Extraneous parameters are ignored (for example, `list abc` is treated as `list`). See: [Extraneous parameters](#features-1)
 * Running `list` returns the display to the full global employee list after any narrowed search results view.
 
-Examples:
-* `list`
+Successful command output:
+
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
 
 <br>
 
 
 ### Adding an employee : `add`
 
-Adds an employee to HRmanager.
+Adds a new employee to HRmanager and stores their employee details persistently.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL r/ROLE d/DEPARTMENT [t/TAG]…​`
 
-What this feature does:
-* Adds a new employee persistently into HRmanager.
-* Captures and stores their essential contact and job role details.
-
-<box type="tip" seamless>
-
-**Tip:** An employee can have any number of tags (including 0)
-</box>
-
-Additional constraints:
-* The compulsory fields are `n/NAME`, `p/PHONE_NUMBER`, `e/EMAIL`, `r/ROLE`, and `d/DEPARTMENT`. Each compulsory prefix must be provided exactly once.
-* `t/TAG` is optional and can be provided any number of times (including 0).
-* The employee to be added cannot already exist in HRmanager (based on a case-insensitive match on the name).
-* All fields must adhere to the parameter restrictions specified in the next section.
-* If two employees share the same real-world name, include a differentiating suffix (eg. nickname) in the name itself (for example, `John Doe - Johnny` and `John Doe - Joe`) so that both names are unique.
-* Names are normalized to lowercase when stored in HRmanager.
-* HRmanager currently restricts names to alphanumeric characters, hyphens, and spaces only. This means names containing:
-
-- __Diacritics/accents__ (e.g., Müller, Josée, Piñata)
-- __Non-Latin scripts__ (e.g., 王小明, 田中, 김철수) 
-- __Special punctuation__ (e.g., O'Connor, D'Angelo, s/o, d/o) 
-
-are not supported in the current version. The workaround is to use the closest ASCII equivalent or romanized version of the name. (e.g., `Muller`, `Josee`, `Pinata`, `Wang Xiaoming`, `Tian Zhong`, `Kim Cheolsu`, `OConnor`, `DAngelo`, `Rajesh son of Suresh`, `Anita daughter of Kumar`)
-* Since phone numbers are not allowed to have spaces, extensions, or country codes, it is recommended to use a tag to store any additional information related to the phone number. For example, if an employee has a phone number with an extension, you can add the extension as a tag (e.g., `t/ext 1234`). Or if an employee has a country code, you can add the country code as a tag (e.g., `t/sg phone country code` for Singapore). This way, you can still keep track of important details related to the phone number while adhering to the input restrictions.
-
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com r/Receptionist d/Operations` adds an employee named John Doe with the specified details.
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com r/Associate Director d/Finance p/1234567 t/criminal` adds an employee named Betsy Crowe with two tags, `friend` and `criminal`.
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com r/Associate Director d/Finance p/1234567` adds an employee named Betsy Crowe with a tag, `friend`.
 
-**Successful add command output:**
+Additional notes:
+* All compulsory fields (`n/`, `p/`, `e/`, `r/`, `d/`) must be provided exactly once. `t/TAG` is optional (0 or more).
+* Employee names must be unique (case-insensitive). For duplicate real-world names, add a suffix like `John Doe - Johnny`.
+* Names are stored in lowercase and only accept alphanumeric characters, hyphens, and spaces.
+    - **Unsupported:** Diacritics (Müller), non-Latin scripts (王小明), special punctuation (O'Connor, s/o)
+    - **Workaround:** Use ASCII equivalents (`Muller`, `Wang Xiaoming`, `OConnor`, `son of`)
+* Phone numbers accept only digits (3-16). Use tags for extensions or country codes (e.g., `t/ext 1234`, `t/sg`).
+* HRmanager has maximum capacity of 200 employees. To add new employees at full capacity, remove existing ones first.
 
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/add-command-placeholder.png`
+Successful command output:
+
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
 
 <box type="info" seamless>
 
 **🔁 Undo Possible:** This command can be reversed if executed recently. See [Undo](#undo-an-executed-command--undo) for details.
 </box>
+
 <br>
 
-### Parameter restrictions for each field:
+
+### Parameter restrictions for each field
 
 #### Name (`n/`)
 
@@ -221,90 +209,67 @@ Examples:
 <br>
 
 
-### Searching for an employee : `search`
+### Searching for employees : `search`
 
-Finds employees whose fields contain all of the given keywords.
+Finds employees whose fields contain at least one of the given keywords (name, phone, email, role, department, tags) with partial match support (e.g., Han matches Hans).
 
-Format: `search KEYWORD [MORE_KEYWORDS]...` (each keyword separated by a space)
-
-What this feature does:
-* Filters the employee list to show only those who match all provided keywords.
-* Searches across every field (name, phone, email, role, department, and tags).
-* Evaluates partial matches (e.g., `Han` will match `Hans`).
-
-Additional constraints:
-* The search is case-insensitive.
-* At least **one** keyword must be provided.
-* A maximum of **5** keywords can be supplied in a single command.
-* Each keyword must be **alphanumeric** only (no spaces or special characters).
-* Each keyword must be at most **20** characters long.
-* To return to the full employee list after `search`, run `list`.
+Format: `search KEYWORD [MORE_KEYWORDS]...` (keywords are separated by whitespace)
 
 Examples:
 * `search John` returns employees with "John" anywhere in their fields (e.g., `John Doe`).
-* `search friends` returns employees with the "friends" tag or keyword.
-* `search alice eng` returns employees that match both "alice" and "eng" (e.g., Alice who is an Engineer).
+* `search @` returns employees with `@` in any searchable field (commonly email).
+* `search alice eng` returns employees that match either "alice" and "eng" (e.g., Alice who is an Engineer).
 * `search zzz` shows `0 employees listed!` if no employee fields match.
 
-**Successful search command output:**
+Additional notes:
+* The search is case-insensitive.
+* at least **1** and at most **5** keywords (max **50** chars each) must be provided, separated by spaces. Special characters are allowed (for example `@`, `_`, `-`, and `.`).  Each keyword must be a **non-whitespace** token.
+* Combines multiple keywords using `OR` semantics.
+* To return to the full employee list after `search`, run `list`.
 
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png`
+Successful command output:
+
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
 
 <br>
 
 
 ### Switching the statistics dashboard mode: `stat`
 
-Switches the right-side HR statistics dashboard to a selected mode so you can focus on the metric that matters now.
+Switches the right-side statistics dashboard between tag, department, and role distributions to provide an at-a-glance view of workforce composition using full employee records (unaffected by on-screen filters).
 
 Format: `stat MODE`
-
-What this feature does:
-* Changes the dashboard between **tag**, **department**, and **role** distributions.
-* Gives an at-a-glance view of workforce composition by showing total employees and grouped distribution trends.
-* Helps HR quickly see which tags, departments, and roles exist, so they can search and manage records more efficiently.
-* Uses the full employee records in HRmanager for dashboard computation.
-* Shows organisation-wide metrics based on the full employee dataset, even when the on-screen list is filtered (for example after `search`).
 
 Supported modes:
 * `t` or `tag` - Shows tag-focused statistics.
 * `d`, `dept`, or `department` - Shows department-focused statistics.
 * `r` or `role` - Shows role-focused statistics.
 
-<box type="info" seamless>
-
-**Mode-specific display behavior:**
-* All modes show total employees.
-* **Tag mode:** Unique tags, most common tag, employees with tags, employees without tags, and tag distribution.
-* **Department mode:** Unique departments, most common department, and department distribution.
-* **Role mode:** Unique roles, most common role, and role distribution.
-* For all modes, distribution values are shown top-to-bottom in descending count (highest at the top, lowest at the bottom).
-* If multiple values have the same count, they are ordered alphabetically (case-insensitive).
-* If multiple values tie for the highest count, the displayed most common value (tag/department/role) is the one ordered first alphabetically (case-insensitive).
-* For all modes, values are computed from the full HRmanager dataset (global distribution), not only the currently filtered on-screen list.
-</box>
-
-Additional constraints:
-* Exactly **one** mode must be provided.
-* The mode is case-insensitive.
-* If the input format is invalid, HRmanager shows the `stat` command usage message.
-
 Examples:
 * `stat t` switches the dashboard to tag distribution mode.
 * `stat department` switches the dashboard to department distribution mode.
 * `stat r` switches the dashboard to role distribution mode.
 
-**Tag mode dashboard (`stat t` or `stat tag`):**
+Additional notes:
+* Exactly **one** mode must be provided. Mode is case-insensitive (`t`, `tag`, `d`, `dept`, `department`, `r`, `role`).
+* Uses the **full employee dataset** (unaffected by on-screen filters like `search`).
+* **Tag mode:** Unique tags, most common tag, employees with/without tags, tag distribution.
+* **Department mode:** Unique departments, most common department, department distribution.
+* **Role mode:** Unique roles, most common role, role distribution.
+* Distribution values are sorted by count (highest first), then alphabetically for ties.
+* The dashboard updates automatically after `add`, `edit`, `delete`, or `clear`.
 
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/stat-tag-mode-placeholder.png`
+Successful command output - Tag mode dashboard:
 
-**Department mode dashboard (`stat d`, `stat dept`, or `stat department`):**
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
 
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/stat-department-mode-placeholder.png`
+Successful command output - Department mode dashboard:
 
-**Role mode dashboard (`stat r` or `stat role`):**
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
 
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/stat-role-mode-placeholder.png`
+Successful command output - Role mode dashboard
+
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
 
 <box type="tip" seamless>
 
@@ -316,21 +281,22 @@ Examples:
 
 ### Editing an employee : `edit`
 
-Edits an existing employee in HRmanager.
+Edits an existing employee's details in HRmanager.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [r/ROLE] [d/DEPARTMENT] [t/TAG]…​`
 
-* You will be prompted to confirm the action before the command executes. Enter `y` to proceed or `n` to cancel.
-* Edits the employee at the specified `INDEX`. The index refers to the index number shown in the displayed employee list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Each optional field accepts at most 1 updated value, i.e. no duplicate fields.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the employee will be removed i.e. adding of tags is not cumulative.
-* You can remove all the employee's tags by typing `t/` without specifying any tags after it.
-
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` edits the phone number and email address of the 1st employee to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower d/Marketing t/` edits the name and department of the 2nd employee to be `Betsy Crower` and `Marketing`, and clears all existing tags.
+* `edit 1 p/91234567 e/johndoe@example.com` edits the phone number and email address of the 1st employee to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower d/Marketing t/` edits the name and department of the 2nd employee to be `Betsy Crower` and `Marketing`, and clears all existing tags.
+
+Additional notes:
+* Edits the employee at the specified INDEX (must be a positive integer, 1, 2, 3, …​).
+* At least one optional field must be provided. Each field accepts at most 1 updated value. 
+* When editing tags, existing tags are replaced (not added to). Use t/ without any tags to clear all tags.
+
+Successful command output:
+
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
 
 <box type="info" seamless>
 
@@ -346,25 +312,11 @@ Examples:
 
 ### Deleting an employee : `delete`
 
-Deletes one or more employees using the index numbers shown in the **currently displayed list**.
+Deletes one or more employees from the currently displayed list in HRmanager.
 
 Format: `delete INDEX [MORE_INDEXES]`
 
 Alias: `del`
-
-What this feature does:
-* Removes one or more employees permanently from HRmanager.
-* Works on the employee list that is currently shown on screen.
-* Supports deleting several employees in one command.
-* If deletion is done from a filtered list (for example after `search`), the main window remains on the filtered list view after successful deletion.
-
-Additional constraints:
-* At least **one** index must be provided.
-* Each index must be a **positive non-zero integer**: `1`, `2`, `3`, ...
-* A maximum of **10** indexes can be supplied in a single command.
-* Indexes are based on the **current displayed list**, not on a hidden or previously shown list.
-* If any supplied index is out of range, the deletion fails and no employee is deleted.
-* Repeated indexes are accepted, but duplicate indexes are ignored internally.
 
 Examples:
 * `delete 2` deletes the 2nd employee in the currently displayed list.
@@ -373,9 +325,17 @@ Examples:
 * `search Betsy` followed by `delete 1` deletes the 1st employee in the filtered search results.
 * `delete 3 1 3` deletes the employees at indexes `3` and `1`; the repeated `3` is ignored.
 
-**Successful delete command output:**
+Additional notes:
+* At least one index must be provided, up to a maximum of 10 indexes per command. 
+* Each index must be a positive integer (1, 2, 3, ...) based on the current displayed list. 
+* If any index is out of range, the entire deletion fails (no partial deletion). 
+* Repeated indexes are ignored internally. 
+* After deletion from a filtered list (e.g., after search), the view remains on the filtered list. 
+* You will be prompted to confirm the action before execution. Enter y to proceed or n to cancel.
 
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/delete-command-placeholder.png`
+Successful command output:
+
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
 
 <box type="info" seamless>
 
@@ -391,15 +351,15 @@ Examples:
 
 ### Clearing all entries : `clear`
 
-Clears all entries from HRmanager; that is, delete all employees.
+Clears all employees from HRmanager.
 
 Format: `clear`
 
-Additional notes:
-* Extraneous parameters are ignored (for example, `clear now` is treated as `clear`). See: [Extraneous parameters](#features-1)
-
 Examples:
 * `clear`
+
+Additional notes:
+* Extraneous parameters are ignored (for example, `clear now` is treated as `clear`). See: [Extraneous parameters](#features-1)
 
 <box type="info" seamless>
 
@@ -415,29 +375,28 @@ Examples:
 
 ### Import employee data : `import`
 
-Imports a new list of employees from a local CSV file, overwriting existing app data.
+Imports a new list of employees from a local CSV (comma-separated values) file, overwriting all existing app data.
 
 Format: `import [FILE PATH]`
 
-Notes on file format:
-* The target file must be a csv (comma-separated values) file (that means, ending in ".csv").
-* File must have a valid header row consisting of: name, phone, email, role, department, tags (optional) in any order.
-* File must be smaller than 1MB.
-* File must have no more than 200 employees' data, due to HRmanager's storage limit.
-* All data validation rules apply, e.g. no employees with duplicate names or invalid/missing fields are allowed.
-* When there are multiple invalid values or rule violations in the target file, only the first error will be detected and reported.
-
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/correct-csv-file-placeholder.png`
-
 Examples:
 * `import employees.csv`
-* `import "C:\Users\username\Downloads\2026_employee_list.csv"`
+* `import C:\Users\username\Downloads\2026_employee_list.csv`
+
+Additional notes:
+* The target file must be a `.csv` file with a valid header row: `name, phone, email, role, department, tags` (tags optional, any order).
+* File size limit: 1MB. Employee limit: 200 employees.
+* All data validation rules apply (e.g., no duplicate names, invalid or missing fields). [Parameter restrictions](#Parameter-restrictions-for-each-field)
+* When multiple errors exist, only the first error is reported.
 
 Alternative ways to import:
-1. Drag the target file into HRmanager's home folder, and input `import (file name in full, including extension)` into HRmanager. 
-2. Right-click on the target file, click "Copy as path", and input `import (Ctrl+V to paste file path)` into HRmanager.
+1) Drag the file into HRmanager's home folder, then run `import filename.csv` 
+2) Right-click the file → "Copy as path" → paste the path (Ctrl+V) when running `import <path/that/was/copied>`
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
 
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/import-steps-graphic-placeholder.png`
+Successful command output:
+
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
 
 <box type="info" seamless>
 
@@ -445,7 +404,7 @@ Alternative ways to import:
 </box>
 <box type="info" seamless>
 
-**🔁 Undo Possible:** `import` command can be reversed if executed recently. See [Undo](#undo-an-executed-command--undo) for details.
+**🔁 Undo Possible:** This command can be reversed if executed recently. See [Undo](#undo-an-executed-command--undo) for details.
 </box>
 
 <br>
@@ -457,40 +416,43 @@ Exports the current list of employees into a CSV (comma-separated values) file, 
 
 Format: `export [FILE PATH]`
 
-Notes:
-* The full list of employees is exported, even when your view of the list is narrowed using the search function.
-* [FILE PATH] must end in ".csv". Exporting to other file formats is currently not supported.
-* Entering only a file name (e.g. "employees.csv") will export the current list into HRmanager's home folder.
-* No overwriting of local files is allowed.
-
 Examples:
 * `export employees.csv`
 * `export C:\Users\username\Desktop\2026_employee_list.csv`
 
+Additional notes:
+* The full employee list is exported, even when the on-screen view is filtered (e.g., after `search`).
+* [FILE PATH] must end in ".csv". Exporting to other file formats is currently not supported.
+* Entering only a file name (e.g. "employees.csv") will export the current list into HRmanager's home folder.
+* Overwriting existing files is __not allowed__.
+
 Exported file format:
 
-> **PNG placeholder:** Insert a screenshot here, e.g. `images/exported-csv-placeholder.png`
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
+
+Successful command output:
+
+> **PNG placeholder:** Insert a screenshot here, e.g. `images/search-command-placeholder.png` follow this format when inserting photos '![help command](images/helpCommand.png)'
 
 <box type="info" seamless>
 
 **⚠️ Confirmation Required:** This command requires confirmation before execution to prevent accidental edits. See [Confirmation Prompts](#confirmation-prompts) for details on how to respond.
 </box>
-<box type="info" seamless>
 
 <br>
 
 
 ### Exiting the program : `exit`
 
-Close the application.
+Closes the HRmanager application.
 
 Format: `exit`
 
-Additional notes:
-* Extraneous parameters are ignored (for example, `exit now` is treated as `exit`). See: [Extraneous parameters](#features-1)
-
 Examples:
 * `exit`
+
+Additional notes:
+* Extraneous parameters are ignored (for example, `exit now` is treated as `exit`). See: [Extraneous parameters](#features-1)
 
 <box type="info" seamless>
 
@@ -498,6 +460,7 @@ Examples:
 </box>
 
 <br>
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -556,6 +519,9 @@ Cancelled: edit employee details.
 Reverses the effects of a prior `add`, `edit`, `delete`, `clear`, or `import` command (Collectively: "Eligible commands").
 
 Format: `undo`
+
+Examples:
+* `undo`
 
 What this feature does:
 * Reverse/undo the effects of a previous successful eligible command.
@@ -655,7 +621,15 @@ Furthermore, certain edits can cause HRmanager to behave in unexpected ways (e.g
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
-3. Non-ASCII characters (e.g., diacritics/accents, non-Latin scripts, and special punctuation) are not supported in the current version. The workaround is to use the closest ASCII equivalent or romanized version of the name. (e.g., `Muller`, `Josee`, `Pinata`, `Wang Xiaoming`, `Tian Zhong`, `Kim Cheolsu`, `OConnor`, `DAngelo`) We plan to support non-ASCII characters in a future version.
+3. Non-ASCII characters (e.g., diacritics/accents, non-Latin scripts, and special punctuation) are not supported in the current version. The workaround is to use the closest ASCII equivalent or romanized version of the name. (e.g., `Muller`, `Josee`, `Pinata`, `Wang Xiaoming`, `Tian Zhong`, `Kim Cheolsu`, `OConnor`, `DAngelo`)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Future implementations - Coming in future versions
+1. Support for non-ASCII characters (e.g., diacritics/accents, non-Latin scripts, and special punctuation) in employee names.
+2. Support for importing and exporting in file formats other than CSV.
+3. Support the management of more employees by increasing the storage limit.
+4. Searchor and Searchand features to allow more powerful searching capabilities.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -667,6 +641,7 @@ Action     | Format, Examples
 **List**   | `list`
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL r/ROLE d/DEPARTMENT [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com r/Software Engineer d/Engineering t/friend t/colleague`
 **Search** | `search KEYWORD...`<br> e.g., `search James`
+**Search** | `search KEYWORD [MORE_KEYWORDS]...`<br> e.g., `search James @`
 **Stat** | `stat MODE`<br> e.g., `stat tag`, `stat dept`, `stat role`
 **Cycle commands** | up/down arrow keys
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [r/ROLE] [d/DEPARTMENT] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com d/Finance`
