@@ -6,7 +6,7 @@
 
 # HRmanager User Guide
 
-HRmanager is a **desktop app for managing employee and applicant records, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). That is, based on typing commands instead of clicking buttons. If you can type fast, HRmanager can help you manage HR records faster than traditional GUI apps.
+HRmanager is a **desktop app for managing employee records, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). That is, based on typing commands instead of clicking buttons. If you can type fast, HRmanager can help you manage HR records faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -114,7 +114,7 @@ Here is a quick guide to jump straight to the section you need:
 
 ### Viewing help: `help`
 
-Shows a dialog box with a link to te User Guide explaining how to use the app.
+Shows a dialog box with a link to the User Guide explaining how to use the app.
 
 Format: `help`
 
@@ -264,6 +264,7 @@ Examples:
 * `stat r` switches the dashboard to role distribution mode.
 
 Additional notes:
+* By default, the dashboard starts in department mode when you launch the app.
 * Exactly **one** mode must be provided. Mode is case-insensitive (`t`, `tag`, `d`, `dept`, `department`, `r`, `role`).
 * Uses the **full employee dataset** (unaffected by on-screen filters like `search`).
 * **Tag mode:** Unique tags, most common tag, employees with/without tags, tag distribution.
@@ -301,11 +302,12 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [r/ROLE] [d/DEPARTMENT] [t/TAG]
 Examples:
 * `edit 1 p/91234567 e/johndoe@example.com` edits the phone number and email address of the 1st employee to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower d/Marketing t/` edits the name and department of the 2nd employee to be `Betsy Crower` and `Marketing`, and clears all existing tags.
+* `edit 3 t/friend t/colleague` changes the tags of the 3rd employee to "friend" and "colleague". (If the employee already had "friend", you must retype it to keep it; otherwise, it will be replaced.)
 
 Additional notes:
 * Edits the employee at the specified INDEX (must be a positive integer, 1, 2, 3, …​).
 * At least one optional field must be provided. Each field accepts at most 1 updated value. 
-* When editing tags, existing tags are replaced (not added to). Use t/ without any tags to clear all tags.
+* When editing tags, existing tags are replaced (not added to). To add a new tag while keeping existing ones, retype all desired tags. Use t/ without any tags to clear all tags.
 
 Successful command output:
 
@@ -501,15 +503,15 @@ Since HRmanager stores **sensitive employee data** (personal information, contac
 **Example:**
 ```
 > delete 1
-Please confirm this action. Enter 'y' to proceed or 'n' to cancel.
+⚠ Warning! ⚠ Please confirm this action. Enter 'y' to proceed or 'n' to cancel.
 Action: Delete 1 employee(s)
-Impact: Permanently removes employee(s) from HRmanager
+Impact: Permanently removes: John Doe
 
 > y
 Employee deleted successfully
 
 > edit 1 n/john
-Please confirm this action. Enter 'y' to proceed or 'n' to cancel.
+⚠ Warning! ⚠ Please confirm this action. Enter 'y' to proceed or 'n' to cancel.
 Action: Edit employee at index 1.
 Impact: Provided fields will overwrite existing employee details.
 
@@ -627,7 +629,7 @@ Furthermore, certain edits can cause HRmanager to behave in unexpected ways (e.g
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app on the other computer and overwrite the empty data file it creates with the file that contains the data from your previous HRmanager home folder.
+**A**: Use the `export` command on your current computer to save your employee data as a CSV file. Copy this CSV file to your new computer, then use the `import` command in HRmanager to load your data. This will overwrite the sample data with your own records and is the recommended way to transfer data between computers.
 
 <br>
 
@@ -645,7 +647,7 @@ Furthermore, certain edits can cause HRmanager to behave in unexpected ways (e.g
 1. Support for non-ASCII characters (e.g., diacritics/accents, non-Latin scripts, and special punctuation) in employee names.
 2. Support for importing and exporting in file formats other than CSV.
 3. Support the management of more employees by increasing the storage limit.
-4. Searchor and Searchand features to allow more powerful searching capabilities.
+4. Searchor and Searchand features to allow more powerful and diverse searching capabilities.
 
 <br>
 
