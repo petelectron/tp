@@ -54,10 +54,16 @@ public class CommandResult {
         return feedbackToUser;
     }
 
+    /**
+     * Returns whether help information should be shown to the user.
+     */
     public boolean shouldShowHelp() {
         return shouldShowHelp;
     }
 
+    /**
+     * Returns whether the application should exit.
+     */
     public boolean shouldExit() {
         return shouldExit;
     }

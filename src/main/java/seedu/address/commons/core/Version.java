@@ -44,6 +44,9 @@ public class Version implements Comparable<Version> {
         return patch;
     }
 
+    /**
+     * Returns whether this version is an early access release.
+     */
     public boolean isEarlyAccess() {
         return isEarlyAccess;
     }
@@ -67,6 +70,9 @@ public class Version implements Comparable<Version> {
                 versionMatcher.group(4) == null ? false : true);
     }
 
+    /**
+     * Returns this version in its string representation.
+     */
     @JsonValue
     public String toString() {
         return String.format("V%d.%d.%d%s", major, minor, patch, isEarlyAccess ? "ea" : "");

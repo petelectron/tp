@@ -13,6 +13,12 @@ public class FileUtil {
 
     private static final String CHARSET = "UTF-8";
 
+    /**
+     * Returns whether the specified regular file exists.
+     *
+     * @param file Path to the file to check.
+     * @return True if the file exists and is a regular file.
+     */
     public static boolean doesFileExist(Path file) {
         return Files.exists(file) && Files.isRegularFile(file);
     }
