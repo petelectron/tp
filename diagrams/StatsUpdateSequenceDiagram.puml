@@ -1,5 +1,6 @@
 @startuml
 !include style.puml
+
 skinparam ArrowFontStyle plain
 skinparam Participant {
     BackgroundColor LightBlue
@@ -19,10 +20,11 @@ end box
 
 box Model #LightPink
     participant "Model" as Model
+    participant "ReadOnlyAddressBook" as ReadOnlyAddressBook
     participant "ObservableList" as ObservableList
 end box
 
-box Service #LightYellow
+box Service #LightGray
     participant "StatisticsService" as StatsService
     participant "Statistics" as Statistics
 end box
@@ -42,7 +44,7 @@ deactivate Model
 AddCommand --> LogicManager : CommandResult
 deactivate AddCommand
 
-LogicManager --> : CommandResult
+LogicManager --> StatsPanel : CommandResult
 deactivate LogicManager
 
 == StatsPanel Auto-Update ==
@@ -56,11 +58,17 @@ activate StatsPanel
 StatsPanel -> StatsService : getCurrentStatistics()
 activate StatsService
 
-StatsService -> Model : getFilteredPersonList()
+StatsService -> Model : getAddressBook()
 activate Model
 
-Model --> StatsService : ObservableList<Person>
+Model --> StatsService : ReadOnlyAddressBook
 deactivate Model
+
+StatsService -> ReadOnlyAddressBook : getPersonList()
+activate ReadOnlyAddressBook
+
+ReadOnlyAddressBook --> StatsService : ObservableList<Person>
+deactivate ReadOnlyAddressBook
 
 StatsService -> Statistics : new Statistics(personList)
 activate Statistics

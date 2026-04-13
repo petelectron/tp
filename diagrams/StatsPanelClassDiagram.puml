@@ -6,13 +6,15 @@ skinparam classBackgroundColor UI_COLOR
 
 class StatsPanel {
     - totalEmployeesLabel: Label
-    - uniqueTagsLabel: Label
-    - mostCommonTagLabel: Label
-    - employeesWithTagsLabel: Label
-    - employeesWithoutTagsLabel: Label
-    - tagDistributionLabel: Label
+    - uniqueMetricLabel: Label
+    - mostCommonMetricLabel: Label
+    - employeesWithMetricLabel: Label
+    - employeesWithoutMetricLabel: Label
+    - distributionLabel: Label
     - statisticsService: StatisticsService
+    - currentMode: StatisticsMode
     + StatsPanel(Logic)
+    + setStatisticsMode(StatisticsMode)
     - refresh()
     - updateUi(Statistics)
 }
@@ -24,35 +26,47 @@ class StatisticsService {
 }
 
 class Statistics {
+    - statisticsMode: StatisticsMode
     - totalEmployees: int
-    - uniqueTagCount: int
-    - mostCommonTag: String
-    - employeesWithTags: int
-    - employeesWithoutTags: int
-    - tagDistribution: String
-    + Statistics(List<Person>)
+    - uniqueValueCount: int
+    - mostCommonValue: String
+    - employeesWithValue: int
+    - employeesWithoutValue: int
+    - valueDistribution: String
+    + Statistics(List<Person>, StatisticsMode)
     + getTotalEmployees(): int
-    + getUniqueTagCount(): int
-    + getMostCommonTag(): String
-    + getEmployeesWithTags(): int
-    + getEmployeesWithoutTags(): int
-    + getTagDistribution(): String
-    - findMostCommonTag(Map): String
-    - createTagDistribution(Map): String
+    + getUniqueValueCount(): int
+    + getMostCommonValue(): String
+    + getEmployeesWithValue(): int
+    + getEmployeesWithoutValue(): int
+    + getValueDistribution(): String
 }
 
 interface Logic <<interface>> {
+    + getAddressBook(): ReadOnlyAddressBook
     + getFilteredPersonList(): ObservableList<Person>
+}
+interface ReadOnlyAddressBook <<interface>> {
+    + getPersonList(): ObservableList<Person>
 }
 
 interface UiPart <<abstract>> {
     # getRoot(): Region
 }
 
+
 StatsPanel --|> UiPart
 StatsPanel --> StatisticsService
+StatsPanel --> StatisticsMode
 StatisticsService --> Logic
 StatisticsService --> Statistics
-Logic --> Person
+Statistics --> StatisticsMode
+Logic --> ReadOnlyAddressBook
+ReadOnlyAddressBook --> Person
+note right of StatsPanel
+StatsPanel supports three modes: TAG, DEPARTMENT, ROLE.
+Labels and statistics update according to the selected mode.
+Statistics are always computed from the full employee list (not filtered).
+end note
 
 @enduml
