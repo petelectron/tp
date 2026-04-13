@@ -177,8 +177,6 @@ This section describes some noteworthy details on how certain features are imple
 
 ### Undo feature
 
-#### Implementation
-
 The undo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
 * `VersionedAddressBook#commit()` — Saves the current HRmanager state in its history.
@@ -290,13 +288,11 @@ This means a command such as `search ali hr` returns employees whose fields cont
 
 ### Statistics Panel
 
-
 The statistics panel provides real-time workforce metrics displayed permanently on the right side of the application. This feature follows the **Separation of Concerns (SoC)** principle by separating data calculation from UI display.
 
 **Note:** The statistics panel supports three modes: TAG, DEPARTMENT, and ROLE. The displayed labels and statistics update according to the selected mode. All statistics are always computed from the full employee list (not the filtered list), regardless of any active search or filter.
 
 #### Design Overview
-
 
 The statistics feature consists of three main components:
 
