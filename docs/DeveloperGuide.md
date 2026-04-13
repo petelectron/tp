@@ -457,6 +457,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     <br> *Steps 1a1-1a2 are repeated until the data provided are correct.*
     <br> *Use case resumes at step 2.*
 
+
 **Use case 2 (UC2): Delete employee**<br>
 
 **MSS**
@@ -487,6 +488,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 4a1. System displays a response indicating that the command was aborted.
     <br> *Use case ends.*
 
+
 **Use case 3 (UC3): View employees**<br>
 
 **MSS**
@@ -501,6 +503,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     <br></p>
     * 2a1. System displays an empty employee list.
     <br> *Use case ends*
+
 
 **Use case 4 (UC4): Search for an employee**<br>
 
@@ -531,6 +534,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 4a1. User requests to view all employees (UC3).
     * 4a2. The system shows the full non-filtered list of employees.
     <br> *Use case ends.*
+
 
 **Use case 5 (UC5): Edit an employee's details**<br>
 
@@ -600,6 +604,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 6a2. User stops cycling at their desired past command or cycles forward to get back to a more recent or original command.
     <br> *Use case resumes at step 7.*<br><br>
 
+
 **Use case 7 (UC7): Importing employee data**<br>
 
 **MSS**
@@ -625,6 +630,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 4a. User cancels import.
   <br> *Use case ends.*
+
 
 **Use case 8 (UC8): Exporting current employee data**<br>
 
@@ -680,7 +686,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ## **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
-
 
 > **Note:** These instructions only provide a starting point for testers to work on; testers are expected to do more *exploratory* testing.
 
@@ -912,26 +917,34 @@ Many commands in HRmanager require confirmation before they execute, to prevent 
 Test the following for each confirmable command:
 
 1. Editing an employee (edit command)
+
     1. Test case: Enter a valid edit command (e.g., `edit 1 n/New Name`). When prompted, enter `y`.<br>
        Expected: The employee is edited. Success message is shown.
+
     2. Test case: Enter a valid edit command (e.g., `edit 1 n/New Name`). When prompted, enter `n`.<br>
        Expected: The edit is cancelled. No changes are made. Cancellation message is shown. <br><br>
 
 2. Deleting an employee (delete command)
+
     1. Test case: Enter a valid delete command (e.g., `delete 1`). When prompted, enter `y`.<br>
        Expected: The employee is deleted. Success message is shown.
+
     2. Test case: Enter a valid delete command (e.g., `delete 1`). When prompted, enter `n`.<br>
        Expected: The deletion is cancelled. No changes are made. Cancellation message is shown. <br><br>
 
 3. Clearing all employees (clear command)
+
     1. Test case: Enter `clear`. When prompted, enter `y`.<br>
        Expected: All employees are deleted. Success message is shown.
+
     2. Test case: Enter `clear`. When prompted, enter `n`.<br>
        Expected: The clear operation is cancelled. No changes are made. Cancellation message is shown. <br><br>
 
 4. Exiting the application (exit command)
+
     1. Test case: Enter `exit`. When prompted, enter `y`.<br>
        Expected: The application closes.
+
     2. Test case: Enter `exit`. When prompted, enter `n`.<br>
        Expected: The application remains open. Cancellation message is shown.
 
@@ -940,26 +953,35 @@ Test the following for each confirmable command:
 Use these tests to verify generic undo workflows. NOTE: If the command is valid, the confirmation feature is first triggered. The tester enters 'y' to proceed.
 
 1. Edit then undo (tracked command)
+
     1. Prerequisites: Ensure employee 1 has a known initial field value (e.g., name is `Alice Tan`).
+
     2. Test case: Enter `edit 1 n/Alice Lim`. Then enter `undo`.<br>
        Expected: The edit is applied first. After `undo`, employee 1's name returns to the initial value (`Alice Tan`).<br><br>
 
 2. Edit, then an untracked command, then undo
+
     1. Prerequisites: Ensure employee 1 has a known initial field value.
+
     2. Test case: Enter `edit 1 n/Alice Lim`. Enter a non-data-modifying command (e.g., `list` or `search Alice`). Then run `undo`.<br>
        Expected: Undo skips the untracked command and reverts the latest tracked change. Employee 1's edited field returns to its initial value.<br><br>
 
 3. Delete then undo (tracked command)
+
     1. Prerequisites: Ensure there is at least one employee in the list.
+
     2. Test case: Enter `delete 1`. Then enter `undo`.<br>
        Expected: The employee is deleted first. After `undo`, the same employee is restored to the list.
 
 ### Testing Command Cycling
 
 1. Command cycling after tracked commands
+
     1. Prerequisites: Ensure there is at least one employee in the list.
+
     2. Test case: Enter `add n/Test User p/91234567 e/test@example.com r/Intern d/Operations`, then enter `delete 1` (confirm valid commands with `y` when prompted). Press the non-numpad Up arrow key repeatedly in the command box.<br>
        Expected: The first Up arrow shows the most recent command (`delete 1`). The next Up arrow shows the earlier command (`add n/Test User p/91234567 e/test@example.com r/Intern d/Operations`).
+
     3. Test case: After reaching the older command using Up arrow, press the non-numpad Down arrow key.<br>
        Expected: Cycling moves forward through command history toward newer commands (back to `delete 1`, then to the original/current input state).
 
@@ -978,7 +1000,6 @@ NOTE: If the command is valid, the confirmation feature is first triggered. The 
    3. Test case: `import test.txt` (Invalid entry)<br>
       Expected: Employee list is not imported. An error message is shown, indicating invalid file extension.
 
-   
 2. Importing employee data, on Windows OS
 
    1. Test case: `import C:\Users\username\Downloads\test.csv` (Valid entry, assuming `test.csv` exists in `Downloads` with valid data)<br>
@@ -986,7 +1007,6 @@ NOTE: If the command is valid, the confirmation feature is first triggered. The 
 
    2. Test case: `import C:\Users\username\invalid\path\nonexistent\test.csv` (Invalid path)<br>
      Expected: Employee list is not imported. An error message is shown, indicating invalid path.
-
 
 3. Importing employee data, on MacOS/Linux
 
@@ -1012,7 +1032,6 @@ NOTE: If the command is valid, the confirmation feature is first triggered. The 
    3. Test case: `export duplicate.csv` (Invalid path, assuming existing duplicate.csv in HRmanager's home folder)<br>
         Expected: No csv file is created. An error message is shown, indicating no overwriting of local files.
 
-
 2. Exporting current employee data, on Windows OS
 
    1. Test case: `export C:\Users\username\Downloads\test.csv` (Valid entry, assuming no existing test.csv in directory)<br>
@@ -1020,7 +1039,6 @@ NOTE: If the command is valid, the confirmation feature is first triggered. The 
 
    2. Test case: `export C:\Users\username\Downloads\new\path\employees.csv` (Valid entry, assuming no existing subdirectory `new`)<br>
       Expected: A directory `new` and a subdirectory `path` are created inside User's Downloads folder, a file employees.csv containing the current employee data in csv format is created inside. The success message is shown, with the number of people exported and the file path.
-
 
 3. Exporting current employee data, on MacOs/Linux
 
@@ -1032,8 +1050,6 @@ NOTE: If the command is valid, the confirmation feature is first triggered. The 
    
     3. Test case: `export /home/user/My Data.csv` (Invalid entry, no quotes around path containing space(s))<br>
        Expected: No csv file is created. An error message is shown, indicating invalid path.
-
-
 
 ### Saving and loading data
 
@@ -1085,7 +1101,7 @@ Team Members: 5
 
 ## **Appendix: Effort**
 
-The development of HRManager required considerable effort which extended well beyond AddressBook-Level3's baseline (AB3). Whilst AB3 provided a robust foundation, we have added numerous specific enhancements aimed at improving our userbase (Human Resoure Managers)'s experience.
+The development of HRmanager required considerable effort which extended well beyond AddressBook-Level3's baseline (AB3). Whilst AB3 provided a robust foundation, we have added numerous specific enhancements aimed at improving our userbase (Human Resource Managers') experience.
 This appendix evaluates the effort our team invested and how our project evolved from the initial AB3 codebase.
 
 ### 1. Stats Panel Integration
@@ -1101,5 +1117,5 @@ To elevate the application from a basic address book to a professional tool, we 
 
 ### 3. Import / Export System
 While AB3 handles basic background JSON, HR professionals primarily work with spreadsheets. We implemented robust `.csv` Import and Export commands.
-*   **The Effort:** This was far more difficult than simple File I/O. We had to build a custom CSV parser and serializer capable of mapping raw strings to our domain-specific objects (like `Department` or `Role`), whilst handling formatting errors (duplicates, missing values, etc.) gracefully. The system had to be capable of bulk-adding entries, validating them on the fly, and rejecting malformed files without corrupting the existing HRManager database.
+*   **The Effort:** This was far more difficult than simple File I/O. We had to build a custom CSV parser and serializer capable of mapping raw strings to our domain-specific objects (like `Department` or `Role`), whilst handling formatting errors (duplicates, missing values, etc.) gracefully. The system had to be capable of bulk-adding entries, validating them on the fly, and rejecting malformed files without corrupting the existing HRmanager database.
 
