@@ -13,7 +13,7 @@ public class Role {
     public static final String MESSAGE_CONSTRAINTS =
             "Roles should only consist of alphanumeric characters, "
             + "hyphens and spaces, and be between 1 and " + MAX_LENGTH + " characters long.\n"
-            + "Roles should not start or end with a space or hyphen.\n"
+            + "Roles should not start or end with a hyphen.\n"
             + "Roles should not contain consecutive spaces, consecutive hyphens, "
             + "or a space beside a hyphen.";
 

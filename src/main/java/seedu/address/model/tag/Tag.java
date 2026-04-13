@@ -14,7 +14,7 @@ public class Tag {
     public static final String MESSAGE_CONSTRAINTS =
             "Tags should only consist of alphanumeric characters, "
             + "hyphens and spaces, and be between 1 and " + MAX_LENGTH + " characters long.\n"
-            + "Tags should not start or end with a space or hyphen.\n"
+            + "Tags should not start or end with a hyphen.\n"
             + "Tags should not contain consecutive spaces, consecutive hyphens, "
             + "or a space beside a hyphen.";
 
