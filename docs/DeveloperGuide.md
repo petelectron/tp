@@ -582,7 +582,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3.  System {displays confirmation message}. (If the command is confirmable)
 4.  User suddenly recalls that they have forgotten to also edit the employee's email address.
 5.  User requests to cycle to the previous command.
-6.  System prefills the input line with the most recently executed command (from step 1).
+6.  System retrieves and displays the most recently executed command.
 7.  User modifies the command to edit the {email details} and executes the command.
 8.  System {edits the employee's email address in the records}.
     <br> *Use case ends.*
@@ -650,6 +650,43 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2b. File already exists at target destination.
     * 2b1. System displays an error message.
     <br> *Use case resumes from step 1.*
+
+**Use case 9 (UC9): Undo previous command**<br>
+
+**MSS**
+
+1. User requests to undo the most recent data-modifying command.
+2. System checks if there is a previous state available.
+3. System restores the most recent previous state of the employee records.
+4. System displays a success message indicating that the undo operation was completed.
+   <br> *Use case ends.*
+
+**Extensions**
+
+* 2a. There is no previous state available.
+  * 2a1. System displays an error message indicating that there is nothing to undo.
+  <br> *Use case ends.*<br><br>
+
+* 2b. There are untracked / non-data-modifying commands executed after the last tracked command.
+  * 2b1. System identifies the most recent valid previous state, ignoring any non-data-modifying commands.
+  <br> *Use case resumes from step 3.*<br><br>
+
+**Use case 10 (UC10): View and switch statistics dashboard mode**<br>
+
+**MSS**
+
+1. User requests to change the statistics mode using a valid command.
+2. System validates the requested mode.
+3. System computes statistics based on all employee records.
+4. System updates the statistics dashboard to reflect the selected mode.
+5. System displays a success message indicating updated state.
+   <br> *Use case ends.*
+
+**Extensions**
+
+* 2a. The requested mode is invalid.
+  * 2a1. System displays an error message indicating the correct format.
+  <br> *Use case ends.*<br><br>
 
 ### Non-Functional Requirements
 
@@ -1116,4 +1153,5 @@ To elevate the application from a basic address book to a professional tool, we 
 ### 3. Import / Export System
 While AB3 handles basic background JSON, HR professionals primarily work with spreadsheets. We implemented robust `.csv` Import and Export commands.
 *   **The Effort:** This was far more difficult than simple File I/O. We had to build a custom CSV parser and serializer capable of mapping raw strings to our domain-specific objects (like `Department` or `Role`), whilst handling formatting errors (duplicates, missing values, etc.) gracefully. The system had to be capable of bulk-adding entries, validating them on the fly, and rejecting malformed files without corrupting the existing HRmanager database.
+
 
