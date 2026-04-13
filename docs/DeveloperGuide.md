@@ -65,7 +65,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`. (Note: The delete command also supports multiple indexes, e.g., `delete 1 3 5`, which follows the same interaction pattern.)
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
 
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
@@ -175,9 +175,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
+### Undo feature
 
 The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
@@ -266,12 +264,6 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Pros: Will use less memory (e.g. for `delete`, just save an employee being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 ### Search feature
 
 The `search` command is implemented by `SearchCommand`, `SearchCommandParser`, and `PersonMatchesKeywordPredicate`.
@@ -305,9 +297,13 @@ This means a command such as `search ali hr` returns employees whose fields cont
 
 ### Statistics Panel
 
+
 The statistics panel provides real-time workforce metrics displayed permanently on the right side of the application. This feature follows the **Separation of Concerns (SoC)** principle by separating data calculation from UI display.
 
+**Note:** The statistics panel supports three modes: TAG, DEPARTMENT, and ROLE. The displayed labels and statistics update according to the selected mode. All statistics are always computed from the full employee list (not the filtered list), regardless of any active search or filter.
+
 #### Design Overview
+
 
 The statistics feature consists of three main components:
 
@@ -316,6 +312,8 @@ The statistics feature consists of three main components:
 3. **`StatsPanel`** (UI layer): A JavaFX component that displays statistics and listens for changes to the employee list to auto-refresh.
 
 <puml src="diagrams/StatsPanelClassDiagram.puml" width="500" />
+
+The class diagram above uses generic field and method names (e.g., `uniqueValueCount`, `mostCommonValue`, etc.) to reflect that the statistics panel is not limited to tags, but also supports department and role statistics. The `StatsPanel` class updates its UI fields and labels based on the current mode (TAG, DEPARTMENT, or ROLE).
 
 #### Implementation Details
 
@@ -332,9 +330,16 @@ The statistics feature consists of three main components:
 
 **StatsPanel Class:**
 - Extends `UiPart<Region>` with FXML layout
-- Listens to `logic.getFilteredPersonList()` for changes
+- Listens to `logic.getAddressBook().getPersonList()` for changes (the full, unfiltered list)
 - Updates UI labels when the employee list changes
 - Only handles UI updates - no calculation logic
+- Supports three dashboard modes: TAG, DEPARTMENT, and ROLE. The displayed statistics and labels update according to the selected mode.
+
+<box type="info" seamless>
+
+**Note:** The statistics panel is intentionally designed to reflect statistics for all employees in the HRmanager, regardless of any active search filters or on-screen filtering. This matches the User Guide and actual implementation. The panel's fields and methods are generic to support all three modes.
+
+</box>
 
 #### Sequence Diagram
 
@@ -393,208 +398,190 @@ The sequence diagram below shows how the statistics panel updates when an employ
 
 ### Product scope
 
-**Target user profile**: Human Resource Manager
+**Target user profile**:
 
-* has a need to manage a significant number of employee and applicant records
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
+* Human Resource Manager at a small company (up to 200 employees)
+* needs to store and manage employee contact details and basic HR information (not intended for large enterprises or complex HR processes)
+* prefers desktop apps over web/mobile alternatives
 * is reasonably comfortable using CLI apps
+* does not require complex HR features (e.g., payroll, leave management)
+* can type fast
 
 **Value proposition**:
-- manage employee records faster than a typical mouse/GUI driven app
-- provides fast access to employee details, with sorting options for further clarity
-- view job applicants details at a glance and decide whether to proceed with interviews and hiring
+HRmanager enables small organizations to efficiently manage and quickly access employee contact details, roles, departments, and tags through a fast, keyboard-driven interface—providing lightweight, statistics-driven HR management for up to 200 employees, without the complexity of enterprise HR systems.
+
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                            | I want to …​                            | So that I can…​                                             |
-|---------|------------------------------------|----------------------------------------|------------------------------------------------------------|
-| `* * *` | new user                           | have a guided tutorial                 | understand the layout and get started quickly              |
-| `* * *` | user                               | add an employee                        | keep track of new employees                                |
-| `* * *` | user                               | delete an employee                     | clear up data when it is no longer needed                  |
-| `* * *` | user                               | view all employees                     | gain a brief overview of everyone in the company           |
-| `* * *` | user                               | store phone numbers and email addresses| contact employees easily                                   |
-| `* * *` | busy user                          | search for employees by keywords       | quickly find relevant staff members                        |
-| `* * *` | busy user                          | add contacts with only name and phone  | track someone now and update details later                 |
-| `* * `  | organised user                     | modify employee details                | keep info up to date                                       |
-| `* * `  | organised user                     | sort employees by variables            | find the most relevant employees for my needs              |
-| `* * `  | organised user                     | tag employees by department            | categorise them                                            |
-| `* * `  | cautious user                      | get confirmation of my work            | not worry that my changes haven't been saved               |
-| `* * `  | clumsy user                        | undo my last action                    | avoid making mistakes or losing data                       |
-| `* * `  | clueless user                      | see error messages                     | correct my mistakes                                        |
-| `* `    | expert user                        | import employee data                   | manage pre-existing details without hand-typing everything |
-| `* `    | expert user                        | export employee data                   | back up data, support audits and planning                  |
-| `* `    | expert user                        | repeat previous command or similar     | enter commands quickly                                     |
-| `* `    | expert user                        | bulk archive or tag multiple applicants| clean up after a role is filled more efficiently           |
-| `* `    | user responsible for reporting	  | use a centralized dashboard            | maintain visibility over workforce and talent pipeline     |
-| `* `    | safe user                          | access the app via login authentication| ensure employee data is secure                             |
+| Priority | As a …​                         | I want to …​                                                                     | So that I can…​                                            |
+|----------|---------------------------------|----------------------------------------------------------------------------------|------------------------------------------------------------|
+| `* * *`  | new user                        | have an informative beginner friendly user guide                                 | understand the layout and get started quickly              |
+| `* * *`  | user                            | add an employee                                                                  | keep track of new employees                                |
+| `* * *`  | user                            | delete an employee                                                               | clear up data when it is no longer needed                  |
+| `* * *`  | user                            | view all employees                                                               | gain a brief overview of everyone in the company           |
+| `* * *`  | user                            | store phone numbers and email addresses                                          | contact employees easily                                   |
+| `* * *`  | busy user                       | search for employees by keywords                                                 | quickly find relevant staff members                        |
+| `* * *`  | forgetful user                  | get prompted to add all compulsory employee data fields (e.g. Phone, email, ...) | refrain from having incomplete employee data               |
+| `* * `   | organised user                  | modify employee details                                                          | keep information up to date                                |
+| `* * `   | organised user                  | view a statistics panel summarising employee data                                | quickly understand workforce composition and trends        |
+| `* * `   | organised user                  | tag employees by departments and roles                                           | categorise them for easy search                            |
+| `* * `   | cautious user                   | get confirmation of my work                                                      | not worry that my changes haven't been saved               |
+| `* * `   | clumsy user                     | undo my last action                                                              | avoid making mistakes or losing data                       |
+| `* * `   | clumsy user                     | automatically save all data locally after closing the app                        | avoid needing to export the data all the time              |
+| `* * `   | clueless user                   | see error messages                                                               | correct my mistakes                                        |
+| `* * `   | safe user                       | be notified when executing destructive commands like delete                      | prevent accidental deletion and loss of data               |
+| `* `     | lazy user                       | cycle through my previous commands                                               | avoid retyping long commands                               |
+| `* `     | expert user                     | import employee data                                                             | manage pre-existing details without hand-typing everything |
+| `* `     | expert user                     | export employee data                                                             | back up data, support audits and planning                  |
+| `* `     | expert user                     | use aliases for a few frequently used commands                                   | type less and work faster                                  |
+| `* `     | expert user                     | repeat previous command or similar                                               | enter commands quickly                                     |
+| `* `     | expert user                     | bulk delete employees                                                            | efficiently remove employees that have left the company    |
+| `* `     | user responsible for reporting	 | use a centralized dashboard                                                      | maintain visibility over workforce and talent pipeline     |
 
-*{More to be added}*
 
 ### Use cases
 
 (For all use cases below, the **System** is the `HRmanager` and the **Actor** is the `user`, unless specified otherwise)
 
 
-### Use case 1 (UC1): Add employee
+**Use case 1 (UC1): Add employee**<br>
 
 **MSS**
 
 1.  User requests to add an employee by adding employee details (`name`, `phone`, `email`, `role`, `department`, optional tags).
 2.  System adds an employee to the records.
-3.  System displays confirmation message.
-
-    Use case ends.
+3.  System displays success message.
+    <br> *Use case ends.*
 
 **Extensions**
 
 * 1a. System detects an error (e.g. format/syntax/duplicates error) in the entered data.
+    <br></p>
     * 1a1. System displays an error message with the correct format.
     * 1a2. User enters new data.
-    Steps 1a1-1a2 are repeated until the data entered are correct.
+    <br> *Steps 1a1-1a2 are repeated until the data entered are correct.*
+    <br> *Use case resumes at step 2.*
 
-    Use case resumes from step 2.
 
-
-### Use case 2 (UC2): Delete employee
+**Use case 2 (UC2): Delete employee**<br>
 
 **MSS**
 
 1. User requests to remove one or more employees by specifying their index numbers in the displayed list.
 2. System validates the provided index numbers.
 3. System prompts the user for confirmation that they want to execute a deletion.
-4. User confirms their intent to execute a 'delete' command, entering 'y'.
+4. User confirms their intent to proceed with the deletion.
 5. System removes the corresponding employee records from the system.
-6. System displays a confirmation message indicating the number of employees deleted.
-
-    Use case ends.
+6. System displays a success message indicating the number of employees deleted and their names.
+    <br> *Use case ends.*
 
 **Extensions**
 
 * 1a. System detects an error (e.g. format/syntax error) in the entered data.
     * 1a1. System displays an error message with the correct format.
     * 1a2. User enters new data in the correct format.
-      Steps 1a1-1a2 are repeated until the data entered are correct.
-
-    Use case resumes from step 2.
+    <br> *Steps 1a1-1a2 are repeated until the data entered are correct.*
+    <br> *Use case resumes from step 2.*<br><br>
 
 * 2a. One or more indexes are invalid (e.g., index exceeds list size).
     * 2a1. System displays an error message indicating the invalid index.
     * 2a2. User modifies the command until the index is valid.
+    <br> *Use case resumes from step 2.*<br><br>
 
-    Use case resumes from step 2.
-
-* 4a. User enter 'n' instead.
+* 4a. User decides not to proceed with the deletion.
     * 4a1. System displays a response indicating that the command was aborted.
+    <br> *Use case ends.*
 
-    Use case ends.
-
-
-### Use case 3 (UC3): View employees
+**Use case 3 (UC3): View employees**<br>
 
 **MSS**
 
 1. User requests to view the list of employees.
 2. System retrieves the employee records and displays employee list.
-
-   Use case ends.
+   <br> *Use case ends.*
 
 **Extensions**
 
 * 2a. There are no employees stored in the system.
+    <br></p>
     * 2a1. System displays an empty employee list.
+    <br> *Use case ends*
 
-    Use case ends
-
-
-### Use case 4 (UC4): Search for an employee
+**Use case 4 (UC4): Search for an employee**<br>
 
 **MSS**
 
-1.  User enters the `search` command with one or more keywords.
+1.  User requests to search for employees using one or more keywords.
 2.  System validates the search input.
 3.  System processes the search query against the existing employee records.
 4.  System displays a filtered list of all employees that match the search.
     Matching is case-insensitive, supports partial substring matching across all fields, and returns employees whose fields contain any of the supplied keywords.
-
-    Use case ends.
+    <br> *Use case ends.*
 
 **Extensions**
 
 * 1a. The user executes `search` with blank input.
     * 1a1. System displays an invalid command format message together with the proper `search` usage.
-
-    Use case resumes at step 1.
+    <br> *Use case resumes from step 1.*<br><br>
 
 * 1b. The user provides more than 5 keywords, or at least one keyword longer than 50 characters.
     * 1b1. System displays an invalid command format message together with the proper `search` usage.
-
-    Use case resumes at step 1.
+    <br> *Use case resumes from step 1.*<br><br>
 
 * 3a. No employees match the provided search query.
     * 3a1. System displays an empty list and `0 employees listed!`.
-
-    Use case ends.
+    <br> *Use case ends.*<br><br>
 
 * 4a. The user than wants to return to the full non-filtered list of employees.
     * 4a1. User executes `list` to [view employees](#use-case-3-uc3-view-employees) (UC3).
     * 4a2. The system shows the full non-filtered list of employees.
+    <br> *Use case ends.*
 
-    Use case ends.
 
-
-### Use case 5 (UC5): Tag an employee
+**Use case 5 (UC5): Tag an employee**<br>
 
 **MSS**
 
-1. User [searches](#use-case-4-uc4-search-for-an-employee) for employee. (UC4)
+1. User [searches](use-case-4-uc4-search-for-an-employee) for employee. (UC4)
 2. System shows list of employees. (Steps 1 and 2 are necessary to see the changes)
 3. User requests to edit a specific employee in the list, modifying the person's tag(s).
 4. System prompts the user for confirmation that they want to execute a 'edit'.
 5. User confirms their intent to execute a 'edit' command, entering 'y'.
 6. System edits that employee, deleting all previous tags, and adding the given tags.
-7. System displays a confirmation message showing that the employee has been edited, and their new details.
-
-    Use case ends.
+7. System displays a confirmation message showing that the employee has been edited, and their new details. 
+   <br> *Use case ends.*
 
 **Extensions**
 
 * 2a. The list is empty.
-
-    Use case ends. (The person to tag does not exist)
+    <br> *Use case ends. (The person to tag does not exist)*
 
 * 3a. The given index is invalid.
     * 3a1. System shows an error message.
     * 3a2. The user modifies their command until the index is valid.
-
-    Use case resumes at step 4.
+    <br> *Use case resumes from step 4.*<br><br>
 
 * 3b. The tag name provided is already associated with this employee.
     * 3b1. There is no problem. The action proceeds anyway, though there is essentially no change at step 6.
-
-    Use case resumes at step 4.
+    <br> *Use case resumes from step 4.*<br><br>
 
 * 3c. The tag provided is invalid (e.g., exceeds 30 characters, or contains non-alphanumeric characters).
     * 3c1. System shows an error message: "Tags should only consist of alphanumeric characters, hyphens and spaces, and be between 1 and 30 characters long. The tag should not start or end with a space or hyphen, and it should not contain consecutive spaces or hyphens."
     * 3c2. The user modifies their command until the tag(s) is/are valid.
-
-    Use case resumes at step 4.
+    <br> *Use case resumes from step 4.*<br><br>
 
 * 3d. The tag provided is blank, e.g., "edit 4 t/" (This is the way to delete tags)
     * 3d1. The execution proceeds. The result is that at step 6, the employee at the given index has all their tags deleted.
-
-    Use case resumes at step 4.
+    <br> *Use case resumes from step 4.*<br><br>
 
 * 5a. User enter 'n' instead.
     * 5a1. System displays a response indicating that the command was aborted.
+    <br> *Use case ends.*<br><br>
 
-    Use case ends.
 
-
-### Use case 6 (UC6): Edit an employee's details
+**Use case 6 (UC6): Edit an employee's details**<br>
 
 **MSS**
 
@@ -603,38 +590,34 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3. User confirms their intent to execute a 'edit' command, entering 'y'.
 4. System edits that employee, deleting all previous tags, and adding the given tags.
 5. System displays a confirmation message showing that the employee has been edited, and their new details.
+   <br> *Use case ends.*
 
 **Extensions**
 
 * 1a. The user enters the command in the incorrect format.
     * 1a1. System shows an error message, along with the correct format for an edit command.
-
-    Use case resumes at step 1.
+    <br> *Use case resumes at step 1.*<br><br>
 
 * 1b. The given index is invalid.
     * 1b1. System shows an error message.
     * 1b2. The user modifies their command until the index is valid.
-
-    Use case resumes at step 2.
+    <br> *Use case resumes from step 2.*<br><br>
 
 * 1c. The user's proposed details are invalid.
     * 1c1. The system shows an error message for the relevant field for which the input restrictions are not adhered to.
     * 1c2. The user modifies their inputs until all of the proposed parameters are accepted.
-
-    Use case resumes at step 2.
+    <br> *Use case resumes from step 2.*<br><br>
 
 * 1d. User enters empty details.
     * 1d1. System shows an error message: "At least one field to edit must be provided."
-
-    Use case resumes at step 1.
+    <br> *Use case resumes from step 1.*<br><br>
 
 * 3a. User enter 'n' instead.
     * 3a1. System displays a response indicating that the command was aborted.
+    <br> *Use case ends.*<br><br>
 
-    Use case ends.
 
-
-### Use case 7 (UC7): Cycle through previous executed commands
+**Use case 7 (UC7): Cycle through previous executed commands**<br>
 
 **MSS**
 
@@ -646,29 +629,24 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 6.  System prefills the CLI with the command used in step 5.
 7.  User deletes the {phone field} and types {the email details}, then enters the command. (The command {"edit"} and the relevant {employee index} is already prepared)
 8.  System {edits the employee's email address in the records}.
-
-    Use case ends.
+    <br> *Use case ends.*
 
 **Extensions**
 
 * 2a. User has entered more than 10 unique commands.
     * 2a1. The oldest command is discarded and can no longer be cycled through.
-
-    Use case ends.
+    <br> *Use case ends.*<br><br>
 
 * 5a. There are no previous successfully executed commands.
     * 5a1. System does not do anything in response to up arrow (PgUp) key.
-
-    Use case ends.
+    <br> *Use case ends.*<br><br>
 
 * 6a. There are up to 10 previous successfully executed commands. User presses up arrow (PgUp) again.
     * 6a1. User presses up arrow (PgUp) key until their desired previous executed command appears. If there is already an input in the CLI, it is saved. User can also press down arrow (PgDn) key to get back to the more recent/original command.
     * 6a2. User stops cycling at their desired past/current command.
+    <br> *Use case resumes at step 7.*<br><br>
 
-    Use case resumes at step 7.
-
-
-### Use case 8 (UC8): Importing employee data
+**Use case 8 (UC8): Importing employee data**<br>
 
 **MSS**
 
@@ -677,22 +655,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3. System converts csv data into list of employees.
 4. System saves list of employees, overwriting any pre-existing employee data.
 5. System displays a confirmation message indicating the number of employees imported and the file used.
-
-    Use case ends.
+   <br> *Use case ends.*
 
 **Extensions**
 
 * 2a. User input filepath is invalid.
   * 2a1. System displays an error message.
-
-    Use case resumes at Step 1.
+  <br> *Use case resumes at Step 1.*<br><br>
 
 * 3a. File data is invalid (e.g. missing required header rows, duplicate persons).
   * 3a1. System displays an error message.
+  <br> *Use case resumes at step 1.*
 
-    Use case resumes at step 1.
-
-### Use case 9 (UC9): Exporting current employee data
+**Use case 9 (UC9): Exporting current employee data**<br>
 
 **MSS**
 
@@ -701,43 +676,45 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3. System converts app data into csv format.
 4. System saves csv file into target destination.
 5. System displays a confirmation message indicating the file destination.
-
-   Use case ends.
+   <br> *Use case ends.*
 
 **Extensions**
 
 * 2a. User input filepath is invalid.
     * 2a1. System displays an error message.
-
-      Use case resumes at Step 1.
+    <br> *Use case resumes at Step 1.*<br><br>
 
 * 2b. File already exists at target destination.
     * 2b1. System displays an error message.
-
-      Use case resumes at step 1.
-
+    <br> *Use case resumes at step 1.*
 
 ### Non-Functional Requirements
 
 1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2. The system should respond to user commands within **1 second** under normal usage conditions.
 3. The system should be able to store and manage at least **100 employee records** while maintaining command response times within **1 second**.
-4. The system should be usable entirely through a **Command Line Interface (CLI)** without requiring graphical interaction such as mouse input.
 5. The system should be usable by **HR managers who are not highly technical**, meaning commands should be simple and documentation should clearly explain how to use them.
 6. The system should follow **standard Java coding conventions and modular design principles** to ensure maintainability.
 7. The system should ensure that employee data stored in the system remains consistent and is not corrupted during normal usage.
 8. The system should ensure that employee information stored locally is not transmitted over the network without user intent.
 9. The system should remain stable when invalid commands or inputs are entered and should not crash during normal usage.
 10. The system should be packaged as a single executable JAR file so that users can run the application without additional installation steps beyond having Java installed.
+11. The system inputs should be primarily through CLI with minimal reliance on mouse interactions, to cater to users who prefer keyboard-driven interfaces.
 
 ### Glossary
 
+* **HRmanager**: The name of our desktop application for managing employee records.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **HR Manager**: The primary user of the system who manages employee records using the application.
 * **Employee Record**: A collection of information stored in the system about an employee, such as name, email, phone number, role, and department.
 * **Command Line Interface (CLI)**: A text-based interface where users interact with the application by typing commands.
 * **Department**: The organizational unit an employee belongs to (e.g., `Engineering`, `Finance`, `Human Resources`).
-* **Tag**: A label that can be attached to an employee record for categorization purposes. Tags must be alphanumeric and 1-30 characters in length. Examples include "HR", "Manager", "FullTime", "Intern".
+* **Role**: The position or job title of an employee (e.g., `Software Engineer`, `HR Manager`).
+* **Alias**: A user-defined shortcut for a command (e.g., `d` as an alias for `delete`).
+* **CSV**: Comma-Separated Values, a common file format for storing tabular data.
+* **JSON**: JavaScript Object Notation, a common file format for storing structured data.
+* **JAR**: Java Archive, a package file format used to aggregate many Java class files and associated metadata and resources into one file for distribution.
+* **Prefix**: A specific string used in command syntax to indicate the type of data being entered (e.g., `n/` for name, `p/` for phone).
+* **Preamble**: The part of the command before the first valid prefix. It should be empty or just whitespace for a valid command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -841,7 +818,7 @@ testers are expected to do more *exploratory* testing.
 
    9. Test case: `delete 1 2 3 4 5 6 7 8 9 10`<br>
       Expected: 10 employees deleted. Status message shows "Deleted employee(s): 10 employee(s)".
-   
+
    10. Test case: `delete 1 2 3 4 5 6 7 8 9 10 11`<br>
       Expected: No employee is deleted. Error shown: "Too many indexes specified."
 
@@ -863,7 +840,7 @@ testers are expected to do more *exploratory* testing.
 
    5. Test case: `search KEYWORD` (where original list has 3 entries, KEYWORD returns 1 match) followed by `delete 3`<br>
       Expected: Error message shown for invalid index since the index applies to the filtered list, not full list.
-      
+
 
 ### Searching for employees
 
@@ -949,19 +926,19 @@ testers are expected to do more *exploratory* testing.
 ### Importing employee list
 
 1. Importing employee data
-   
+
    1. Test case: `import C:\Users\username\Downloads\test.csv` (Valid entry, assuming file format and data are valid)
        Expected: Employee list is imported by parsing test.csv in user's Downloads folder, overwriting existing employee data.
 
    2. Test case: `import test.csv` (Valid entry, assuming file format and data are valid)
        Expected: Employee list is imported by parsing test.csv in HRmanager's home folder, overwriting existing employee data.
-   
+
    3. Test case: `import C:\Users\username\invalid\path\nonexistent\test.csv` (Invalid entry)
        Expected: Employee list is not imported. An error message is shown, indicating invalid path.
-   
+
    4. Test case:`import C:\Users\username\Downloads\wrongformat.csv` (Invalid entry, assuming file exists but is in the wrong format, e.g. duplicate persons, missing required headers, invalid data...)
        Expected: Employee list is not imported. An error message is shown, indicating failure in parsing and the exact format error that caused it.
-   
+
    5. Test case: `import C:\Users\username\Downloads\test.txt` (Invalid entry)
       Expected: Employee list is not imported. An error message is shown, indicating invalid file extension.
 
@@ -981,16 +958,45 @@ testers are expected to do more *exploratory* testing.
 
    4. Test case: `export employees.txt` (Invalid path, only csv exports are allowed)
         Expected: No csv file is created. An error message is shown, indicating the required .csv extension.
-   
+
    5. Test case: `export C:\Users\username\nonexisting\invalid\path\employees.csv` (Invalid entry, path is invalid)
         Expected: No csv file is created. An error message is shown, indicating invalid path.
 
 
+      
 
-### Saving data
+### Saving and loading data
 
-1. Dealing with missing/corrupted data files
+#### Dealing with corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+**Prerequisites:**
+- In the data folder, have a `HRmanager.json` file with at least one employee entry.
 
-1. _{ more test cases …​ }_
+**Test case 1:**
+Open `HRmanager.json` and modify an employee so that a mandatory field (e.g., name, phone, email, role, department) is set to an empty string: `""`. Start up the application.
+<br><br>
+**Expected:**
+- The employee list will appear blank in the UI.
+- A warning message is shown to the user.
+- The corrupted `HRmanager.json` file is not overwritten on exit or window close; it remains on disk in its corrupted state.
+- The file will be overwritten with clean (empty) data only after a data-modifying command (e.g., add, delete, edit) is executed.
+
+**Test case 2:**
+Delete a mandatory field from an employee entry, or insert an invalid value (e.g., special characters in name, malformed email). Start up the application.
+<br><br>
+**Expected:**
+- Similar to previous: blank list, warning message, file not overwritten until a data-modifying command is executed.
+
+#### Dealing with missing data files
+
+**Prerequisites:**
+- Have an existing `HRmanager.json` file in the data folder.
+
+**Test case 3:**
+Delete or rename `HRmanager.json`. Start up the application.
+<br><br>
+**Expected:**
+- The initial sample employee list will appear in the UI.
+- The `HRmanager.json` file will be created (with sample entries) only after a data-modifying command (e.g., add, delete, edit) is executed.
+
+### Future Enhancements
