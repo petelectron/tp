@@ -714,10 +714,10 @@ Given below are instructions to test the app manually.
     3. Test case: `add k n/Amy Choo p/22222222 e/amy@example.com r/Head of Office d/Operations t/friend` (Preamble is not a space)<br>
        Expected: The employee is not added. Error message for invalid command format, along with an example of the correct format, shown.
 
-    4. Test case: `add n/Bob Choo p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Same exact name with existing entry, despite different details)<br>
+    4. Test case: `add n/Bob Choo p/11111111 e/bob@example.com r/Head of Operations d/Operations t/friend` (Same exact name with existing entry, despite different details)<br>
        Expected: The employee is not added. Duplicate error message is shown, indicating the employee (with same name) already exists.
 
-    5. Test case: `add n/bob Choo p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Same exact name with different case. Name check is case insensitive.)<br>
+    5. Test case: `add n/bob Choo p/11111111 e/bob@example.com r/Head of Operations d/Operations t/friend` (Same exact name with different case. Name check is case insensitive.)<br>
        Expected: The employee is not added. Duplicate error message is shown, indicating the employee (with same name) already exists.
 
     6. Test case: `add n/Lance Choo p/33333333 e/lance@example.com r/Head of HR d/Human Resources t/friend t/friend t/husband` (Multiple tags)<br>
@@ -765,7 +765,7 @@ Given below are instructions to test the app manually.
    6. Test case: `delete 1 2 999` (Prerequisite: there are less than 999 entries/employees) <br>
       Expected: No employee is deleted. Error details shown for an invalid index (because of 999).
 
-   7. All test cases, except `del` is used instead of `delete`. E.g.: `del 1`<br>
+   7. All test cases, except `del` is used instead of `delete`. E.g. `del 1`<br>
       Expected: Same exact behaviour as `delete`
 
    8. Test case: `delete -3`, `delete a`, `del 0` or similar (No index provided or index is invalid) <br>
@@ -780,7 +780,7 @@ Given below are instructions to test the app manually.
    11. Other incorrect delete commands to try: `delete x` (where x is larger than the list size), `del 1 2 a`, `del a`, `del 1 ` (trailing whitespace), `del #`, etc.<br>
       Expected: Similar error handling to above.
 
-2. Deleting a employee from a filtered list (search results)
+2. Deleting an employee from a filtered list (search results)
 
    1. Prerequisites: Execute `search KEYWORD` to filter the list (where KEYWORD returns one or more matching results based on searchable fields). Multiple search results shown.
 
