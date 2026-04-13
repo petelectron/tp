@@ -466,7 +466,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     <br> *Steps 1a1-1a2 are repeated until the data entered are correct.*
     <br> *Use case resumes at step 2.*
 
-
 **Use case 2 (UC2): Delete employee**<br>
 
 **MSS**
@@ -810,7 +809,6 @@ testers are expected to do more *exploratory* testing.
    5. Test case: `search KEYWORD` (where original list has 3 entries, KEYWORD returns 1 match) followed by `delete 3`<br>
       Expected: Error message shown for invalid index since the index applies to the filtered list, not full list.
 
-
 ### Searching for employees
 
 1. Searching for employees using one or more keywords
@@ -910,11 +908,12 @@ NOTE: If the command is valid, the confirmation feature is first triggered. The 
    
 2. Importing employee data, on Windows OS
 
-    1. Test case: `import C:\Users\username\Downloads\test.csv` (Valid entry, assuming `test.csv` exists in `Downloads` with valid data)<br>
-       Expected: Employee list is imported by parsing `test.csv` in user's `Downloads` folder, overwriting existing employee data. Success message is shown with number of employees imported and the file path.
+   1. Test case: `import C:\Users\username\Downloads\test.csv` (Valid entry, assuming `test.csv` exists in `Downloads` with valid data)<br>
+   Expected: Employee list is imported by parsing `test.csv` in user's `Downloads` folder, overwriting existing employee data. Success message is shown with number of employees imported and the file path.
 
-    2. Test case: `import C:\Users\username\invalid\path\nonexistent\test.csv` (Invalid path)<br>
-      Expected: Employee list is not imported. An error message is shown, indicating invalid path.
+   2. Test case: `import C:\Users\username\invalid\path\nonexistent\test.csv` (Invalid path)<br>
+     Expected: Employee list is not imported. An error message is shown, indicating invalid path.
+
 
 3. Importing employee data, on MacOS/Linux
 
@@ -926,7 +925,6 @@ NOTE: If the command is valid, the confirmation feature is first triggered. The 
 
    3. Test case: `import /home/user/My Data.csv` (Invalid entry, no quotes around path containing space(s))<br>
       Expected: Employee list is not imported. An error message is shown, indicating invalid path.
-
 
 ### Exporting employee list
 
