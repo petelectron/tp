@@ -455,7 +455,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. System displays an error message with the correct format.
     * 1a2. User provides new data.
     <br> *Steps 1a1-1a2 are repeated until the data provided are correct.*
-    <br> *Use case resumes at step 2.*
+    <br> *Use case resumes from step 2.*
 
 
 **Use case 2 (UC2): Delete employee**<br>
@@ -550,7 +550,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The user enters the command in the incorrect format.
     * 1a1. System shows an error message, along with the correct format for an edit command.
-    <br> *Use case resumes at step 1.*<br><br>
+    <br> *Use case resumes from step 1.*<br><br>
 
 * 1b. The given index is invalid.
     * 1b1. System shows an error message.
@@ -595,13 +595,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 5a. There are no previous successfully executed commands.
     * 5a1. System does not respond to the user's cycle request.
-
-    Use case ends.
+    <br> *Use case ends.*<br><br>
 
 * 6a. The user has executed multiple commands before the recent one, and requests to cycle further back.
     * 6a1. System continues to cycle through older executed commands. If there is already an input, it is saved.
     * 6a2. User stops cycling at their desired past command or cycles forward to get back to a more recent or original command.
-    <br> *Use case resumes at step 7.*<br><br>
+    <br> *Use case resumes from step 7.*<br><br>
 
 
 **Use case 7 (UC7): Importing employee data**<br>
@@ -621,11 +620,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. User input filepath is invalid.
   * 2a1. System displays an error message.
-  <br> *Use case resumes at Step 1.*<br><br>
+  <br> *Use case resumes from Step 1.*<br><br>
 
 * 3a. File data is invalid (e.g. missing required header rows, duplicate persons).
   * 3a1. System displays an error message.
-  <br> *Use case resumes at step 1.*
+  <br> *Use case resumes from step 1.*<br><br>
 
 * 4a. User cancels import.
   <br> *Use case ends.*
@@ -646,11 +645,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. User input filepath is invalid.
     * 2a1. System displays an error message.
-    <br> *Use case resumes at Step 1.*<br><br>
+    <br> *Use case resumes from Step 1.*<br><br>
 
 * 2b. File already exists at target destination.
     * 2b1. System displays an error message.
-    <br> *Use case resumes at step 1.*
+    <br> *Use case resumes from step 1.*
 
 ### Non-Functional Requirements
 

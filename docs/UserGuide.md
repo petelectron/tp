@@ -40,7 +40,7 @@ Here is a quick guide to jump straight to the section you need:
 
 * [Confirmation Prompts](#confirmation-prompts)
 * [Undo an executed command: `undo`](#undo-an-executed-command-undo)
-* [Cycle through previous executed commands](#cycle-through-previous-executed-commands)
+* [Cycle through command history](#cycle-through-command-history-previous-executed-commands)
 * [Saving the data](#saving-the-data)
 * [Editing the data file](#editing-the-data-file)
 
@@ -48,7 +48,6 @@ Here is a quick guide to jump straight to the section you need:
 
 * [FAQ](#faq)
 * [Known issues](#known-issues)
-* [Future implementations](#future-implementations)
 * [Command summary](#command-summary)
 
 --------------------------------------------------------------------------------------------------------------------
@@ -191,7 +190,7 @@ Examples:
 
 <box theme="success" icon=":fa-solid-lightbulb:">
 
-Refer to [parameter restrictions](#parameter-restrictions-for-each-field) for each field for details on acceptable values for each parameter.
+Refer to [parameter restrictions](#parameter-restrictions-for-each-field) for acceptable values of each field.
 </box>
 
 <box type="warning" theme="warning" icon=":fa-solid-undo-alt:">
@@ -337,7 +336,7 @@ Examples:
 
 <box theme="success" icon=":fa-solid-lightbulb:">
 
-Refer to [parameter restrictions](#parameter-restrictions-for-each-field) for each field for details on acceptable values for each parameter.
+Refer to [parameter restrictions](#parameter-restrictions-for-each-field) for acceptable values of each field.
 </box>
 
 <box type="important" icon=":fa-solid-exclamation-triangle:">
@@ -442,7 +441,7 @@ Alternative ways to import:
 
 <box theme="success" icon=":fa-solid-lightbulb:">
 
-Refer to [parameter restrictions](#parameter-restrictions-for-each-field) for each field for details on acceptable values for each parameter.
+Refer to [parameter restrictions](#parameter-restrictions-for-each-field) for acceptable values of each field.
 </box>
 
 <box theme="success" icon=":fa-solid-lightbulb:">
