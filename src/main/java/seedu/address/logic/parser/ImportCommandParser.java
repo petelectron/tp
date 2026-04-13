@@ -18,7 +18,13 @@ public class ImportCommandParser implements Parser<ImportCommand> {
      */
     @Override
     public ImportCommand parse(String args) throws ParseException {
-        String trimmed = args.trim().replace("\"", ""); //remove spaces and quotes
+        String trimmed = args.trim();
+        if (trimmed.startsWith("\"") && trimmed.endsWith("\"")) {
+            trimmed = trimmed.substring(1, trimmed.length() - 1);
+        }
+        if (trimmed.startsWith("~")) {
+            trimmed = trimmed.replaceFirst("^~", System.getProperty("user.home"));
+        } //for unix-based systems
         if (trimmed.isEmpty()) {
             throw new ParseException(
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));

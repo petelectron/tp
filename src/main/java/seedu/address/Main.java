@@ -6,7 +6,7 @@ import javafx.application.Application;
 import seedu.address.commons.core.LogsCenter;
 
 /**
- * The mainimpoimpo entry point to the application.
+ * The main entry point to the application.
  *
  * This is a workaround for the following error when MainApp is made the
  * entry point of the application:

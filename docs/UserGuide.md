@@ -399,13 +399,29 @@ Format: `import [FILE PATH]`
 
 Examples:
 * `import employees.csv`
-* `import C:\Users\username\Downloads\2026_employee_list.csv`
+* `import C:\Users\username\Downloads\2026_employee_list.csv` (Windows)
+* `import "C:\My Documents\data.csv"` (Windows)
+* `import /home/user/data.csv` (MacOS/Linux)
+* `import "/home/user/My Data.csv"` (MacOs/Linux)
 
-Additional notes:
-* The target file must be a `.csv` file with a valid header row: `name, phone, email, role, department, tags` (tags optional, any order).
+Notes on file path format:
+* Must end in `.csv`. 
+* Only one layer of quotes can be parsed.
+* For MacOS/Linux, file paths containing spaces must be quoted.
+
+Notes on csv file format:
+* Must contain a valid header row containing all of `name, phone, email, role, department` in any order.
+* Optionally, one `tags` column is accepted. All tags must be included in one single field, e.g. `tag1, tag2, tag3`.
+* In the case of duplicate headers, the left-most column is taken.
 * File size limit: 100kB. Employee limit: 200 employees.
 * All data validation rules apply (e.g., no duplicate names, invalid or missing fields). [Parameter restrictions](#parameter-restrictions-for-each-field)
-* When multiple errors exist, only the first error is reported.
+
+When multiple errors exist, only the first error is reported.
+
+Example of correct csv file format:
+
+![import command](images/importCommandCsv.png)
+
 
 Alternative ways to import:
 1) Drag the file into HRmanager's home folder, then run `import filename.csv` 
@@ -664,6 +680,6 @@ Action     | Format, Examples
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [r/ROLE] [d/DEPARTMENT] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com d/Finance`
 **Delete** | `delete INDEX [MORE_INDEXES]` or `del INDEX [MORE_INDEXES]`<br> e.g., `delete 3`, `delete 1 4 5`
 **Clear**  | `clear`
-**Import** | `import [FILE PATH]`<br> e.g., `export C:\Users\John\Desktop\employees.csv`
+**Import** | `import [FILE PATH]`<br> e.g., `import C:\Users\John\Desktop\employees.csv`
 **Export** | `export [FILE PATH]`<br> e.g., `export C:\Users\John\Desktop\employees.csv`
 **Exit**   | `exit`

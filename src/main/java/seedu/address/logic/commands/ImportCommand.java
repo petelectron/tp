@@ -46,7 +46,7 @@ public class ImportCommand extends Command implements ConfirmableCommand {
     public static final String MESSAGE_INVALID_PATH =
         "The provided file path is invalid: %s";
     public static final String MESSAGE_NOT_CSV =
-        "Only csv files are supported";
+        "Only csv files are supported. Check that your file path ends in \".csv\".";
     public static final int MAX_KILOBYTES = 100;
     public static final int MAX_BYTES = 102400; //100kb
     public static final String MESSAGE_FILE_SIZE_OVER_LIMIT =
