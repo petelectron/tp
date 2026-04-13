@@ -462,8 +462,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. System detects an error (e.g. format/syntax/duplicate error) in the entered data.
     <br></p>
     * 1a1. System displays an error message with the correct format.
-    * 1a2. User enters new data.
-    <br> *Steps 1a1-1a2 are repeated until the data entered are correct.*
+    * 1a2. User provides new data.
+    <br> *Steps 1a1-1a2 are repeated until the data provided are correct.*
     <br> *Use case resumes at step 2.*
 
 
@@ -481,9 +481,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. System detects an error (e.g. format/syntax error) in the entered data.
+* 1a. System detects an error (e.g. format/syntax error) in the provided data.
     * 1a1. System displays an error message with the correct format.
-    * 1a2. User enters new data until it is in the correct format.
+    * 1a2. User provides new data until it is in the correct format.
 
     Use case resumes from step 2.
 
@@ -525,20 +525,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. The user executes `search` with blank input.
-    * 1a1. System displays an invalid command format message together with the proper `search` usage.
+* 1a. The user provides a blank search query.
+    * 1a1. System displays an invalid command format message together with the proper command usage.
     <br> *Use case resumes from step 1.*<br><br>
 
 * 1b. The user provides invalid input keywords.
-    * 1b1. System displays an invalid command format message together with the proper `search` usage.
+    * 1b1. System displays an invalid command format message together with the proper command usage.
     <br> *Use case resumes from step 1.*<br><br>
 
 * 3a. No employees match the provided search query.
     * 3a1. System displays an empty list and a success message.
     <br> *Use case ends.*<br><br>
 
-* 4a. The user than wants to return to the full non-filtered list of employees.
-    * 4a1. User executes `list` to view employees (UC3).
+* 4a. The user then wants to return to the full non-filtered list of employees.
+    * 4a1. User requests to view all employees (UC3).
     * 4a2. The system shows the full non-filtered list of employees.
     <br> *Use case ends.*
 
@@ -546,8 +546,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to edit employee details, with the employee's index in the list, and enters the details to be updated (any combination of `name`, `phone`, `email`, `role`, `department`, tags).
-2. System prompts the user for confirmation that they want to execute a 'edit'.
+1. User requests to edit an employee's details by providing the employee's index in the list alongside the changed details.
+2. System prompts the user for confirmation that they want to execute the edit.
 3. User confirms intent to proceed with the edit.
 4. System edits that employee, replacing the relevant fields with new ones.
 5. System displays a success message showing that the employee has been edited, and their new details.
@@ -571,7 +571,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     <br> *Steps 1c1-1c2 are repeated until the all the proposed parameters are accepted.*
     <br> *Use case resumes from step 2.*<br><br>
 
-* 1d. User enters empty details.
+* 1d. User provides empty details.
     * 1d1. System shows an error message.
     <br> *Use case resumes from step 1.*<br><br>
 
@@ -588,9 +588,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  System {edits the employee's phone number in the records}.
 3.  System {displays confirmation message}. (If the command is confirmable)
 4.  User suddenly recalls that they have forgotten to also edit the employee's email address.
-5.  User presses the **non-numpad Up arrow key** in the CLI.
-6.  System prefills the CLI with the most recently executed command (from step 1)."
-7.  User deletes the {phone field} and types {the email details}, then enters the command. (The command {"edit"} and the relevant {employee index} is already prepared)
+5.  User requests to cycle to the previous command.
+6.  System prefills the input line with the most recently executed command (from step 1).
+7.  User modifies the command to edit the {email details} and executes the command.
 8.  System {edits the employee's email address in the records}.
     <br> *Use case ends.*
 
@@ -601,13 +601,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     <br> *Use case ends.*<br><br>
 
 * 5a. There are no previous successfully executed commands.
-    * 5a1. System does not do anything in response to the up arrow key.
+    * 5a1. System does not respond to the user's cycle request.
 
     Use case ends.
 
-* 6a. There are up to 10 previous successfully executed commands. User presses up arrow key again.
-    * 6a1. User presses up arrow key until their desired previous executed command appears. If there is already an input in the CLI, it is saved. User can also press down arrow key to get back to the more recent/original command.
-    * 6a2. User stops cycling at their desired past/current command.
+* 6a. The user has executed multiple commands before the recent one, and requests to cycle further back.
+    * 6a1. System continues to cycle through older executed commands. If there is already an input, it is saved.
+    * 6a2. User stops cycling at their desired past command or cycles forward to get back to a more recent or original command.
     <br> *Use case resumes at step 7.*<br><br>
 
 **Use case 7 (UC7): Importing employee data**<br>
