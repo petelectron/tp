@@ -115,6 +115,11 @@ public class EditCommand extends Command implements ConfirmableCommand {
         requireNonNull(lastShownList);
 
         Person personToEdit = getPersonToEdit(lastShownList);
+
+        if (!editPersonDescriptor.isAnyFieldEdited()) {
+            throw new CommandException(MESSAGE_NOT_EDITED);
+        }
+
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
         requireNonNull(editedPerson);
 
@@ -135,6 +140,10 @@ public class EditCommand extends Command implements ConfirmableCommand {
         requireNonNull(lastShownList);
 
         Person personToEdit = getPersonToEdit(lastShownList);
+
+        if (!editPersonDescriptor.isAnyFieldEdited()) {
+            throw new CommandException(MESSAGE_NOT_EDITED);
+        }
 
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
         requireNonNull(editedPerson);

@@ -79,17 +79,9 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
+    public void execute_noFieldSpecifiedUnfilteredList_failure() {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
-        Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(editedPerson, editedPerson); // No change
-        expectedModel.commitAddressBook();
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_NOT_EDITED);
     }
 
     @Test
@@ -320,10 +312,10 @@ public class EditCommandTest {
     }
 
     @Test
-    public void validateBeforeConfirm_noFieldEdited_success() {
+    public void validateBeforeConfirm_noFieldEdited_failure() {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
 
-        assertDoesNotThrow(() -> editCommand.validateBeforeConfirm(model));
+        assertThrows(CommandException.class, () -> editCommand.validateBeforeConfirm(model));
     }
 
     @Test
