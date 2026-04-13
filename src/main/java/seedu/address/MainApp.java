@@ -46,6 +46,8 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
 
+    private String startupDataErrorMessage = null;
+
     @Override
     public void init() throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");
@@ -64,7 +66,7 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model, storage);
 
-        ui = new UiManager(logic);
+        ui = new UiManager(logic, getStartupDataErrorMessage());
     }
 
     /**
@@ -85,12 +87,24 @@ public class MainApp extends Application {
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataLoadingException e) {
-            logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
-                    + " Will be starting with an empty AddressBook.");
+            logger.warning("Data file at " + storage.getAddressBookFilePath()
+                    + " could not be loaded. Will be starting with an empty AddressBook.");
+            // Set error message for UI display
+            startupDataErrorMessage = "Warning: Failed to load data file '"
+                    + storage.getAddressBookFilePath().getFileName()
+                    + "'. The file may be corrupted, renamed, or contain invalid data. "
+                    + "Starting with an empty employee list.";
             initialData = new AddressBook();
         }
 
         return new ModelManager(initialData, userPrefs);
+    }
+
+    /**
+     * Returns the error message if data loading failed at startup, or null otherwise.
+     */
+    public String getStartupDataErrorMessage() {
+        return startupDataErrorMessage;
     }
 
     private void initLogging(Config config) {
