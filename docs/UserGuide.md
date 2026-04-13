@@ -203,19 +203,19 @@ Successful command output:
 #### Role (`r/`)
 
 * __Characters:__ The role should consist of only alphanumeric characters and/or hyphens (`-`) and/or spaces (` `) and cannot be blank. The role should not contain consecutive hyphens and/or spaces. The role should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed.
-* __Case sensitivity:__ The role entered is case-insensitive eg. inputting `Software Engineer` will be the same as `software engineer` and `SOFTWARE ENGINEER`. The role will be stored in Hr manager in lower casing.
+* __Case sensitivity:__ The role entered is case-insensitive eg. inputting `Software Engineer` will be the same as `software engineer` and `SOFTWARE ENGINEER`. The role will be stored in HRmanager in lower casing.
 * __Input length:__ The role must be between 1 and 30 characters long (inclusive).
 
 #### Department (`d/`)
 
 * __Characters:__ The department should consist of only alphanumeric characters and/or hyphens (`-`) and/or spaces (` `) and cannot be blank. The department should not contain consecutive hyphens and/or spaces. The department should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed.
-* __Case sensitivity:__ The department entered is case-insensitive eg. inputting `Human Resources` will be the same as `human resources` and `HUMAN RESOURCES`. The department will be stored in Hr manager in lower casing.
+* __Case sensitivity:__ The department entered is case-insensitive eg. inputting `Human Resources` will be the same as `human resources` and `HUMAN RESOURCES`. The department will be stored in HRmanager in lower casing.
 * __Input length:__ The department must be between 1 and 30 characters long (inclusive).
 
 #### Tag (`t/`)
 
 * __Characters:__ The tag should consist of only alphanumeric characters and/or hyphens (`-`) and/or spaces (` `) and cannot be blank. The tag should not contain consecutive hyphens and/or spaces. The tag should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed.
-* __Case sensitivity:__ The tag entered is case-insensitive eg. inputting `friend` will be the same as `Friend` and `FRIEND`. The tag will be stored in Hr manager in lower casing.
+* __Case sensitivity:__ The tag entered is case-insensitive eg. inputting `friend` will be the same as `Friend` and `FRIEND`. The tag will be stored in HRmanager in lower casing.
 * __Input length:__ The tag must be between 1 and 30 characters long (inclusive).
 
 <br>
@@ -504,7 +504,7 @@ Since HRmanager stores **sensitive employee data** (personal information, contac
 > delete 1
 ⚠ Warning! ⚠ Please confirm this action. Enter 'y' to proceed or 'n' to cancel.
 Action: Delete 1 employee(s)
-Impact: Permanently removes: John Doe
+Impact: The selected employee record(s) will be permanently removed: John Doe.
 
 > y
 Employee deleted successfully
