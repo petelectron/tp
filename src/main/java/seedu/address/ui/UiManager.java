@@ -24,12 +24,24 @@ public class UiManager implements Ui {
 
     private Logic logic;
     private MainWindow mainWindow;
+    private String startupErrorMessage;
 
+    // Creates a {@code UiManager} with the given {@code Logic}.
     /**
-     * Creates a {@code UiManager} with the given {@code Logic}.
+     * Creates a {@code UiManager} with the given {@code Logic} and optional startup error message.
      */
     public UiManager(Logic logic) {
+        this(logic, null);
+    }
+
+    /**
+     * Creates a {@code UiManager} with the given {@code Logic} and optional startup error message.
+     * @param logic The logic component.
+     * @param startupErrorMessage The error message to display at startup, or null if none.
+     */
+    public UiManager(Logic logic, String startupErrorMessage) {
         this.logic = logic;
+        this.startupErrorMessage = startupErrorMessage;
     }
 
     @Override
@@ -43,6 +55,11 @@ public class UiManager implements Ui {
             mainWindow = new MainWindow(primaryStage, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
+
+            // Show startup error message if present
+            if (startupErrorMessage != null && !startupErrorMessage.isEmpty()) {
+                mainWindow.showStartupError(startupErrorMessage);
+            }
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));

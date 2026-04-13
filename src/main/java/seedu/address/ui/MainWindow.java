@@ -127,6 +127,15 @@ public class MainWindow extends UiPart<Stage> {
         statsPanelPlaceholder.getChildren().add(statsPanel.getRoot());
     }
 
+    /**
+     * Shows a startup error message in the result display area.
+     */
+    public void showStartupError(String message) {
+        if (resultDisplay != null && message != null && !message.isEmpty()) {
+            resultDisplay.setFeedbackToUser(message);
+        }
+    }
+
     private void enforceMinimumWindowSize() {
         primaryStage.setMinWidth(MIN_WINDOW_WIDTH);
         primaryStage.setMinHeight(MIN_WINDOW_HEIGHT);
