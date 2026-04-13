@@ -451,8 +451,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1a1. System displays an error message with the correct format.
     * 1a2. User provides new data.
     <br> *Steps 1a1-1a2 are repeated until the data provided are correct.*
-    <br> *Use case resumes from step 2.*
-
+    <br> *Use case resumes from step 2.*<br><br>
 
 **Use case 2 (UC2): Delete employee**<br>
 
@@ -481,8 +480,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 4a. User decides not to proceed with the deletion.
     * 4a1. System displays a response indicating that the command was aborted.
-    <br> *Use case ends.*
-
+    <br> *Use case ends.*<br><br>
 
 **Use case 3 (UC3): View employees**<br>
 
@@ -497,8 +495,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. There are no employees stored in the system.
     <br></p>
     * 2a1. System displays an empty employee list.
-    <br> *Use case ends*
-
+    <br> *Use case ends*<br><br>
 
 **Use case 4 (UC4): Search for an employee**<br>
 
@@ -528,8 +525,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 4a. The user then wants to return to the full non-filtered list of employees.
     * 4a1. User requests to view all employees (UC3).
     * 4a2. The system shows the full non-filtered list of employees.
-    <br> *Use case ends.*
-
+    <br> *Use case ends.*<br><br>
 
 **Use case 5 (UC5): Edit an employee's details**<br>
 
@@ -568,7 +564,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. System displays a response indicating that the command was aborted.
     <br> *Use case ends.*<br><br>
 
-
 **Use case 6 (UC6): Cycle through previous executed commands**<br>
 
 **MSS**
@@ -598,7 +593,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 6a2. User stops cycling at their desired past command or cycles forward to get back to a more recent or original command.
     <br> *Use case resumes from step 7.*<br><br>
 
-
 **Use case 7 (UC7): Importing employee data**<br>
 
 **MSS**
@@ -623,8 +617,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   <br> *Use case resumes from step 1.*<br><br>
 
 * 4a. User cancels import.
-  <br> *Use case ends.*
-
+  <br> *Use case ends.*<br><br>
 
 **Use case 8 (UC8): Exporting current employee data**<br>
 
@@ -645,8 +638,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2b. File already exists at target destination.
     * 2b1. System displays an error message.
-    <br> *Use case resumes from step 1.*
-
+    <br> *Use case resumes from step 1.*<br><br>
 
 **Use case 9 (UC9): Undo previous command**<br>
 
@@ -668,7 +660,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 2b1. System identifies the most recent valid previous state, ignoring any non-data-modifying commands.
   <br> *Use case resumes from step 3.*<br><br>
 
-
 **Use case 10 (UC10): View and switch statistics dashboard mode**<br>
 
 **MSS**
@@ -686,7 +677,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   <br><br>
   * 2a1. System displays an error message indicating the correct format.
   <br> *Use case ends.*<br><br>
-
 
 ### Non-Functional Requirements
 
@@ -982,7 +972,7 @@ Test the following for each confirmable command:
        Expected: The application closes.
 
     2. Test case: Enter `exit`. When prompted, enter `n`.<br>
-       Expected: The application remains open. Cancellation message is shown.
+       Expected: The application remains open. Cancellation message is shown.<br><br>
 
 5. Importing employee data (import command)
 
