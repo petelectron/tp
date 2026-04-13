@@ -928,7 +928,6 @@ testers are expected to do more *exploratory* testing.
 
 
       
-
 ### Saving and loading data
 
 #### Dealing with corrupted data files
