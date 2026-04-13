@@ -8,7 +8,7 @@
 
 HRmanager is a **desktop app designed for HR managers to manage employee records, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). That is, based on typing commands instead of clicking buttons. If you can type fast, HRmanager can help you manage HR records faster than traditional GUI apps.
 
-Managing employee records means storing and updating essential HR data: full name, phone number, email, job role, department, and custom tags (e.g., “certified”, “remote”). You can add, edit, delete, search, import/export, and view statistics – all from a single command‑driven interface.
+Managing employee records means storing and updating essential HR data: full name, phone, email, job role, department, and custom tags (e.g., “certified”, “remote”). You can add, edit, delete, search, import/export, and view statistics – all from a single command‑driven interface.
 
 <!-- * Table of Contents -->
 
@@ -47,7 +47,6 @@ Here is a quick guide to jump straight to the section you need:
 ### Appendix
 
 * [FAQ](#faq)
-* [Known issues](#known-issues)
 * [Command summary](#command-summary)
 
 --------------------------------------------------------------------------------------------------------------------
@@ -99,9 +98,9 @@ This yellow box with a redo icon indicates that action can be undone. Use `undo`
 
 4. Run the application. 
    * Open a command terminal.
-   * Type `cd <HRmanager home folder>` to `cd` into the folder you put the jar file in.
-   * Use the `java -jar HRmanager.jar` command to run the application.
-   * A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.
+   * Type `cd <HRmanager home folder>` to change the terminal directory into the folder you put the jar file in.
+   * Type `java -jar HRmanager.jar` to run the application.
+   * A window similar to the below should appear in a few seconds. Note how the app contains some sample data.
 
 <br>
 
@@ -123,7 +122,7 @@ This yellow box with a redo icon indicates that action can be undone. Use `undo`
 
   * `exit` : Exits the app.
 
-6. Refer to the [Features](#features) table above to jump each command implementation section quickly or continue scrolling for the for details of each command.
+6. Refer to the [Features](#features) table of contents listed above to jump each command implementation section quickly or continue scrolling for the for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -138,10 +137,10 @@ This yellow box with a redo icon indicates that action can be undone. Use `undo`
 * Items with `…` after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+  e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `undo`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines, as space characters surrounding line-breaks may be omitted when copied over to the application.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -179,7 +178,7 @@ Successful command output:
 Adds a new employee to HRmanager and stores their employee details persistently - helping HR managers track new employees along with existing employees.
 * All compulsory fields (`n/`, `p/`, `e/`, `r/`, `d/`) must be provided exactly once. `t/TAG` is optional (0 or more).
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL r/ROLE d/DEPARTMENT [t/TAG]…​`
+Format: `add n/NAME p/PHONE e/EMAIL r/ROLE d/DEPARTMENT [t/TAG]…​`
 
 <box type="info" icon=":fa-solid-code:">
 
@@ -208,7 +207,7 @@ Successful command output:
 
 #### Name (`n/`)
 
-* __Characters:__ The name should consist of only alphanumeric characters and/or hyphens (`-`) and/or spaces (` `) and cannot be blank. The name cannot have 2 consecutive hyphens or spaces in a row, or a hyphen beside a space. The name should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed. 
+* __Characters:__ The name should consist of only alphanumeric characters and hyphens (`-`) and spaces (` `) and cannot be blank. The name cannot have 2 consecutive hyphens or spaces in a row, or a hyphen beside a space. The name should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed. 
 * __Case sensitivity:__ The name entered is case-insensitive. For example, adding `John Doe` will be invalid if `john doe` already exists in HRmanager. Names are stored in HRmanager in lowercase. 
 * __Input length:__ The name must be between 1 and 50 characters long (inclusive).
 
@@ -225,19 +224,19 @@ Successful command output:
 
 #### Role (`r/`)
 
-* __Characters:__ The role should consist of only alphanumeric characters and/or hyphens (`-`) and/or spaces (` `) and cannot be blank. The role cannot have 2 consecutive hyphens or spaces in a row, or a hyphen beside a space. The role should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed.
+* __Characters:__ The role should consist of only alphanumeric characters and hyphens (`-`) and spaces (` `) and cannot be blank. The role cannot have 2 consecutive hyphens or spaces in a row, or a hyphen beside a space. The role should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed.
 * __Case sensitivity:__ The role entered is case-insensitive eg. inputting `Software Engineer` will be the same as `software engineer` and `SOFTWARE ENGINEER`. The role will be stored in HRmanager in lower casing.
 * __Input length:__ The role must be between 1 and 30 characters long (inclusive).
 
 #### Department (`d/`)
 
-* __Characters:__ The department should consist of only alphanumeric characters and/or hyphens (`-`) and/or spaces (` `) and cannot be blank. The department cannot have 2 consecutive hyphens or spaces in a row, or a hyphen beside a space. The department should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed.
+* __Characters:__ The department should consist of only alphanumeric characters and hyphens (`-`) and spaces (` `) and cannot be blank. The department cannot have 2 consecutive hyphens or spaces in a row, or a hyphen beside a space. The department should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed.
 * __Case sensitivity:__ The department entered is case-insensitive eg. inputting `Human Resources` will be the same as `human resources` and `HUMAN RESOURCES`. The department will be stored in HRmanager in lower casing.
 * __Input length:__ The department must be between 1 and 30 characters long (inclusive).
 
 #### Tag (`t/`)
 
-* __Characters:__ The tag should consist of only alphanumeric characters and/or hyphens (`-`) and/or spaces (` `) and cannot be blank. The tag should not contain consecutive hyphens and/or spaces. The tag should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed.
+* __Characters:__ The tag should consist of only alphanumeric characters and hyphens (`-`) and spaces (` `) and cannot be blank. The tag cannot have 2 consecutive hyphens or spaces in a row, or a hyphen beside a space. The tag should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed.
 * __Case sensitivity:__ The tag entered is case-insensitive eg. inputting `friend` will be the same as `Friend` and `FRIEND`. The tag will be stored in HRmanager in lower casing.
 * __Input length:__ The tag must be between 1 and 30 characters long (inclusive).
 * __Maximum count:__ Each employee can have at most 20 tags.
@@ -265,7 +264,7 @@ Format: `search KEYWORD [MORE_KEYWORDS]…` (keywords are separated by whitespac
 Examples:
 * `search John` returns employees with "John" anywhere in their fields (e.g., `John Doe`).
 * `search @` returns employees with `@` in any searchable field (commonly email).
-* `search alice eng` returns employees that match either "alice" and "eng" (e.g., Alice who is an Engineer).
+* `search alice eng` returns employees that match either "alice" or "eng" (e.g., Alice who is an Engineer).
 * `search zzz` shows `0 employees listed!` if no employee fields match.
 </box>
 
@@ -329,7 +328,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [r/ROLE] [d/DEPARTMENT] [t/TAG]
 <box type="info" icon=":fa-solid-code:">
 
 Examples:
-* `edit 1 p/91234567 e/johndoe@example.com` edits the phone number and email address of the 1st employee to be `91234567` and `johndoe@example.com` respectively.
+* `edit 1 p/91234567 e/johndoe@example.com` edits the phone and email address of the 1st employee to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower d/Marketing t/` edits the name and department of the 2nd employee to be `Betsy Crower` and `Marketing`, and clears all existing tags.
 * `edit 3 t/friend t/colleague` changes the tags of the 3rd employee to "friend" and "colleague". (If the employee already had "friend", you must retype it to keep it; otherwise, it will be replaced.)
 </box>
@@ -418,9 +417,9 @@ Replaces all current data with employees from a CSV (comma-separated values) fil
 * File must end in `.csv` with headers `name`, `phone`, `email`, `role`, `department` (`tags` optional). If used, one `tags` column is accepted. All tags must be included in one single field, e.g. `tag1, tag2, tag3`. All data validation rules apply (e.g., no duplicate employee names, invalid or missing fields).
 * In the case of duplicate headers, the left-most column is taken.
 * The file size limit is 100kB, and employee limit is 200. 
-* For MacOS/Linux, file paths containing spaces must be quoted. Only one layer of quotes can be parsed.
+* On macOS/Linux, if the file path contains spaces, you must enclose the entire path in double quotes. Nested quotes are not supported.
 
-Format: `import [FILE PATH]`
+Format: `import "FILE PATH"`
 
 <box type="info" icon=":fa-solid-code:">
 
@@ -475,7 +474,7 @@ Exports all employees to a CSV (comma-separated values) file at your specified l
 * File path must end in `.csv`. 
 * Use just a file name (e.g., `employees.csv`) to save in HRmanager's home folder.
 
-Format: `export [FILE PATH]`
+Format: `export "FILE PATH"`
 
 <box type="info" icon=":fa-solid-code:">
 
@@ -531,7 +530,6 @@ Since HRmanager stores **sensitive employee data** (personal information, contac
 * `clear` - When clearing all entries
 * `exit` - When closing the application
 * `import` - When importing data into the application from a file
-* `export` - When exporting data from the application to a file
 
 **How confirmation works:**
 1. After you enter one of the above commands, a confirmation prompt will appear displaying:
@@ -577,7 +575,7 @@ This confirmation step is designed to prevent mistakes. If you accidentally type
 ### Undo an executed command: `undo`
 
 Reverses the effects of a prior `add`, `edit`, `delete`, `clear`, or `import` command (Up to 10 commands) (Collectively: "Eligible commands").
-* If you close the app and re-run it, you will lose command execution history and hence the ability to do `undo` on those commands from previous sessions.
+* If you close the app and re-run it, you will lose command execution history and hence the ability to perform `undo` on those commands from previous sessions.
 
 Format: `undo`
 
@@ -623,14 +621,14 @@ Design considerations:
 
 <box theme="success" icon=":fa-solid-lightbulb:">
 
-Each previous successful eligible command is saved (up to 10 of the latest ones). If there are sufficient such saved commands, you can execute `undo` up to 10 times on the 10 eligible commands in a consecutive sequence.
+Each previous successful eligible command is saved (up to 10 of the latest ones). You can perform `undo` repeatedly to reverse up to the 10 most recent eligible commands, in reverse order.
 </box>
 
 --------------------------------------------------------------------------------------------------------------------
 
 ### Cycle through command history (previous executed commands)
 
-You can pre-fill the command box with your last successful commands using the **Up arrow key**. Use Up/Down arrows to browse through your last 10 successful distinct commands only (excluding y/n).
+You can pre-fill the command box with your last successful commands using the **Up arrow key**. Use Up/Down arrows to browse through your last 10 successful distinct (not the exact same) commands only (excluding y/n).
 * You can only cycle through commands executed in the current session. The command history resets when you restart the app.
 
 <box type="info" icon=":fa-solid-code:">
@@ -706,12 +704,12 @@ Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Help**   | `help`
 **List**   | `list`
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL r/ROLE d/DEPARTMENT [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com r/Software Engineer d/Engineering t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE e/EMAIL r/ROLE d/DEPARTMENT [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com r/Software Engineer d/Engineering t/friend t/colleague`
 **Search** | `search KEYWORD [MORE_KEYWORDS]...`<br> e.g., `search James @`
 **Stat** | `stat MODE`<br> e.g., `stat tag`, `stat dept`, `stat role`
 **Cycle commands** | up/down arrow keys
 **Undo**   | `undo`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [r/ROLE] [d/DEPARTMENT] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com d/Finance`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [r/ROLE] [d/DEPARTMENT] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com d/Finance`
 **Delete** | `delete INDEX [MORE_INDEXES]` or `del INDEX [MORE_INDEXES]`<br> e.g., `delete 3`, `delete 1 4 5`
 **Clear**  | `clear`
 **Import** | `import [FILE PATH]`<br> e.g., `import C:\Users\John\Desktop\employees.csv`
