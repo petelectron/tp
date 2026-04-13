@@ -681,12 +681,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 Given below are instructions to test the app manually.
 
-<box type="info" seamless>
 
-**Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more *exploratory* testing.
-
-</box>
+> **Note:** These instructions only provide a starting point for testers to work on; testers are expected to do more *exploratory* testing.
 
 ### Launch and shutdown
 
@@ -712,40 +708,37 @@ testers are expected to do more *exploratory* testing.
     2. Test case: `add n/Bob Choo p/22222222 e/bob@example.com r/Head of Office d/Operations t/friend` (Valid entry)<br>
        Expected: The employee is added. The success message is shown, along with the added details.
 
-    3. Test case: `add  n/Amy Choo p/22222222 e/amy@example.com r/Head of Office d/Operations t/friend` (Preamble is a space)<br>
-       Expected: The employee is added. The success message is shown, along with the added details.
-
-    4. Test case: `add k n/Amy Choo p/22222222 e/amy@example.com r/Head of Office d/Operations t/friend` (Preamble is not a space)<br>
+    3. Test case: `add k n/Amy Choo p/22222222 e/amy@example.com r/Head of Office d/Operations t/friend` (Preamble is not a space)<br>
        Expected: The employee is not added. Error message for invalid command format, along with an example of the correct format, shown.
 
-    5. Test case: `add n/Bob Choo p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Same exact name with existing entry, despite different details)<br>
+    4. Test case: `add n/Bob Choo p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Same exact name with existing entry, despite different details)<br>
        Expected: The employee is not added. Duplicate error message is shown, indicating the employee (with same name) already exists.
 
-    6. Test case: `add n/bob Choo p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Same exact name with different case. Name check is case insensitive.)<br>
+    5. Test case: `add n/bob Choo p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Same exact name with different case. Name check is case insensitive.)<br>
        Expected: The employee is not added. Duplicate error message is shown, indicating the employee (with same name) already exists.
 
-    7. Test case: `add n/Lance Choo p/33333333 e/lance@example.com r/Head of HR d/Human Resources t/friend t/friend t/husband` (Multiple tags)<br>
+    6. Test case: `add n/Lance Choo p/33333333 e/lance@example.com r/Head of HR d/Human Resources t/friend t/friend t/husband` (Multiple tags)<br>
        Expected: The employee is added. The success message is shown, along with the added details. Note that duplicate tags are accepted as one tag.
 
-    8. Test case: `add n/Justin p/33333333 e/lance@example.com r/Head of HR d/Human Resources` (No tags. Tags are optional)<br>
+    7. Test case: `add n/Justin p/33333333 e/lance@example.com r/Head of HR d/Human Resources` (No tags. Tags are optional)<br>
        Expected: The employee is added. The success message is shown, along with the added details. Note that duplicate tags are accepted as one tag.
 
-    9. Test case: `add n/Amy Cho n/Bob Cho p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Two names))<br>
+    8. Test case: `add n/Amy Cho n/Bob Cho p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Two names))<br>
        Expected: The employee is not added. Error messages for duplicated prefix shown.
 
-    10. Other incorrect commands with duplicated attributes for the same employee: `add <other details> p/11111111 p/22222222`, `add <other details> e/amy@example.com e/bob@example.com`, or similar<br>
+    9. Other incorrect commands with duplicated attributes for the same employee: `add <other details> p/11111111 p/22222222`, `add <other details> e/amy@example.com e/bob@example.com`, or similar<br>
        Expected: The employee is not added. Error messages for duplicated prefix shown.
 
-    11. Test case: `add n/James& p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Invalid name)<br>
+    10. Test case: `add n/James& p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Invalid name)<br>
        Expected: The employee is not added. The correct format for a valid name is shown.
 
-    12. Other incorrect commands with invalid data: `add <other details> p/abc` (Non-numeric phone number) or similar<br>
+    11. Other incorrect commands with invalid data: `add <other details> p/abc` (Non-numeric phone number) or similar<br>
         Expected: The employee is not added. The correct format for the attribute for which the argument is invalid is shown.
 
-    13. Test case: `add n/Peppa Pig e/peppa@example.com r/Head of Media d/Media` (No phone number) or similar absence of necessary attributes <br>
+    12. Test case: `add n/Peppa Pig e/peppa@example.com r/Head of Media d/Media` (No phone number) or similar absence of necessary attributes <br>
         Expected: The employee is not added. Error message is shown, along with the correct format and required parameters for add.
 
-    14. Other incorrect delete commands to try: `add`, `add johndoe p/3333` (no prefix), and other commands which deviate from the command format<br>
+    13. Other incorrect delete commands to try: `add`, `add johndoe p/3333` (no prefix), and other commands which deviate from the command format<br>
         Expected: Similar to previous.
 
 ### Deleting an employee
@@ -755,33 +748,33 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: List all employee using the `list` command. Before each test cases, the number of employees in the (filtered) list is more than or equal to the number of valid arguments given.
 
    2. Test case: `delete 1`<br>
-      Expected: First employee is deleted from the list. Details of the deleted contact shown in the status message.
+      Expected: First employee is deleted from the list. Name of the deleted contact shown in the status message.
 
    3. Test case: `delete 1 3 5`<br>
-      Expected: 1st, 3rd, and 5th employee are deleted from the list. Status message shows "Deleted employee(s): 3 employee(s)".
+      Expected: 1st, 3rd, and 5th employees are deleted from the list. Success message shows the names of the deleted employees.
 
    4. Test case: `delete 1 1 2`<br>
-      Expected: Only 2 unique employees are deleted (duplicate index filtered out). Status message shows "Deleted employee(s): 2 employee(s)". Only the 1st and 2nd persons are removed.
+      Expected: Only 2 unique employees are deleted (duplicate index filtered out). Success message shows the names of the deleted employees. Only the 1st and 2nd persons are removed.
 
    5. Test case: `delete 2 1 3`<br>
-      Expected: 1st, 2nd, and 3rd employees are deleted (regardless of order provided). Status message shows "Deleted employee(s): 3 employee(s)". Deletion performed from highest to lowest index to prevent index shifting errors.
+      Expected: 1st, 2nd, and 3rd employees are deleted (regardless of order provided). Success message shows the names of the deleted employees. Deletion performed from highest to lowest index to prevent index shifting errors.
 
-   6. Test case: `delete 1 2 999`<br> (Prerequisite: there are less than 999 entries/employees)
+   6. Test case: `delete 1 2 999` (Prerequisite: there are less than 999 entries/employees) <br>
       Expected: No employee is deleted. Error details shown for an invalid index (because of 999).
 
    7. All test cases, except `del` is used instead of `delete`. E.g.: `del 1`<br>
       Expected: Same exact behaviour as `delete`
 
-   8. Test case: `delete`, `del`, `delete -3`, `delete a`, `del 0` or similar <br> (No index provided or index is invalid)
-      Expected: No employee is deleted. Invalid command format error shown, along with the details for a correct delete command.
+   8. Test case: `delete -3`, `delete a`, `del 0` or similar (No index provided or index is invalid) <br>
+      Expected: No employee is deleted. Error message shows that the employee index provided is invalid.
 
    9. Test case: `delete 1 2 3 4 5 6 7 8 9 10`<br>
-      Expected: 10 employees deleted. Status message shows "Deleted employee(s): 10 employee(s)".
+      Expected: 10 employees deleted. Success message shows the names of the deleted employees.
 
    10. Test case: `delete 1 2 3 4 5 6 7 8 9 10 11`<br>
       Expected: No employee is deleted. Error shown: "Too many indexes specified."
 
-   11. Other incorrect delete commands to try: `delete x` (where x is larger than the list size), `del 1 2 a`, `del a`, `del 1 ` (trailing whitespace), `del      1` (preamble has many spaces), `del #`, etc.<br>
+   11. Other incorrect delete commands to try: `delete x` (where x is larger than the list size), `del 1 2 a`, `del a`, `del 1 ` (trailing whitespace), `del #`, etc.<br>
       Expected: Similar error handling to above.
 
 2. Deleting a employee from a filtered list (search results)
@@ -789,10 +782,10 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: Execute `search KEYWORD` to filter the list (where KEYWORD returns one or more matching results based on searchable fields). Multiple search results shown.
 
    2. Test case: `delete 1`<br>
-      Expected: The 1st employee in the filtered search results is deleted. Confirmation message shown. Filtered list updates automatically.
+      Expected: The 1st employee in the filtered search results is deleted. Success message shown. Filtered list updates automatically.
 
    3. Test case: `search KEYWORD` (where KEYWORD returns 2 or more matching results) followed by `delete 1 2`<br>
-      Expected: The 1st and 2nd employees in the filtered results are deleted. Confirmation shows "Deleted employee(s): 2 employee(s)". Filtered list updates.
+      Expected: The 1st and 2nd employees in the filtered results are deleted. Success message shows the names of the deleted employees. Filtered list updates.
 
    4. Test case: `search KEYWORD` (where KEYWORD returns no matches) followed by `delete 1`<br>
       Expected: Error message shown for invalid index since filtered list is empty.
@@ -807,28 +800,28 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: List all employees using the list command. Multiple employees in the list with various names, phones, emails, roles, departments, and tags.
 
    2. Test case: `search John`<br>
-      Expected: All employees whose fields contain "John" (case-insensitive) are listed. Status message shows the number of employees listed.
+      Expected: All employees whose fields contain "John" (case-insensitive) are listed. Success message shows the number of employees listed.
 
    3. Test case: `search 91234567`<br>
-      Expected: All employees whose fields contain "91234567" are listed. Status message shows the number of employees listed.
+      Expected: All employees whose fields contain "91234567" are listed. Success message shows the number of employees listed.
 
    4. Test case: `search example`<br>
-      Expected: All employees whose fields contain "example" are listed. Status message shows the number of employees listed.
+      Expected: All employees whose fields contain "example" are listed. Success message shows the number of employees listed.
 
    5. Test case: `search HR`<br>
-      Expected: All employees whose fields contain "HR" are listed. Status message shows the number of employees listed.
+      Expected: All employees whose fields contain "HR" are listed. Success message shows the number of employees listed.
 
    6. Test case: `search ali hr`<br>
-      Expected: Employees whose fields contain either "ali" or "hr" are listed. Status message shows the number of employees listed.
+      Expected: Employees whose fields contain either "ali" or "hr" are listed. Success message shows the number of employees listed.
 
    7. Test case: `search @`<br>
-      Expected: Search is performed successfully. Employees whose fields contain "@" are listed. Status message shows the number of employees listed.
+      Expected: Search is performed successfully. Employees whose fields contain "@" are listed. Success message shows the number of employees listed.
 
    8. Test case: `search John_123` (contains underscore)<br>
       Expected: Search is performed successfully because underscore is allowed. Matching employees are listed, or an empty list is shown if there are no matches.
 
    9. Test case: `search` (no keyword)<br>
-      Expected: No search is performed. Error details shown in the status message indicating invalid command format and displays the correct usage format.
+      Expected: No search is performed. Error details shown in the error message indicate invalid command format and displays the correct usage format.
 
    10. Test case: `search ` (blank keyword with spaces)<br>
        Expected: No search is performed. Error details shown in the status message indicating invalid command format and displays the correct usage format.
@@ -840,19 +833,19 @@ testers are expected to do more *exploratory* testing.
        Expected: No search is performed. Error details shown indicating invalid command format because maximum keywords is exceeded.
 
    13. Test case: `search keywordThatDoesNotMatchAnyEmployee`<br>
-       Expected: Empty list shown. Status message indicates "0 employees listed!".
+       Expected: Empty list shown. Success message indicates "0 employees listed!".
 
 ### Editing an employee
 
-1. Editing an employee's details
+1. Editing an employee's details. NOTE: If the command is valid, the confirmation feature is first triggered. The tester enters 'y' to proceed.
 
     1. Prerequisites: List all employees using the list command. Employee to edit exists in the list.
 
     2. Test case: `edit 1 n/Bob Choo p/22222222 e/bob@example.com r/Head of Office d/Marketing t/friend` (Valid entry)<br>
-       Expected: After user enters "y" to a y/n confirmation prompt, The employee is edited. The success message is shown, along with the updated details.
+       Expected: The employee is edited. The success message is shown, along with the updated details.
 
     3. Test case: `edit 1  n/Amy Choo p/22222222 e/amy@example.com r/Head of Office d/Marketing t/friend` (Preamble is a space)<br>
-       Expected: After user enters "y" to a y/n confirmation prompt, The employee is edited. The success message is shown, along with the updated details.
+       Expected: The employee is edited. The success message is shown, along with the updated details.
 
     4. Test case: `edit 1 k n/Amy Choo p/22222222 e/amy@example.com r/Head of Office d/Marketing t/friend` (Preamble is not a space)<br>
        Expected: The employee is not edited. An error message is shown, indicating invalid command format.
@@ -861,10 +854,10 @@ testers are expected to do more *exploratory* testing.
        Expected: The employee is not edited. An error message is shown, indicating invalid field value.
 
     6. Test case: `edit 1 t/friend t/husband` (Multiple tags)<br>
-       Expected: After user enters "y" to a y/n confirmation prompt, The employee is edited. The success message is shown, along with the updated details. All previous tags are deleted, and the employee now only has 'friend' and 'husband' tags.
+       Expected: The employee is edited. The success message is shown, along with the updated details. All previous tags are deleted, and the employee now only has 'friend' and 'husband' tags.
 
     7. Test case: `edit 1 t/` (Delete tags)<br>
-       Expected: After user enters "y" to a y/n confirmation prompt, The employee is edited. The success message is shown, along with the updated details. All previous tags are deleted, and the employee has no tags.
+       Expected: The employee is edited. The success message is shown, along with the updated details. All previous tags are deleted, and the employee has no tags.
 
     8. Test case: `edit 1 n/Amy Cho n/Bob Choo p/11111111 e/bob@meme.com r/Head of Operations d/Marketing t/friend` (Duplicate fields)<br>
        Expected: The employee is not edited. Error messages for duplicated prefix shown, and the prefix that is duplicated is shown.
@@ -873,13 +866,102 @@ testers are expected to do more *exploratory* testing.
        Expected: The employee is not edited. Error messages for duplicated prefix shown, and the prefix that is duplicated is shown.
 
     10. Test case: `edit 0 n/Amy Cho` (Invalid index) <br>
-       Expected: The employee is not edited. An error message is shown, indicating invalid command format.
+       Expected: The employee is not edited. An error message is shown, indicating invalid index.
 
     11. Test case: `edit n/James& p/11111111 e/bob@meme.com` (Invalid name)<br>
        Expected: The employee is not edited. The correct format for a valid name is shown.
 
     12. Other test cases to try:  Test case 11 but with inputs that do not adhere to other parameters' respective rules. E.g.: `edit 1 p/12!`
        Expected: The employee is not edited. The correct format for the offending parameter is shown.
+
+### Testing the stats panel
+
+1. Viewing the stats panel after editing employee data.
+
+    1. Prerequisites: List all employees using the `list` command. Ensure the stats panel is visible in the UI.
+
+    2. Test case: Edit an employee's department using `edit 1 d/Finance`.<br>
+       Expected: The stats panel updates to reflect the new department distribution.
+
+    3. Test case: Edit an employee's role using `edit 1 r/Manager`.<br>
+       Expected: The stats panel updates to reflect the new role distribution.
+
+    4. Test case: Edit an employee's tags using `edit 1 t/friend t/colleague`.<br>
+       Expected: The stats panel updates to reflect the new tag distribution.
+
+2. Switching dashboard modes (stat command):
+
+    1. Prerequisites: List all employees using the `list` command. Ensure the stats panel is visible in the UI.
+
+    2. Test case: Switch to tag mode using `stat tag` or `stat t`.<br>
+       Expected: The stats panel updates to show tag distribution. The panel title/labels reflect tag statistics.
+
+    3. Test case: Switch to department mode using `stat dept`, `stat department`, or `stat d`.<br>
+       Expected: The stats panel updates to show department distribution. The panel title/labels reflect department statistics.
+
+    4. Test case: Switch to role mode using `stat role` or `stat r`.<br>
+       Expected: The stats panel updates to show role distribution. The panel title/labels reflect role statistics.
+
+    5. Test case: Enter an invalid mode, e.g., `stat xyz`.<br>
+       Expected: An error message is shown indicating the command format is invalid. The stats panel remains unchanged.
+
+### Testing Confirmation Prompts
+
+Many commands in HRmanager require confirmation before they execute, to prevent accidental changes. When prompted, entering `y` confirms and executes the command, while entering `n` cancels it.
+
+Test the following for each confirmable command:
+
+1. Editing an employee (edit command)
+    1. Test case: Enter a valid edit command (e.g., `edit 1 n/New Name`). When prompted, enter `y`.<br>
+       Expected: The employee is edited. Success message is shown.
+    2. Test case: Enter a valid edit command (e.g., `edit 1 n/New Name`). When prompted, enter `n`.<br>
+       Expected: The edit is cancelled. No changes are made. Cancellation message is shown. <br><br>
+
+2. Deleting an employee (delete command)
+    1. Test case: Enter a valid delete command (e.g., `delete 1`). When prompted, enter `y`.<br>
+       Expected: The employee is deleted. Success message is shown.
+    2. Test case: Enter a valid delete command (e.g., `delete 1`). When prompted, enter `n`.<br>
+       Expected: The deletion is cancelled. No changes are made. Cancellation message is shown. <br><br>
+
+3. Clearing all employees (clear command)
+    1. Test case: Enter `clear`. When prompted, enter `y`.<br>
+       Expected: All employees are deleted. Success message is shown.
+    2. Test case: Enter `clear`. When prompted, enter `n`.<br>
+       Expected: The clear operation is cancelled. No changes are made. Cancellation message is shown. <br><br>
+
+4. Exiting the application (exit command, if confirmable)
+    1. Test case: Enter `exit`. When prompted, enter `y`.<br>
+       Expected: The application closes.
+    2. Test case: Enter `exit`. When prompted, enter `n`.<br>
+       Expected: The application remains open. Cancellation message is shown.
+
+### Testing Undo Workflows
+
+Use these tests to verify generic undo workflows. NOTE: If the command is valid, the confirmation feature is first triggered. The tester enters 'y' to proceed.
+
+1. Edit then undo (tracked command)
+    1. Prerequisites: Ensure employee 1 has a known initial field value (e.g., name is `Alice Tan`).
+    2. Test case: Enter `edit 1 n/Alice Lim`. Then enter `undo`.<br>
+       Expected: The edit is applied first. After `undo`, employee 1's name returns to the initial value (`Alice Tan`).<br><br>
+
+2. Edit, then an untracked command, then undo
+    1. Prerequisites: Ensure employee 1 has a known initial field value.
+    2. Test case: Enter `edit 1 n/Alice Lim`. Enter a non-data-modifying command (e.g., `list` or `search Alice`). Then run `undo`.<br>
+       Expected: Undo skips the untracked command and reverts the latest tracked change. Employee 1's edited field returns to its initial value.<br><br>
+
+3. Delete then undo (tracked command)
+    1. Prerequisites: Ensure there is at least one employee in the list.
+    2. Test case: Enter `delete 1`. Then enter `undo`.<br>
+       Expected: The employee is deleted first. After `undo`, the same employee is restored to the list.
+
+### Testing Command Cycling
+
+1. Command cycling after tracked commands
+    1. Prerequisites: Ensure there is at least one employee in the list.
+    2. Test case: Enter `add n/Test User p/91234567 e/test@example.com r/Intern d/Operations`, then enter `delete 1` (confirm valid commands with `y` when prompted). Press the non-numpad Up arrow key repeatedly in the command box.<br>
+       Expected: The first Up arrow shows the most recent command (`delete 1`). The next Up arrow shows the earlier command (`add n/Test User p/91234567 e/test@example.com r/Intern d/Operations`).
+    3. Test case: After reaching the older command using Up arrow, press the non-numpad Down arrow key.<br>
+       Expected: Cycling moves forward through command history toward newer commands (back to `delete 1`, then to the original/current input state).
 
 ### Importing employee list
 
@@ -952,7 +1034,7 @@ NOTE: If the command is valid, the confirmation feature is first triggered. The 
        Expected: No csv file is created. An error message is shown, indicating invalid path.
 
 
-      
+
 ### Saving and loading data
 
 #### Dealing with corrupted data files
@@ -967,7 +1049,7 @@ Open `HRmanager.json` and modify an employee so that a mandatory field (e.g., na
 - The employee list will appear blank in the UI.
 - A warning message is shown to the user.
 - The corrupted `HRmanager.json` file is not overwritten on exit or window close; it remains on disk in its corrupted state.
-- The file will be overwritten with clean (empty) data only after a data-modifying command (e.g., add, delete, edit) is executed.
+- If you want to recover your data, you must manually edit the JSON file to correct the errors. If you execute any data-modifying command (e.g., add, delete, edit), the corrupted file will be overwritten with the current (possibly empty) data, and your previous data will be lost.
 
 **Test case 2:**
 Delete a mandatory field from an employee entry, or insert an invalid value (e.g., special characters in name, malformed email). Start up the application.
