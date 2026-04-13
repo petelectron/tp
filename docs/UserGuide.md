@@ -300,20 +300,15 @@ Examples:
 The dashboard updates automatically after `add`, `edit`, `delete`, or `clear`.
 </box>
 
-Successful command output - Tag mode dashboard:
+Overview of Stat Panel:
 
-![statTag command](images/statTag.png)
+![stat command](images/Statspanel.png)
 
-Successful command output - Department mode dashboard:
+Overview of the different dashboards:
 
-![statDepartment command](images/statDepartment.png)
-
-Successful command output - Role mode dashboard
-
-![statRole command](images/statRole.png)
+![statDepartment command](images/statmodes.png)
 
 <br>
-
 
 ### Editing an employee: `edit`
 
