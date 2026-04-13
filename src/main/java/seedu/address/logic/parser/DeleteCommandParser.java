@@ -29,11 +29,6 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         }
 
         String[] tokens = trimmedArgs.split("\\s+");
-
-        if (tokens.length > DeleteCommand.MAX_INDEX_COUNT) {
-            throw new ParseException("Too many indexes specified.");
-        }
-
         List<Index> indexes = new ArrayList<>();
 
         try {
@@ -41,9 +36,21 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                 indexes.add(ParserUtil.parseIndex(token));
             }
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
+            // Propagate specific index error message if it's an invalid index
+            if (pe.getMessage().equals(seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX)) {
+                throw pe;
+            } else {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
+            }
         }
+
+        // Deduplicate before checking max index count
+        long uniqueCount = indexes.stream().distinct().count();
+        if (uniqueCount > DeleteCommand.MAX_INDEX_COUNT) {
+            throw new ParseException("Too many indexes specified.");
+        }
+
         return new DeleteCommand(indexes);
     }
 }

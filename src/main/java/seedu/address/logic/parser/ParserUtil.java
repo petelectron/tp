@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
@@ -32,11 +31,15 @@ public class ParserUtil {
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
         String trimmedIndex = oneBasedIndex.trim();
 
-        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
-            throw new ParseException(MESSAGE_INVALID_INDEX);
+        try {
+            int value = Integer.parseInt(trimmedIndex);
+            if (value <= 0) {
+                throw new ParseException(seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            return Index.fromOneBased(value);
+        } catch (NumberFormatException e) {
+            throw new ParseException(seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
-        return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
     /**

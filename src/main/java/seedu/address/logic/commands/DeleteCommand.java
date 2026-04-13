@@ -49,9 +49,10 @@ public class DeleteCommand extends Command implements ConfirmableCommand {
     public DeleteCommand(List<Index> targetIndexes) {
         requireNonNull(targetIndexes);
         targetIndexes.forEach(java.util.Objects::requireNonNull);
-        assert !targetIndexes.isEmpty() : "DeleteCommand requires at least one target index";
-        assert targetIndexes.size() <= MAX_INDEX_COUNT : "DeleteCommand received too many indexes";
-
+        if (targetIndexes.isEmpty()) {
+            throw new IllegalArgumentException("DeleteCommand requires at least one target index");
+        }
+        // Defensive: parser should already enforce unique count, but do not assert here
         this.targetIndexes = targetIndexes;
         logger.fine("DeleteCommand created with " + targetIndexes.size() + " requested index(es)");
     }
