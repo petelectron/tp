@@ -74,7 +74,7 @@ Each of the four main components (also shown in the diagram above),
 * defines its *API* in an `interface` with the same name as the Component.
 * implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
 
-For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
+For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside components being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
 <puml src="diagrams/ComponentManagers.puml" width="300" />
 
@@ -111,7 +111,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <box type="info" seamless>
 
-**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
 </box>
 
 How the `Logic` component works:
@@ -176,8 +176,6 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 This section describes some noteworthy details on how certain features are implemented.
 
 ### Undo feature
-
-#### Implementation
 
 The undo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
@@ -290,13 +288,11 @@ This means a command such as `search ali hr` returns employees whose fields cont
 
 ### Statistics Panel
 
-
 The statistics panel provides real-time workforce metrics displayed permanently on the right side of the application. This feature follows the **Separation of Concerns (SoC)** principle by separating data calculation from UI display.
 
 **Note:** The statistics panel supports three modes: TAG, DEPARTMENT, and ROLE. The displayed labels and statistics update according to the selected mode. All statistics are always computed from the full employee list (not the filtered list), regardless of any active search or filter.
 
 #### Design Overview
-
 
 The statistics feature consists of three main components:
 
@@ -582,7 +578,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3.  System {displays confirmation message}. (If the command is confirmable)
 4.  User suddenly recalls that they have forgotten to also edit the employee's email address.
 5.  User requests to cycle to the previous command.
-6.  System prefills the input line with the most recently executed command (from step 1).
+6.  System retrieves and displays the most recently executed command.
 7.  User modifies the command to edit the {email details} and executes the command.
 8.  System {edits the employee's email address in the records}.
     <br> *Use case ends.*
@@ -651,6 +647,47 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2b1. System displays an error message.
     <br> *Use case resumes from step 1.*
 
+
+**Use case 9 (UC9): Undo previous command**<br>
+
+**MSS**
+
+1. User requests to undo the most recent data-modifying command.
+2. System checks if there is a previous state available.
+3. System restores the most recent previous state of the employee records.
+4. System displays a success message indicating that the undo operation was completed.
+   <br> *Use case ends.*
+
+**Extensions**
+
+* 2a. There is no previous state available.
+  * 2a1. System displays an error message indicating that there is nothing to undo.
+  <br> *Use case ends.*<br><br>
+
+* 2b. There are untracked / non-data-modifying commands executed after the last tracked command.
+  * 2b1. System identifies the most recent valid previous state, ignoring any non-data-modifying commands.
+  <br> *Use case resumes from step 3.*<br><br>
+
+
+**Use case 10 (UC10): View and switch statistics dashboard mode**<br>
+
+**MSS**
+
+1. User requests to change the statistics mode using a valid command.
+2. System validates the requested mode.
+3. System computes statistics based on all employee records.
+4. System updates the statistics dashboard to reflect the selected mode.
+5. System displays a success message indicating updated state.
+   <br> *Use case ends.*
+
+**Extensions**
+
+* 2a. The requested mode is invalid.
+  <br><br>
+  * 2a1. System displays an error message indicating the correct format.
+  <br> *Use case ends.*<br><br>
+
+
 ### Non-Functional Requirements
 
 1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
@@ -663,6 +700,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 9. The system should remain stable when invalid commands or inputs are entered and should not crash during normal usage.
 10. The system should be packaged as a single executable JAR file so that users can run the application without additional installation steps beyond having Java installed.
 11. The system inputs should be primarily through CLI with minimal reliance on mouse interactions, to cater to users who prefer keyboard-driven interfaces.
+
 
 ### Glossary
 
@@ -714,17 +752,17 @@ Given below are instructions to test the app manually.
     3. Test case: `add k n/Amy Choo p/22222222 e/amy@example.com r/Head of Office d/Operations t/friend` (Preamble is not a space)<br>
        Expected: The employee is not added. Error message for invalid command format, along with an example of the correct format, shown.
 
-    4. Test case: `add n/Bob Choo p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Same exact name with existing entry, despite different details)<br>
+    4. Test case: `add n/Bob Choo p/11111111 e/bob@example.com r/Head of Operations d/Operations t/friend` (Same exact name with existing entry, despite different details)<br>
        Expected: The employee is not added. Duplicate error message is shown, indicating the employee (with same name) already exists.
 
-    5. Test case: `add n/bob Choo p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Same exact name with different case. Name check is case insensitive.)<br>
+    5. Test case: `add n/bob Choo p/11111111 e/bob@example.com r/Head of Operations d/Operations t/friend` (Same exact name with different case. Name check is case insensitive.)<br>
        Expected: The employee is not added. Duplicate error message is shown, indicating the employee (with same name) already exists.
 
     6. Test case: `add n/Lance Choo p/33333333 e/lance@example.com r/Head of HR d/Human Resources t/friend t/friend t/husband` (Multiple tags)<br>
        Expected: The employee is added. The success message is shown, along with the added details. Note that duplicate tags are accepted as one tag.
 
-    7. Test case: `add n/Justin p/33333333 e/lance@example.com r/Head of HR d/Human Resources` (No tags. Tags are optional)<br>
-       Expected: The employee is added. The success message is shown, along with the added details. Note that duplicate tags are accepted as one tag.
+    7. Test case: `add n/Justin p/33333333 e/lance@example.com r/Head of HR d/Human Resources` (No tags since they are optional)<br>
+       Expected: The employee is added. The success message is shown, along with the added details.
 
     8. Test case: `add n/Amy Cho n/Bob Cho p/11111111 e/bob@meme.com r/Head of Operations d/Operations t/friend` (Two names))<br>
        Expected: The employee is not added. Error messages for duplicated prefix shown.
@@ -765,7 +803,7 @@ Given below are instructions to test the app manually.
    6. Test case: `delete 1 2 999` (Prerequisite: there are less than 999 entries/employees) <br>
       Expected: No employee is deleted. Error details shown for an invalid index (because of 999).
 
-   7. All test cases, except `del` is used instead of `delete`. E.g.: `del 1`<br>
+   7. All test cases, except `del` is used instead of `delete`. E.g. `del 1`<br>
       Expected: Same exact behaviour as `delete`
 
    8. Test case: `delete -3`, `delete a`, `del 0` or similar (No index provided or index is invalid) <br>
@@ -780,7 +818,7 @@ Given below are instructions to test the app manually.
    11. Other incorrect delete commands to try: `delete x` (where x is larger than the list size), `del 1 2 a`, `del a`, `del 1 ` (trailing whitespace), `del #`, etc.<br>
       Expected: Similar error handling to above.
 
-2. Deleting a employee from a filtered list (search results)
+2. Deleting an employee from a filtered list (search results)
 
    1. Prerequisites: Execute `search KEYWORD` to filter the list (where KEYWORD returns one or more matching results based on searchable fields). Multiple search results shown.
 
@@ -1116,4 +1154,5 @@ To elevate the application from a basic address book to a professional tool, we 
 ### 3. Import / Export System
 While AB3 handles basic background JSON, HR professionals primarily work with spreadsheets. We implemented robust `.csv` Import and Export commands.
 *   **The Effort:** This was far more difficult than simple File I/O. We had to build a custom CSV parser and serializer capable of mapping raw strings to our domain-specific objects (like `Department` or `Role`), whilst handling formatting errors (duplicates, missing values, etc.) gracefully. The system had to be capable of bulk-adding entries, validating them on the fly, and rejecting malformed files without corrupting the existing HRmanager database.
+
 
