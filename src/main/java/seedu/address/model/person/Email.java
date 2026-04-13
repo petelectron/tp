@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Email {
 
-    private static final String SPECIAL_CHARACTERS = "+_.-";
+    private static final String SPECIAL_CHARACTERS = "+.-";
     public static final String MESSAGE_CONSTRAINTS = "Emails should be of the format local-part@domain "
             + "and adhere to the following constraints:\n"
             + "1. The local-part should only contain alphanumeric characters and these special characters, excluding "
@@ -22,16 +22,13 @@ public class Email {
             + "    - have each domain label start and end with alphanumeric characters\n"
             + "    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.\n"
             + "3. Email must be 50 characters or less";
-    // alphanumeric and special characters
-    private static final String ALPHANUMERIC_NO_UNDERSCORE = "[^\\W_]+"; // alphanumeric characters except underscore
-    private static final String LOCAL_PART_REGEX = "^" + ALPHANUMERIC_NO_UNDERSCORE + "([" + SPECIAL_CHARACTERS + "]"
-            + ALPHANUMERIC_NO_UNDERSCORE + ")*";
-    private static final String DOMAIN_PART_REGEX = ALPHANUMERIC_NO_UNDERSCORE
-            + "(-" + ALPHANUMERIC_NO_UNDERSCORE + ")*";
-    private static final String DOMAIN_LAST_PART_REGEX = "(" + DOMAIN_PART_REGEX + "){2,}$"; // At least two chars
-    private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)*" + DOMAIN_LAST_PART_REGEX;
-    public static final String VALIDATION_REGEX = "^(?=.{1,50}$)"
-        + LOCAL_PART_REGEX + "@" + DOMAIN_REGEX;
+    private static final String ALPHANUMERIC_WITH_UNDERSCORE = "[a-zA-Z0-9_]+";
+    private static final String LOCAL_PART_REGEX = "^" + ALPHANUMERIC_WITH_UNDERSCORE + "([" + SPECIAL_CHARACTERS + "]"
+            + ALPHANUMERIC_WITH_UNDERSCORE + ")*";
+    private static final String DOMAIN_PART_REGEX = "[a-zA-Z0-9]+" + "(-[a-zA-Z0-9]+)*";
+    private static final String DOMAIN_LAST_PART_REGEX = "(?=.{2,}$)" + DOMAIN_PART_REGEX;
+    private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)+" + DOMAIN_LAST_PART_REGEX;
+    public static final String VALIDATION_REGEX = "^(?=.{1,50}$)" + LOCAL_PART_REGEX + "@" + DOMAIN_REGEX;
 
     private final String value;
 
