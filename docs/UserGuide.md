@@ -185,7 +185,7 @@ Successful command output:
 
 #### Name (`n/`)
 
-* __Characters:__ The name should consist of only alphanumeric characters, optionally hyphens (`-`) and/or spaces (` `), and cannot be blank. The name should not contain consecutive hyphens and/or spaces. The name should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed.
+* __Characters:__ The name should consist of only alphanumeric characters and/or hyphens (`-`) and/or spaces (` `) and cannot be blank. The name should not contain consecutive hyphens and/or spaces. The name should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed.
 * __Case sensitivity:__ The name entered is case-insensitive. For example, adding `John Doe` will be invalid if `john doe` already exists in HRmanager. Names are stored in HRmanager in lowercase.
 * __Input length:__ The name must be between 1 and 50 characters long (inclusive).
 
