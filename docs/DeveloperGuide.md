@@ -984,6 +984,14 @@ Test the following for each confirmable command:
     2. Test case: Enter `exit`. When prompted, enter `n`.<br>
        Expected: The application remains open. Cancellation message is shown.
 
+5. Importing employee data (import command)
+
+    1. Test case: Enter a valid import command. When prompted, enter `y`.<br>
+       Expected: The employee list is imported from the specified file, overwriting existing data. Success message is shown with the number of employees imported and the file path.
+
+    2. Test case: Enter a valid import command. When prompted, enter `n`.<br>
+       Expected: The import is cancelled. No changes are made to the employee list. Cancellation message is shown.
+
 ### Testing Undo Workflows
 
 Use these tests to verify generic undo workflows. NOTE: If the command is valid, the confirmation feature is first triggered. The tester enters 'y' to proceed.
