@@ -283,7 +283,7 @@ Successful command output:
 
 ### Switching the statistics dashboard mode: `stat`
 
-Switches the statistics dashboard to show tags, departments, or roles distributions - providing HR managers with an at-a-glance view of workforce composition using full employee records. 
+Switches the statistics dashboard to show tags, departments, or roles distributions - providing HR managers with a breakdown of workforce composition to inform decisions on resource allocation.
 * Exactly **one** mode must be provided. Mode is case-insensitive. 
 * The dashboard is unaffected by on-screen filters
 * By default, the dashboard starts in department mode. 
@@ -420,12 +420,10 @@ Undo Possible: This command can be reversed if executed recently. See [Undo](#un
 ### Import employee data: `import`
 
 Replaces all current data with employees from a CSV (comma-separated values) file - allowing HR managers to quickly load employee records from spreadsheets or migrate data from existing HR systems.
-* File must end in `.csv` with headers `name`, `phone`, `email`, `role`, `department` (`tags` optional). 
-* The file size limit is 100kB, and employee limit is 200. All data validation rules apply (e.g., no duplicate employee names, invalid or missing fields). See [parameter restrictions](#parameter-restrictions-for-each-field) for details on acceptable values for each field.
-* Only one layer of quotes can be parsed.
-* For MacOS/Linux, file paths containing spaces must be quoted.
-* Optionally, one `tags` column is accepted. All tags must be included in one single field, e.g. `tag1, tag2, tag3`.
+* File must end in `.csv` with headers `name`, `phone`, `email`, `role`, `department` (`tags` optional). If used, one `tags` column is accepted. All tags must be included in one single field, e.g. `tag1, tag2, tag3`. All data validation rules apply (e.g., no duplicate employee names, invalid or missing fields).
 * In the case of duplicate headers, the left-most column is taken.
+* The file size limit is 100kB, and employee limit is 200. 
+* For MacOS/Linux, file paths containing spaces must be quoted. Only one layer of quotes can be parsed.
 
 Format: `import [FILE PATH]`
 
@@ -448,7 +446,12 @@ Alternative ways to import:
 
 <box theme="success" icon=":fa-solid-lightbulb:">
 
-When errors are detected in the CSV file, the first error will be shown.
+Refer to [parameter restrictions](#parameter-restrictions-for-each-field) for each field for details on acceptable values for each parameter.
+</box>
+
+<box theme="success" icon=":fa-solid-lightbulb:">
+
+When errors are detected in the CSV file, the first error will be shown. Users will constantly be prompted to help with debugging until they fix all the errors.
 </box>
 
 <box type="important" icon=":fa-solid-exclamation-triangle:">
@@ -475,8 +478,7 @@ Successful command output:
 
 Exports all employees to a CSV (comma-separated values) file at your specified location - enabling HR managers to easily share employee records with other colleagues or for backup purposes.
 * File path must end in `.csv`. 
-* Use just a file name (e.g., `employees.csv`) to save in HRmanager's home folder. 
-* Overwriting existing files is **not allowed**.
+* Use just a file name (e.g., `employees.csv`) to save in HRmanager's home folder.
 
 Format: `export [FILE PATH]`
 
@@ -486,16 +488,16 @@ Examples:
 * `export employees.csv`
 * `export C:\Users\username\Desktop\2026_employee_list.csv` (Windows)
 * `export /home/user/data.csv` (MacOS/Linux)
-* </box>
+</box>
 
 <box theme="success" icon=":fa-solid-lightbulb:">
 
-The full list is exported (even if you're viewing filtered results).
+The full list is exported (even if you are viewing filtered results).
 </box>
 
-<box type="important" icon=":fa-solid-exclamation-triangle:">
+<box type="important">
 
-Confirmation Required: This command requires confirmation before execution to prevent accidental edits. See [Confirmation Prompts](#confirmation-prompts) for details on how to respond.
+Overwriting existing files is **not allowed**.
 </box>
 
 Successful command output:
@@ -577,7 +579,6 @@ This confirmation step is designed to prevent mistakes. If you accidentally type
 ### Undo an executed command: `undo`
 
 Reverses the effects of a prior `add`, `edit`, `delete`, `clear`, or `import` command (Up to 10 commands) (Collectively: "Eligible commands").
-* Each previous successful eligible command is saved (up to 10 of the latest ones). If there are sufficient such saved commands, you can execute `undo` up to 10 times on the 10 eligible commands in a consecutive sequence.
 * If you close the app and re-run it, you will lose command execution history and hence the ability to do `undo` on those commands from previous sessions.
 
 Format: `undo`
@@ -619,12 +620,17 @@ Design considerations:
 
 </box>
 
+<box theme="success" icon=":fa-solid-lightbulb:">
+
+Each previous successful eligible command is saved (up to 10 of the latest ones). If there are sufficient such saved commands, you can execute `undo` up to 10 times on the 10 eligible commands in a consecutive sequence.
+</box>
+
 --------------------------------------------------------------------------------------------------------------------
 
 ### Cycle through command history (previous executed commands)
 
 You can pre-fill the command box with your last successful commands using the **Up arrow key**. Use Up/Down arrows to browse through your last 10 successful distinct commands only (excluding y/n).
-* You can only cycle through commands executed in the current session. That is, if you close the app and re-run it, you will lose command execution history and hence the ability to toggle/cycle through them.
+* You can only cycle through commands executed in the current session. The command history resets when you restart the app.
 
 <box theme="success" icon=":fa-solid-lightbulb:">
 
@@ -663,6 +669,9 @@ Furthermore, certain edits can cause HRmanager to behave in unexpected ways (e.g
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Use the `export` command on your current computer to save your employee data as a CSV file. Copy this CSV file to your new computer, then use the `import` command in HRmanager to load your data. This will overwrite the sample data with your own records and is the recommended way to transfer data between computers.
+
+**Q**: How do I import multiple tags for a single employee in CSV?<br>
+**A**: In the CSV file, ensure that all tags for an employee are included in a single field (e.g., `tags`) and separated by commas. For example, if an employee has the tags "friend", "colleague", and "certified", the `tags` field for that employee should be formatted as `friend, colleague, certified`. When you import this CSV file into HRmanager, it will correctly parse the tags and assign them to the employee.
 
 <br>
 
