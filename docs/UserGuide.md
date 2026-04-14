@@ -545,7 +545,7 @@ Since HRmanager stores **sensitive employee data** (personal information, contac
 <box type="info" icon=":fa-solid-code:">
 
 The text starting with `>` shows the command you type into HRmanager. Do not type the `>` symbol itself.
-<br>The text after the // is a comment or explanation, not part of the actual command.<br>
+<br>The text after the `//` is a comment or explanation, not part of the actual command.<br>
 
 <br>Command execution sequence example:
 ```
