@@ -568,29 +568,31 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to {edit an employee's phone number}*. (Edit is an example. It can be any command)
-2.  System {edits the employee's phone number in the records}.
-3.  System {displays confirmation message}. (If the command is confirmable)
-4.  User suddenly recalls that they have forgotten to also edit the employee's email address.
-5.  User requests to cycle to the previous command.
-6.  System retrieves and displays the most recently executed command.
-7.  User modifies the command to edit the {email details} and executes the command.
-8.  System {edits the employee's email address in the records}.
+1.  User requests to execute a command.
+2.  System executes the command.
+4.  User wants to make a similar command.
+5.  User requests to cycle to the previous command, by pressing the relevant key.
+6.  System retrieves and pre-fills the command box with the most recently executed command.
+7.  User enters the command.
     <br> *Use case ends.*
 
 **Extensions**
 
-* 2a. User has entered more than 10 unique commands.
-    * 2a1. The oldest command is discarded and can no longer be cycled through.
+* 2a. User has entered 10 unique commands. User then executes another command.
+    * 2a1. The oldest command is discarded and can no longer be cycled through. The new command is saved.
     <br> *Use case ends.*<br><br>
 
 * 5a. There are no previous successfully executed commands.
-    * 5a1. System does not respond to the user's cycle request.
+    * 5a1. System does not respond to the user's key press (cycle request).
     <br> *Use case ends.*<br><br>
 
-* 6a. The user has executed multiple commands before the recent one, and requests to cycle further back.
+* 6a. The user has executed multiple commands before the most recent one, and requests to cycle further back.
     * 6a1. System continues to cycle through older executed commands. If there is already an input, it is saved.
     * 6a2. User stops cycling at their desired past command or cycles forward to get back to a more recent or original command.
+    <br> *Use case resumes from step 7.*<br><br>
+
+* 6b. The command the user wants to make is not exactly the same as the pre-filled, previous command
+    * 6b1. User modifies the command accordingly.
     <br> *Use case resumes from step 7.*<br><br>
 
 **Use case 7 (UC7): Importing employee data**<br>
