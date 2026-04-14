@@ -591,7 +591,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 6a2. User stops cycling at their desired past command or cycles forward to get back to a more recent or original command.
     <br> *Use case resumes from step 7.*<br><br>
 
-* 6b. The command the user wants to make is not exactly the same as the pre-filled, previous command
+* 6b. The command the user wants to make is not exactly the same as the pre-filled, previous command.
     * 6b1. User modifies the command accordingly.
     <br> *Use case resumes from step 7.*<br><br>
 
