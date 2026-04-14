@@ -572,7 +572,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  System executes the command.
 3.  User wants to make a similar command.
 4.  User requests to cycle to the previous command.
-5.  System retrieves and pre-fills the command box with the most recently executed command.
+5.  System retrieves and pre-writes the most recently executed command.
 6.  User enters the command.
     <br> *Use case ends.*
 
