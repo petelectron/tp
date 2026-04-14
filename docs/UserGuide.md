@@ -545,6 +545,7 @@ Since HRmanager stores **sensitive employee data** (personal information, contac
 <box type="info" icon=":fa-solid-code:">
 
 The text starting with `>` shows the command you type into HRmanager. Do not type the `>` symbol itself.
+<br>The text after the // is a comment or explanation, not part of the actual command.<br>
 
 <br>Command execution sequence example:
 ```
@@ -556,10 +557,10 @@ Impact: The selected employee record(s) will be permanently removed: john doe.
 > y
 Deleted employee(s): john doe
 
-> edit 1 n/john
+> edit 1 n/john doe
 ⚠ Warning! ⚠ Please confirm this action. Enter 'y' to proceed or 'n' to cancel.
 Action: Edit employee at index 1.
-Impact: Provided fields will overwrite existing employee details for: beatrice lim.
+Impact: Provided fields will overwrite existing employee details for: josh tan. //josh tan is the name of the employee at index 1
 
 > n
 Cancelled: edit employee details.
