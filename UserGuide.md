@@ -131,11 +131,11 @@ This yellow box with a redo icon indicates that action can be undone. Use `undo`
 ### Notes about the command format
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…` after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. in `add n/NAME`, `NAME` is a parameter which can be replaced by `John Doe`.
+* Parameters in square brackets are optional.<br>
+  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/junior` or as `n/John Doe`.
+* Parameters with `…` after them can be used multiple times including zero times.<br>
+  e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/junior`, `t/junior t/intern` etc.
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `undo`, `exit` and `clear`) will be ignored.<br>
@@ -164,7 +164,7 @@ Format: `list`
 
 <box theme="success" icon=":fa-solid-lightbulb:">
 
-Running `list` returns the display to the full global employee list after any narrowed search results view.
+Executing `list` returns the display to the full global employee list after any narrowed search is done.
 </box>
 
 Successful command output:
@@ -184,7 +184,7 @@ Format: `add n/NAME p/PHONE e/EMAIL r/ROLE d/DEPARTMENT [t/TAG]…​`
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com r/Receptionist d/Operations` adds an employee named John Doe with the specified details.
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com r/Associate Director d/Finance p/1234567` adds an employee named Betsy Crowe with a tag, `friend`.
+* `add n/Betsy Crowe t/junior e/betsycrowe@example.com r/Associate Director d/Finance p/1234567` adds an employee named Betsy Crowe with a tag, `junior`.
 </box>
 
 <box theme="success" icon=":fa-solid-lightbulb:">
@@ -237,7 +237,7 @@ Successful command output:
 #### Tag (`t/`)
 
 * __Characters:__ The tag should consist of only alphanumeric characters and hyphens (`-`) and spaces (` `) and cannot be blank. The tag cannot have 2 consecutive hyphens or spaces in a row, or a hyphen beside a space. The tag should not start or end with a hyphen. Leading and trailing spaces will be ignored. No other characters are allowed.
-* __Case sensitivity:__ The tag entered is case-insensitive eg. inputting `friend` will be the same as `Friend` and `FRIEND`. The tag will be stored in HRmanager in lower casing.
+* __Case sensitivity:__ The tag entered is case-insensitive eg. inputting `junior` will be the same as `Junior` and `JUNIOR`. The tag will be stored in HRmanager in lower casing.
 * __Input length:__ The tag must be between 1 and 30 characters long (inclusive).
 * __Maximum count:__ Each employee can have at most 20 tags.
 
@@ -246,7 +246,7 @@ Successful command output:
 * __Characters:__ The index should consist of only numeric digits.
 * __Input restrictions:__ The index must be a positive integer (1, 2, 3, …​) and must be within the range of the currently displayed employee list. For example, if there are currently 5 employees shown in the list, the index must be between 1 and 5 (inclusive).
 * `edit` Command: Exactly one index must be provided. The above character and input restrictions apply.
-* Exception: `delete` Command accepts up to 10 indexes. Duplicate indexes are removed before the command is processed. The above character and input restrictions apply to each index provided. If any index is invalid, the entire command fails (no partial deletion).
+* Exception: `delete` Command accepts up to 10 distinct indexes. Duplicate indexes are removed before the command is processed. The above character and input restrictions apply to each index provided. If any index is invalid, the entire command fails (no partial deletion).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -257,7 +257,7 @@ Searches across all employee fields (name, phone, email, role, department, tags)
 * The search is case-insensitive and finds anyone matching any keyword (e.g., `John` finds John, Johnson, Johnny). 
 * Special characters like `@`,`_`,`-`, and `.` are allowed.
 
-Format: `search KEYWORD [MORE_KEYWORDS]…` (keywords are separated by whitespace)
+Format: `search KEYWORD [MORE_KEYWORDS]…` (keywords are separated by a space (` `))
 
 <box type="info" icon=":fa-solid-code:">
 
@@ -283,7 +283,7 @@ Successful command output:
 
 Switches the statistics dashboard to show tags, departments, or roles distributions - providing HR managers with a breakdown of workforce composition to inform decisions on resource allocation.
 * Exactly **one** mode must be provided. Mode is case-insensitive. 
-* The dashboard is unaffected by on-screen filters
+* The dashboard always displays statistics for the global list, regardless of current search filters.
 * By default, the dashboard starts in department mode. 
 * Values are sorted by count (highest first), then alphabetically for ties.
 
@@ -328,9 +328,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [r/ROLE] [d/DEPARTMENT] [t/TAG]
 <box type="info" icon=":fa-solid-code:">
 
 Examples:
-* `edit 1 p/91234567 e/johndoe@example.com` edits the phone and email address of the 1st employee to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower d/Marketing t/` edits the name and department of the 2nd employee to be `Betsy Crower` and `Marketing`, and clears all existing tags.
-* `edit 3 t/friend t/colleague` changes the tags of the 3rd employee to "friend" and "colleague". (If the employee already had "friend", you must retype it to keep it; otherwise, it will be replaced.)
+* `edit 1 p/91234567 e/johndoe@example.com` edits the 1st employee's phone to `91234567` and their email address to `johndoe@example.com`.
+* `edit 2 n/Betsy Crower d/Marketing t/` edits the 2nd employee's name to `Betsy Crower` and their department to `Marketing`, and clears all of their existing tags.
+* `edit 3 t/junior t/intern` changes the tags of the 3rd employee to "junior" and "intern". (If the employee already had "junior", you must retype it to keep it; otherwise, it will be replaced.)
 </box>
 
 <box theme="success" icon=":fa-solid-lightbulb:">
@@ -366,7 +366,7 @@ Alias: `del`
 
 Examples:
 * `delete 2` deletes the 2nd employee in the currently displayed list.
-* `del 4` deletes the 4th employee using the alias.
+* `del 4` deletes the 4th employee.
 * `list` followed by `delete 1 3 5` deletes the 1st, 3rd, and 5th employees in the full list.
 * `search Betsy` followed by `delete 1` deletes the 1st employee in the filtered search results.
 * `delete 3 1 3` deletes the employees at indexes `3` and `1`; the repeated `3` is ignored.
@@ -414,8 +414,9 @@ Undo Possible: This command can be reversed if executed recently. See [Undo](#un
 ### Import employee data: `import`
 
 Replaces all current data with employees from a CSV (comma-separated values) file - allowing HR managers to quickly load employee records from spreadsheets or migrate data from existing HR systems.
-* File must end in `.csv` with headers `name`, `phone`, `email`, `role`, `department` (`tags` optional). If used, one `tags` column is accepted. All tags must be included in one single field, e.g. `tag1, tag2, tag3`. All data validation rules apply (e.g., no duplicate employee names, invalid or missing fields).
-* In the case of duplicate headers, the left-most column is taken.
+* File path must end in `.csv`.
+* File must have headers `name`, `phone`, `email`, `role`, `department` (`tags` optional). If used, one `tags` column is accepted. All tags must be included in one single field, e.g. `tag1, tag2, tag3`. All data validation rules apply (e.g., no duplicate employee names, invalid or missing fields).
+* In the case of duplicate headers, the leftmost column is taken.
 * The file size limit is 100kB, and employee limit is 200. 
 * On macOS/Linux, if the file path contains spaces, you must enclose the entire path in double quotes. Nested quotes are not supported.
 
@@ -543,7 +544,6 @@ Since HRmanager stores **sensitive employee data** (personal information, contac
 <box type="info" icon=":fa-solid-code:">
 
 The text starting with `>` shows the command you type into HRmanager. Do not type the `>` symbol itself.
-<br>The text after the `//` is a comment or explanation, not part of the actual command.<br>
 
 <br>Command execution sequence example:
 ```
@@ -606,14 +606,6 @@ will not result in any net change because all the changes are reversed. Beyond 1
 ```
 is effectively the same as the above example and will not result in any net change because all the changes are reversed. The `help`, `search` and `list` commands are ineligible and are ignored by the undo command.
 
-* `undo` still works even if there are commands not eligible for `undo` in the past sequence; it will simply ignore them. For example, if you execute
-```
-> add (params...) // execute add
-> help // execute help
-> undo // reverses add
-```
-then the execution of `undo` will ignore `help` (which is not eligible for undo) and will reverse the effects of `add`. Such ineligible commands do not contribute to the 10 saved commands.
-
 Design considerations:
 `undo` clears the filter and returns to the main view. If the filter were silently restored, users might not realize they are still in a filtered view, especially after multiple undo operations. This also maintains a single source of truth by ensuring users always return to a complete, reliable overview after undo, reducing ambiguity.
 
@@ -645,11 +637,10 @@ The text starting with `>` shows the command you type into HRmanager. Do not typ
 
 > (Press Up arrow once)  // Command box shows: search Engineer
 > (Press Up arrow again) // Command box shows: add n/John p/98765432 e/john@example.com r/Engineer d/Engineering
-> (Press Down arrow once)  // Command box shows: search Engineer
-> (Press Down arrow again) // Command box shows: add n/Jane Smith (incomplete command, not lost)
+> add n/Jane p/91234567 e/jane@example.com r/Engineer d/Engineering // edited from John's add command
 ```
 
-* You can then modify the retrieved command (e.g., change the name from John Doe to John Tan) and press Enter to execute the new command.
+* You can then modify the retrieved command (e.g., change the name from John to Jane) and press Enter to execute the new command.
 * The current pending command is saved when you browse history, so typing add n/ then pressing Up arrow won't lose your partial input.
 
 </box>
@@ -694,7 +685,7 @@ Furthermore, certain edits can cause HRmanager to behave in unexpected ways (e.g
 **A**: Use the `export` command on your current computer to save your employee data as a CSV file. Copy this CSV file to your new computer, then use the `import` command in HRmanager to load your data. This will overwrite the sample data with your own records and is the recommended way to transfer data between computers.
 
 **Q**: How do I import multiple tags for a single employee in CSV?<br>
-**A**: In the CSV file, ensure that all tags for an employee are included in a single field (e.g., `tags`) and separated by commas. For example, if an employee has the tags "friend", "colleague", and "certified", the `tags` field for that employee should be formatted as `friend, colleague, certified`. When you import this CSV file into HRmanager, it will correctly parse the tags and assign them to the employee.
+**A**: In the CSV file, ensure that all tags for an employee are included in a single field (e.g., `tags`) and separated by commas. For example, if an employee has the tags "junior", "intern", and "certified", the `tags` field for that employee should be formatted as `junior, intern, certified`. When you import this CSV file into HRmanager, it will correctly parse the tags and assign them to the employee.
 
 <br>
 
@@ -704,14 +695,14 @@ Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Help**   | `help`
 **List**   | `list`
-**Add**    | `add n/NAME p/PHONE e/EMAIL r/ROLE d/DEPARTMENT [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com r/Software Engineer d/Engineering t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE e/EMAIL r/ROLE d/DEPARTMENT [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com r/Software Engineer d/Engineering t/junior t/intern`
 **Search** | `search KEYWORD [MORE_KEYWORDS]...`<br> e.g., `search James @`
 **Stat** | `stat MODE`<br> e.g., `stat tag`, `stat dept`, `stat role`
-**Cycle commands** | up/down arrow keys
-**Undo**   | `undo`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [r/ROLE] [d/DEPARTMENT] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com d/Finance`
 **Delete** | `delete INDEX [MORE_INDEXES]` or `del INDEX [MORE_INDEXES]`<br> e.g., `delete 3`, `delete 1 4 5`
 **Clear**  | `clear`
 **Import** | `import [FILE PATH]`<br> e.g., `import C:\Users\John\Desktop\employees.csv`
 **Export** | `export [FILE PATH]`<br> e.g., `export C:\Users\John\Desktop\employees.csv`
 **Exit**   | `exit`
+**Undo**   | `undo`
+**Cycle commands** | up/down arrow keys
